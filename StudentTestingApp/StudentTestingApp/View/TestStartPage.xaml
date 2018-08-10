@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudentTestingApp.View.TestStartPage"
+             BackgroundColor="#616161">
+    <StackLayout BackgroundColor="#424242" VerticalOptions="Center">
+        <StackLayout.Resources>
+            <ResourceDictionary>
+                <Style x:Key="TestInfo" TargetType="Label">
+                    <Setter Property="TextColor" Value="#FFFFFF"/>
+                    <Setter Property="FontSize" Value="Medium"/>
+                </Style>
+                <Style x:Key="LineTestInfo" TargetType="StackLayout">
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                    <Setter Property="HorizontalOptions" Value="Center"/>
+                </Style>
+            </ResourceDictionary>
+        </StackLayout.Resources>
+        <Label Text="{Binding TestName}" Style="{StaticResource TestInfo}" FontSize="Large" HorizontalTextAlignment="Center"/>
+        <StackLayout Style="{StaticResource LineTestInfo}">
+            <Label Text="Количество вопросов:" Style="{StaticResource TestInfo}"/>
+            <Label Text="{Binding QuestionCount}" Style="{StaticResource TestInfo}"/>
+        </StackLayout>
+        <StackLayout Style="{StaticResource LineTestInfo}">
+            <Label Text="Продолжительность: " Style="{StaticResource TestInfo}"/>
+            <Label Text="{Binding Duration}" Style="{StaticResource TestInfo}"/>
+        </StackLayout>
+        <Label Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" FontSize="Large"/>
+    </StackLayout>
+</ContentPage>

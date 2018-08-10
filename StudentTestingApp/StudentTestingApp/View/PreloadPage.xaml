@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:StudentTestingApp.View"
+             x:Class="StudentTestingApp.View.PreloadPage"
+             BackgroundColor="#000000">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackLayout VerticalOptions="Center">
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <Style x:Key="Title" TargetType="Label">
+                            <Setter Property="FontSize" Value="50"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                            <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa"/>
+                            <Setter Property="TextColor" Value="White"/>
+                            <Setter Property="HorizontalOptions" Value="Center"/>
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
+                <Label Text="Student" Style="{StaticResource Title}"/>
+                <Label Text="Testing" Style="{StaticResource Title}"/>
+                <Label Text="App"  Style="{StaticResource Title}"/>
+            </StackLayout>
+            <Image Grid.Row="1" x:Name="AnimatedImage" Source="refresh.png" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Grid.Row="2" x:Name="AnimatedLabel" Text="Загрузка тестов" VerticalOptions="Start" HorizontalOptions="Center" FontSize="Large" TextColor="White"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>
