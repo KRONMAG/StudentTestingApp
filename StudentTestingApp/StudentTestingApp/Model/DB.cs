@@ -6,7 +6,7 @@ using SQLite;
 
 namespace StudentTestingApp.Model
 {
-    class DB
+    public class DB
     {
         private static DB instance;
 
@@ -48,10 +48,10 @@ namespace StudentTestingApp.Model
             else return from item in db.Table<Subject>() select item;
         }
 
-        public IEnumerable<Test> GetTests(int subjectId)
+        public IEnumerable<Test> GetTests(Subject subject)
         {
             if (db == null) return null;
-            else return from item in db.Table<Test>() where item.SubjectId == subjectId select item;
+            else return from item in db.Table<Test>() where item.SubjectId == subject.Id select item;
         }
     }
 }

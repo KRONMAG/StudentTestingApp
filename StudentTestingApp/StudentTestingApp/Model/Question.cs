@@ -4,7 +4,7 @@ using SQLite;
 namespace StudentTestingApp.Model
 {
     [Table("questions")]
-    class Question
+    public class Question
     {
         [Column("id"), PrimaryKey]
         public int Id { get; set; }

@@ -2,45 +2,37 @@
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Presenter;
+using StudentTestingApp.Model;
 using StudentTestingApp.View.Interface;
+using System.Collections.Generic;
 
 namespace StudentTestingApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubjectListPage : ContentPage, ISubjectListView
     {
-        public class SubjectView
-        {
-            public string Name { get; set; }
-        }
-
-        public event Action OnSelectSubject;
-        public ObservableCollection<SubjectView> Subjects { get; }
-        public string SelectedSubjectName { get; private set; }
-
         public SubjectListPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            Subjects = new ObservableCollection<SubjectView>();
+            Subjects = new ObservableCollection<Subject>();
             BindingContext = this;
         }
 
-        public void Show()
+        private void SubjectTapped(object sender, ItemTappedEventArgs e)
         {
-            App.Current.MainPage = new NavigationPage(this);
-        }
-
-        public void ShowSubject(string name)
-        {
-            Subjects.Add(new SubjectView() { Name = name });
-        }
-
-        private void SubjectTapped(object sender, SelectedItemChangedEventArgs e)
-        {
-            SelectedSubjectName = ((SubjectView)((ListView)sender).SelectedItem).Name;
             OnSelectSubject?.Invoke();
         }
+
+        #region ISubjectListView
+        public event Action OnSelectSubject;
+        public ICollection<Subject> Subjects { get; }
+        public Subject SelectedSubject { get; set; }
+
+        public void Show()
+        {
+            App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("000000") };
+        }
+        #endregion
     }
 }

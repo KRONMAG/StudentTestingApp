@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    interface ISubjectListView : IParentView
+    public interface ISubjectListView : IParentView
     {
-        void ShowSubject(string name);
-        string SelectedSubjectName { get; }
+        ICollection<Subject> Subjects { get; }
+        Subject SelectedSubject { get; }
         event Action OnSelectSubject;
     }
 }

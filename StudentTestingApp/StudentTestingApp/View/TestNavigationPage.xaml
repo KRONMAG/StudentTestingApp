@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudentTestingApp.View.TestNavigationPage"
+            xmlns:local="clr-namespace:StudentTestingApp.View"
+            BarBackgroundColor="#212121">
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Завершить тестирование" Order="Secondary"/>
+        <ToolbarItem Text="Оставшееся время:"/>
+        <ToolbarItem Text="{Binding RemainingSeconds}"/>
+        <ToolbarItem Text="сек."/>
+    </TabbedPage.ToolbarItems>
+    <ContentPage Title="1"/>
+    <ContentPage Title="2" />
+    <ContentPage Title="3" />
+    <ContentPage Title="4" />
+    <ContentPage Title="5" />
+</TabbedPage>

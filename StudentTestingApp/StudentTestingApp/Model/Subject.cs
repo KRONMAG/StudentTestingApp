@@ -4,12 +4,12 @@ using SQLite;
 namespace StudentTestingApp.Model
 {
     [Table("subjects")]
-    class Subject
+    public class Subject
     {
         [Column("id"), PrimaryKey]
         public int Id { get; set; }
 
-        [Column("name"), NotNull, Unique]
+        [Column("name"), NotNull]
         public string Name { get; set; }
     }
 }

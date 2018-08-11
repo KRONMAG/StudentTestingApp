@@ -25,6 +25,7 @@
             <Label Text="Продолжительность: " Style="{StaticResource TestInfo}"/>
             <Label Text="{Binding Duration}" Style="{StaticResource TestInfo}"/>
         </StackLayout>
-        <Label Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" FontSize="Large"/>
+        <Entry Text="{Binding StudentName}"  Placeholder="ФИО учащегося" FontSize="Medium" TextColor="#FFFFFF" HorizontalTextAlignment="Center"/>
+        <Button Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" Clicked="StartTestClicked"/>
     </StackLayout>
 </ContentPage>

@@ -2,7 +2,7 @@
 
 namespace StudentTestingApp.View.Interface
 {
-    interface IDerivedView
+    public interface IDerivedView
     {
         void Show(IParentView parentView);
     }

@@ -12,16 +12,16 @@
             <Label BackgroundColor="#212121" Text="Тесты" FontSize="Medium" TextColor="White"/>
         </StackLayout>
         <ScrollView Grid.Row="1">
-            <ListView BackgroundColor="#616161" ItemsSource="{Binding Tests}" ItemTapped="TestTapped">
+           <ListView BackgroundColor="#616161" ItemsSource="{Binding Tests}" SelectedItem="{Binding SelectedTest}" ItemTapped="TestTapped">
                 <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.View>
-                            <Label BackgroundColor="#424242" Text="{Binding Name}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#FFFFFF"/>
-                        </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Label BackgroundColor="#424242" Text="{Binding Name}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#FFFFFF"/>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </ScrollView>
     </Grid>

@@ -1,9 +1,13 @@
 ﻿using System;
+using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    interface ITestStartView : IDerivedView
+    public interface ITestStartView : IDerivedView
     {
-        void ShowTestInfo(string testName, int questionCount, int? duration);
+        void ShowTestInfo(Test test);
+        void ShowError(string message);
+        string StudentName { get; }
+        event Action OnStartTest;
     }
 }

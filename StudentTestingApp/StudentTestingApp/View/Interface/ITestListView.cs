@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    interface ITestListView : IDerivedView
+    public interface ITestListView : IDerivedView
     {
-        void ShowTest(string testName);
-        string SelectedTestName { get; }
+        ICollection<Test> Tests { get; }
+        Test SelectedTest { get; }
         event Action OnSelectTest;
     }
 }

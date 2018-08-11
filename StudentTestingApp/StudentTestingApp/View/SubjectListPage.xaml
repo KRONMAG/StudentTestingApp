@@ -13,7 +13,7 @@
             <Label BackgroundColor="#212121" Text="Предметы" FontSize="Medium" TextColor="White"/>
         </StackLayout>
         <ScrollView Grid.Row="1">
-            <ListView BackgroundColor="#616161" ItemsSource="{Binding Subjects}" ItemTapped="SubjectTapped">
+            <ListView BackgroundColor="#616161" ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" ItemTapped="SubjectTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

@@ -21,7 +21,8 @@ namespace StudentTestingApp
             Container.RegisterType<ISubjectListView, SubjectListPage>();
             Container.RegisterType<ITestListView, TestListPage>();
             Container.RegisterType<ITestStartView, TestStartPage>();
-            new PreloadViewPresenter(Container.Resolve<IPreloadView>());
+            Container.RegisterType<ITestNavigationView, TestNavigationPage>();
+            new PreloadPresenter(Container.Resolve<IPreloadView>());
         }
 
         protected override void OnStart()

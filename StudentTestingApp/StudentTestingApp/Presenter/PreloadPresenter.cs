@@ -6,18 +6,18 @@ using Unity;
 
 namespace StudentTestingApp.Presenter
 {
-    class PreloadViewPresenter
+    public class PreloadPresenter
     {
         private IPreloadView preloadView;
 
-        public PreloadViewPresenter(IPreloadView preloadView)
+        public PreloadPresenter(IPreloadView preloadView)
         {
             this.preloadView = preloadView;
             preloadView.Show();
             new Task(() =>
             {
                 if (!DB.Instance.InitializeDB()) preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
-                new SubjectViewPresenter(App.Container.Resolve<ISubjectListView>());
+                new SubjectPresenter(App.Container.Resolve<ISubjectListView>());
             }).Start();
         }
     }

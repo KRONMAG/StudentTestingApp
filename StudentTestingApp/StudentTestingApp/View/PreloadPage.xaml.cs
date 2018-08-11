@@ -15,6 +15,7 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
+        #region IPreloadPage
         public void Show()
         {
             App.Current.MainPage = this;
@@ -37,5 +38,6 @@ namespace StudentTestingApp.View
                 await DisplayAlert("Ошибка", message, "Назад");
             });
         }
+        #endregion
     }
 }
