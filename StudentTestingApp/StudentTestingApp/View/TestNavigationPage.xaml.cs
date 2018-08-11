@@ -32,6 +32,7 @@ namespace StudentTestingApp.View
 
         public void ShowWithTimer(IParentView parentView, Test test)
         {
+            Show(parentView);
             if (test.Duration != null)
             {
                 RemainingSeconds = (int)test.Duration;
