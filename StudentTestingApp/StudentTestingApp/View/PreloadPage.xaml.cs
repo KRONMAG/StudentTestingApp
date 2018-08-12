@@ -19,24 +19,18 @@ namespace StudentTestingApp.View
         public void Show()
         {
             App.Current.MainPage = this;
-            Device.BeginInvokeOnMainThread(() =>
+            new Timer(new TimerCallback(async (o) =>
             {
-                new Timer(new TimerCallback(async (o) =>
-                {
-                    await AnimatedImage.RotateTo(-360, 500);
-                    AnimatedImage.Rotation = 0;
-                    await AnimatedImage.RotateYTo(360, 500);
-                    AnimatedImage.RotationY = 0;
-                }), null, 0, 1500);
-            });
+                await AnimatedImage.RotateTo(-360, 500);
+                AnimatedImage.Rotation = 0;
+                await AnimatedImage.RotateYTo(360, 500);
+                AnimatedImage.RotationY = 0;
+            }), null, 0, 1500);
         }
 
         public void ShowError(string message)
         {
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Ошибка", message, "Назад");
-            });
+            DisplayAlert("Ошибка", message, "Назад");
         }
         #endregion
     }

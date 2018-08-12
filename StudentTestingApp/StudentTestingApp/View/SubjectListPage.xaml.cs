@@ -31,7 +31,7 @@ namespace StudentTestingApp.View
 
         public void Show()
         {
-            App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("000000") };
+            App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
         }
         #endregion
     }

@@ -5,8 +5,8 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ITestStartView : IDerivedView
     {
-        void ShowTestInfo(Test test);
         void ShowError(string message);
+        Test Test { get; set; }
         string StudentName { get; }
         event Action OnStartTest;
     }

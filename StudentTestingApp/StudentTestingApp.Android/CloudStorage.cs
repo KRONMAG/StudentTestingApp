@@ -14,7 +14,7 @@ namespace StudentTestingApp.Droid
         {
             try
             {
-                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAGUfnm2lG7dz9OpPEnB0c3Z2lHXvMskst5Cp0sbWWo6Ty");
+                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAGrItq4fqTjAeRkcFsRQj3IWfoebali0S-GA6GHtcO0rh");
                 var buffer = client.Files.DownloadAsync(remoteFileName).Result.GetContentAsByteArrayAsync().Result;
                 File.WriteAllBytes(localFileName, buffer);
                 return true;

@@ -1,30 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:StudentTestingApp.View"
              x:Class="StudentTestingApp.View.TestStartPage"
              BackgroundColor="#616161">
     <StackLayout BackgroundColor="#424242" VerticalOptions="Center">
         <StackLayout.Resources>
             <ResourceDictionary>
                 <Style x:Key="TestInfo" TargetType="Label">
+                    <Setter Property="BindingContext" Value="{Binding Test}"/>
+                    <Setter Property="HorizontalTextAlignment" Value="Center"/>
                     <Setter Property="TextColor" Value="#FFFFFF"/>
                     <Setter Property="FontSize" Value="Medium"/>
                 </Style>
-                <Style x:Key="LineTestInfo" TargetType="StackLayout">
-                    <Setter Property="Orientation" Value="Horizontal"/>
-                    <Setter Property="HorizontalOptions" Value="Center"/>
-                </Style>
+                <local:DurationConverter x:Key="DurationConverter"/>
             </ResourceDictionary>
         </StackLayout.Resources>
-        <Label Text="{Binding TestName}" Style="{StaticResource TestInfo}" FontSize="Large" HorizontalTextAlignment="Center"/>
-        <StackLayout Style="{StaticResource LineTestInfo}">
-            <Label Text="Количество вопросов:" Style="{StaticResource TestInfo}"/>
-            <Label Text="{Binding QuestionCount}" Style="{StaticResource TestInfo}"/>
-        </StackLayout>
-        <StackLayout Style="{StaticResource LineTestInfo}">
-            <Label Text="Продолжительность: " Style="{StaticResource TestInfo}"/>
-            <Label Text="{Binding Duration}" Style="{StaticResource TestInfo}"/>
-        </StackLayout>
+        <Label Text="{Binding Name}" Style="{StaticResource TestInfo}" FontSize="Large"/>
+        <Label Text="{Binding QuestionCount, StringFormat='Количество вопросов: {0}'}" Style="{StaticResource TestInfo}"/>
+        <Label Text="{Binding Duration, StringFormat='Продолжительность: {0}', Converter={StaticResource DurationConverter}}" Style="{StaticResource TestInfo}"/>
         <Entry Text="{Binding StudentName}"  Placeholder="ФИО учащегося" FontSize="Medium" TextColor="#FFFFFF" HorizontalTextAlignment="Center"/>
         <Button Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" Clicked="StartTestClicked"/>
     </StackLayout>

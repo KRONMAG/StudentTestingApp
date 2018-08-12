@@ -17,8 +17,8 @@ namespace StudentTestingApp.Presenter
             this.testStartView = testStartView;
             this.test = test;
             testStartView.OnStartTest += startTest;
+            testStartView.Test = test;
             testStartView.Show(parentView);
-            testStartView.ShowTestInfo(test);
         }
 
         private void startTest()
