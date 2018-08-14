@@ -1,8 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:StudentTestingApp.View.Converter"
              x:Class="StudentTestingApp.App">
     <Application.Resources>
-        
+        <converter:DurationConverter x:Key="DurationConverter"/>
+        <converter:ImageConverter x:Key="ImageConverter"/>
+        <Style x:Key="Header" TargetType="Label">
+            <Setter Property="BackgroundColor" Value="#000000"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
+        <Style x:Key="Title" TargetType="Label">
+            <Setter Property="BackgroundColor" Value="#212121"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
+        <Style x:Key="Text" TargetType="Label">
+            <Setter Property="BackgroundColor" Value="#424242"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
     </Application.Resources>
 </Application>

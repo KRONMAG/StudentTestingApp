@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudentTestingApp.View.QuestionPage">
+    <StackLayout BackgroundColor="#616161">
+        <Label BindingContext="{Binding Question}" Text="{Binding Text}" Style="{StaticResource Text}" BackgroundColor="#616161"/>
+        <Image BindingContext="{Binding Question}" Source="{Binding Image, Converter={StaticResource ImageConverter}}"/>
+        <ListView ItemsSource="{Binding Answers}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Text}" Style="{StaticResource Text}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

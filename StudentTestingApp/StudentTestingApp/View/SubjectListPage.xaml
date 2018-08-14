@@ -3,23 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:StudentTestingApp"
              x:Class="StudentTestingApp.View.SubjectListPage">
-    <Grid Margin="0" RowSpacing="0">
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackLayout Spacing="0">
-            <Label BackgroundColor="#000000" Text="Student Testing App" FontSize="Large" FontAttributes="Bold" FontFamily="Phorsa.ttf#Phorsa" TextColor="#FFFFFF"/>
-            <Label BackgroundColor="#212121" Text="Предметы" FontSize="Medium" TextColor="White"/>
+            <Label Text="Student Testing App" Style="{StaticResource Header}"/>
+            <Label Text="Предметы" Style="{StaticResource Title}"/>
         </StackLayout>
         <ScrollView Grid.Row="1">
             <ListView BackgroundColor="#616161" ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" ItemTapped="SubjectTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <ViewCell.View>
-                                <Label BackgroundColor="#424242" Text="{Binding Name}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="#FFFFFF"/>
-                            </ViewCell.View>
+                            <Label Text="{Binding Name}" Style="{StaticResource Text}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

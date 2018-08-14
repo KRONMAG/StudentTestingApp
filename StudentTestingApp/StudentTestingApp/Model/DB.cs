@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Xamarin.Forms;
 using SQLite;
 
 namespace StudentTestingApp.Model
@@ -26,17 +25,23 @@ namespace StudentTestingApp.Model
 
         private SQLiteConnection db;
 
+        private string getFullPath(string path)
+        {
+            return $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/path";
+        }
+
         public bool InitializeDB()
         {
             var dbFileName = "StudentTestingDb.db";
-            var dbFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/{dbFileName}";
-            var storage = DependencyService.Get<ICloudStorage>();
+            var dbFilePath = getFullPath(dbFileName);
+            var storage = new CloudStorage();
             if (File.Exists(dbFilePath) || storage.DownloadFile($"/{dbFileName}", dbFilePath))
             {
                 db = new SQLiteConnection(dbFilePath);
                 db.CreateTable<Subject>();
                 db.CreateTable<Test>();
                 db.CreateTable<Question>();
+                db.CreateTable<Answer>();
                 return true;
             }
             else return false;
@@ -45,13 +50,25 @@ namespace StudentTestingApp.Model
         public IEnumerable<Subject> GetSubjects()
         {
             if (db == null) return null;
-            else return from item in db.Table<Subject>() select item;
+            else return db.Table<Subject>();
         }
 
         public IEnumerable<Test> GetTests(Subject subject)
         {
             if (db == null) return null;
-            else return from item in db.Table<Test>() where item.SubjectId == subject.Id select item;
+            else return db.Table<Test>().Where(x => x.SubjectId == subject.Id);
+        }
+
+        public IEnumerable<Question> GetQuestions(Test test)
+        {
+            if (db == null) return null;
+            else return db.Table<Question>().Where(x => x.TestId == test.Id);
+        }
+
+        public IEnumerable<Answer> GetAnswers(Question question)
+        {
+            if (db == null) return null;
+            else return db.Table<Answer>().Where(x => x.QuestionId == question.Id);
         }
     }
 }

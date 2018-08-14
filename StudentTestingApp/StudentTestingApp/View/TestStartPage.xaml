@@ -13,7 +13,6 @@
                     <Setter Property="TextColor" Value="#FFFFFF"/>
                     <Setter Property="FontSize" Value="Medium"/>
                 </Style>
-                <local:DurationConverter x:Key="DurationConverter"/>
             </ResourceDictionary>
         </StackLayout.Resources>
         <Label Text="{Binding Name}" Style="{StaticResource TestInfo}" FontSize="Large"/>

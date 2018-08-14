@@ -22,6 +22,7 @@ namespace StudentTestingApp
             Container.RegisterType<ITestListView, TestListPage>();
             Container.RegisterType<ITestStartView, TestStartPage>();
             Container.RegisterType<ITestNavigationView, TestNavigationPage>();
+            Container.RegisterType<IQuestionView, QuestionPage>();
             new PreloadPresenter(Container.Resolve<IPreloadView>());
         }
 

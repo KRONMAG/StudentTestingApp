@@ -26,7 +26,7 @@ namespace StudentTestingApp.View
 
         #region ITestListView
         public event Action OnSelectTest;
-        public ICollection<Test> Tests { get; private set; }
+        public ICollection<Test> Tests { get; }
         public Test SelectedTest { get; set; }
 
         public void Show(IParentView parentView)

@@ -25,7 +25,7 @@ namespace StudentTestingApp.Presenter
         {
             if (string.IsNullOrEmpty(testStartView.StudentName) || string.IsNullOrWhiteSpace(testStartView.StudentName))
                 testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
-            else new TestNavigationPresenter(parentView, App.Container.Resolve<ITestNavigationView>());
+            else new TestNavigationPresenter(parentView, App.Container.Resolve<ITestNavigationView>(), test);
         }
     }
 }

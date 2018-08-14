@@ -1,20 +1,17 @@
 ﻿using System;
 using System.IO;
-using Xamarin.Forms;
 using Dropbox.Api;
-using StudentTestingApp.Model;
 
-[assembly: Dependency(typeof(StudentTestingApp.Droid.CloudStorage))]
-namespace StudentTestingApp.Droid
+namespace StudentTestingApp.Model
 {
-    public class CloudStorage : ICloudStorage
+    public class CloudStorage
     {
 
         public bool DownloadFile(string remoteFileName, string localFileName)
         {
             try
             {
-                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAGrItq4fqTjAeRkcFsRQj3IWfoebali0S-GA6GHtcO0rh");
+                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAHAuBvbG_AQeoaQ4SgxeX7UQNBHflmhfAK39B3lHJzTAs");
                 var buffer = client.Files.DownloadAsync(remoteFileName).Result.GetContentAsByteArrayAsync().Result;
                 File.WriteAllBytes(localFileName, buffer);
                 return true;

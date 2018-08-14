@@ -15,7 +15,7 @@ namespace StudentTestingApp.Model
         [Column("text"), NotNull]
         public string Text { get; set; }
 
-        [Column("img_src")]
-        public string ImgSrc { get; set; }
+        [Column("image")]
+        public byte[] Image { get; set; }
     }
 }

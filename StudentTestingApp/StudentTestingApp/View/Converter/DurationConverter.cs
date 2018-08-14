@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace StudentTestingApp.View
+namespace StudentTestingApp.View.Converter
 {
     class DurationConverter : IValueConverter
     {
