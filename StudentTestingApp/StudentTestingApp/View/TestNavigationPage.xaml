@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StudentTestingApp.View.TestNavigationPage"
             xmlns:local="clr-namespace:StudentTestingApp.View"
-            BarBackgroundColor="#212121">
+            BarBackgroundColor="#212121"
+            Title="Тестирование">
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="{Binding RemainingSeconds}"/>
         <ToolbarItem Icon="{Binding ClockIconName}"/>

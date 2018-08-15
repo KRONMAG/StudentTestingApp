@@ -3,6 +3,7 @@ using System.Threading;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.Model;
@@ -14,14 +15,26 @@ namespace StudentTestingApp.View
     public partial class TestNavigationPage : TabbedPage, ITestNavigationView, INotifyPropertyChanged
     {
         public string ClockIconName { get; private set; }
-        public int? RemainingSeconds { get; set; }
+        public int? RemainingSeconds { get; private set; }
 
         public TestNavigationPage()
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
             QuestionViews = new ObservableCollection<IQuestionView>();
+            ((ObservableCollection<IQuestionView>)QuestionViews).CollectionChanged += QuestionViewsChanged;
             BindingContext = this;
+        }
+
+        private void QuestionViewsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Children.Clear();
+            foreach (var questionView in QuestionViews)
+            {
+                var page = (Page)questionView;
+                Children.Add(page);
+                page.Title = Children.Count.ToString();
+            }
         }
 
         private async void OkClicked(object sender, EventArgs e)

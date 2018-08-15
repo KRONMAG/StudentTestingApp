@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.Model;
@@ -8,7 +7,7 @@ using StudentTestingApp.View.Interface;
 namespace StudentTestingApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TestStartPage : ContentPage, ITestStartView, INotifyPropertyChanged
+    public partial class TestStartPage : ContentPage, ITestStartView
     {
         public TestStartPage()
         {
@@ -22,32 +21,10 @@ namespace StudentTestingApp.View
             OnStartTest?.Invoke();
         }
 
-        #region INotifyPropertyChanged
-        new public event PropertyChangedEventHandler PropertyChanged;
-
-        new private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
         #region ITestStartView
         public event Action OnStartTest;
-        public Test Test
-        {
-            get
-            {
-                return test;
-            }
-            set
-            {
-                test = value;
-                OnPropertyChanged("Test");
-            }
-        }
+        public Test Test { get; set; }
         public string StudentName { get; set; }
-
-        private Test test;
 
         public void Show(IParentView parentView)
         {

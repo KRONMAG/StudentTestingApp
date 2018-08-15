@@ -18,7 +18,7 @@
                             <Setter Property="FontSize" Value="50"/>
                             <Setter Property="FontAttributes" Value="Bold"/>
                             <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa"/>
-                            <Setter Property="TextColor" Value="White"/>
+                            <Setter Property="TextColor" Value="#FFFFFF"/>
                             <Setter Property="HorizontalOptions" Value="Center"/>
                         </Style>
                     </ResourceDictionary>
@@ -28,7 +28,7 @@
                 <Label Text="App"  Style="{StaticResource Logo}"/>
             </StackLayout>
             <Image Grid.Row="1" x:Name="AnimatedImage" Source="refresh.png" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Label Grid.Row="2" x:Name="AnimatedLabel" Text="Загрузка тестов" VerticalOptions="Start" HorizontalOptions="Center" FontSize="Large" TextColor="White"/>
+            <Label Grid.Row="2" Text="Загрузка тестов" VerticalOptions="Start" HorizontalOptions="Center" FontSize="Large" TextColor="#FFFFFF"/>
         </Grid>
     </ScrollView>
 </ContentPage>

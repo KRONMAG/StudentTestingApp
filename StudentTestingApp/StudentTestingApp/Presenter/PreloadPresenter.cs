@@ -8,11 +8,8 @@ namespace StudentTestingApp.Presenter
 {
     public class PreloadPresenter
     {
-        private IPreloadView preloadView;
-
         public PreloadPresenter(IPreloadView preloadView)
         {
-            this.preloadView = preloadView;
             preloadView.Show();
             new Task(() =>
             {

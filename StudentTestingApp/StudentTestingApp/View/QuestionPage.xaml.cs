@@ -8,12 +8,12 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class QuestionPage : ContentPage, IQuestionView
-	{
-		public QuestionPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class QuestionPage : ContentPage, IQuestionView
+    {
+        public QuestionPage()
+        {
+            InitializeComponent();
             Answers = new ObservableCollection<Answer>();
             SelectedAnswers = new Collection<Answer>();
             BindingContext = this;

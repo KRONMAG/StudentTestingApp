@@ -12,11 +12,11 @@
             <Label Text="Тесты" Style="{StaticResource Title}"/>
         </StackLayout>
         <ScrollView Grid.Row="1">
-           <ListView BackgroundColor="#616161" ItemsSource="{Binding Tests}" SelectedItem="{Binding SelectedTest}" ItemTapped="TestTapped">
+            <ListView Style="{StaticResource List}" ItemsSource="{Binding Tests}" SelectedItem="{Binding SelectedTest}" ItemTapped="TestTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Name}" Style="{StaticResource Text}"/>
+                            <Label Text="{Binding Name}" Style="{StaticResource ListItem}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

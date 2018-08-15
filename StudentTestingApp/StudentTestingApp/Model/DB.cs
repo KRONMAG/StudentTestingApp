@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using SQLite;
 
@@ -62,13 +63,21 @@ namespace StudentTestingApp.Model
         public IEnumerable<Question> GetQuestions(Test test)
         {
             if (db == null) return null;
-            else return db.Table<Question>().Where(x => x.TestId == test.Id);
+            else
+            {
+                var random = new Random();
+                return db.Table<Question>().Where(x => x.TestId == test.Id).ToList().OrderBy(x => random.Next()).Take(test.QuestionCount);
+            }
         }
 
         public IEnumerable<Answer> GetAnswers(Question question)
         {
             if (db == null) return null;
-            else return db.Table<Answer>().Where(x => x.QuestionId == question.Id);
+            else
+            {
+                var random = new Random();
+                return db.Table<Answer>().Where(x => x.QuestionId == question.Id).ToList().OrderBy(x => random.Next());
+            }
         }
     }
 }

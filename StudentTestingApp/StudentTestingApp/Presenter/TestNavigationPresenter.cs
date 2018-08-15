@@ -1,6 +1,6 @@
 ﻿using System;
+using Xamarin.Forms;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using StudentTestingApp.Model;
 using StudentTestingApp.View.Interface;
 using Unity;
@@ -19,7 +19,7 @@ namespace StudentTestingApp.Presenter
                 foreach (var question in questions)
                 {
                     var questionView = App.Container.Resolve<IQuestionView>();
-                    testNavigationView.QuestionViews.Add(questionView);
+                    Device.BeginInvokeOnMainThread(() => testNavigationView.QuestionViews.Add(questionView));
                     new QuestionPresenter(questionView, question);
                 }
             }).Start();
