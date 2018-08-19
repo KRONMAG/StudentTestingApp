@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ISubjectListView : IParentView
+    public interface ISubjectListView : IView
     {
-        ICollection<Subject> Subjects { get; }
+        void AddSubject(Subject subject);
         Subject SelectedSubject { get; }
         event Action OnSelectSubject;
     }

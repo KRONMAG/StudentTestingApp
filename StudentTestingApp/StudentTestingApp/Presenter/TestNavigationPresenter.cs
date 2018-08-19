@@ -9,17 +9,19 @@ namespace StudentTestingApp.Presenter
 {
     public class TestNavigationPresenter
     {
-        public TestNavigationPresenter(IParentView parentView, ITestNavigationView testNavigationView, Test test)
+        public TestNavigationPresenter(ITestNavigationView testNavigationView, Test test)
         {
-            if (test.Duration != null) testNavigationView.ShowWithTimer(parentView, test);
-            else testNavigationView.Show(parentView);
+            if (test.Duration != null)
+                testNavigationView.ShowWithTimer(test);
+            else
+                testNavigationView.Show();
             new Task(() =>
             {
                 var questions = DB.Instance.GetQuestions(test);
                 foreach (var question in questions)
                 {
                     var questionView = App.Container.Resolve<IQuestionView>();
-                    Device.BeginInvokeOnMainThread(() => testNavigationView.QuestionViews.Add(questionView));
+                    Device.BeginInvokeOnMainThread(() => testNavigationView.AddQuestionView(questionView));
                     new QuestionPresenter(questionView, question);
                 }
             }).Start();

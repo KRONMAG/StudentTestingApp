@@ -2,7 +2,7 @@
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface IPreloadView : IParentView
+    public interface IPreloadView : IView
     {
         void ShowError(string message);
     }

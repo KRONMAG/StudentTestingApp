@@ -4,9 +4,9 @@ using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestListView : IDerivedView
+    public interface ITestListView : IView
     {
-        ICollection<Test> Tests { get; }
+        void AddTest(Test test);
         Test SelectedTest { get; }
         event Action OnSelectTest;
     }

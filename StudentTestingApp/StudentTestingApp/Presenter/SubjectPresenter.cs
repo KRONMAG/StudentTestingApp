@@ -19,14 +19,13 @@ namespace StudentTestingApp.Presenter
             {
                 var subjects = DB.Instance.GetSubjects();
                 foreach (var subject in subjects)
-                    subjectListView.Subjects.Add(subject);
+                    subjectListView.AddSubject(subject);
             }).Start();
         }
 
         private void selectSubject()
         {
             new TestListPresenter(
-                subjectListView,
                 App.Container.Resolve<ITestListView>(),
                 subjectListView.SelectedSubject);
         }

@@ -10,7 +10,7 @@ namespace StudentTestingApp.Model
         public int QuestionId { get; set; }
 
         [Column("right"), NotNull]
-        public int Right { get; set; }
+        public bool Right { get; set; }
 
         [Column("text"), NotNull]
         public string Text { get; set; }

@@ -2,7 +2,7 @@
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface IParentView
+    public interface IView
     {
         void Show();
     }

@@ -6,29 +6,26 @@ using Unity;
 
 namespace StudentTestingApp.Presenter
 {
-    class TestListPresenter
+    public class TestListPresenter
     {
-        private IParentView parentView;
         private ITestListView testListView;
 
-        public TestListPresenter(IParentView parentView, ITestListView testListView, Subject subject)
+        public TestListPresenter(ITestListView testListView, Subject subject)
         {
             this.testListView = testListView;
-            this.parentView = parentView;
             testListView.OnSelectTest += selectTest;
-            testListView.Show(parentView);
+            testListView.Show();
             new Task(() =>
             {
                 var tests = DB.Instance.GetTests(subject);
                 foreach (var test in tests)
-                    testListView.Tests.Add(test);
+                    testListView.AddTest(test);
             }).Start();
         }
 
         private void selectTest()
         {
             new TestStartPresenter(
-                parentView,
                 App.Container.Resolve<ITestStartView>(),
                 testListView.SelectedTest);
         }

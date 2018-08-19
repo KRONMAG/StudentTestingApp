@@ -5,10 +5,10 @@
              x:Class="StudentTestingApp.View.TestStartPage"
              BackgroundColor="#616161">
     <StackLayout BackgroundColor="#424242" VerticalOptions="Center">
-        <Label Text="{Binding BindingContext.Test.Name}" Style="{StaticResource Title}" HorizontalTextAlignment="Center"/>
-        <Label Text="{Binding BindingContext.Test.QuestionCount, StringFormat='Количество вопросов: {0}'}" Style="{StaticResource Text}"/>
-        <Label Text="{Binding BindingContext.Test.Duration, StringFormat='Продолжительность: {0}', Converter={StaticResource DurationConverter}}" Style="{StaticResource Text}"/>
-        <Entry Text="{Binding StudentName}"  Placeholder="ФИО учащегося" TextColor="#FFFFFF" HorizontalTextAlignment="Center"/>
-        <Button Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" Clicked="StartTestClicked"/>
+        <Label x:Name="nameLabel" Style="{StaticResource Title}" HorizontalTextAlignment="Center"/>
+        <Label x:Name="questionCountLabel" Style="{StaticResource Text}"/>
+        <Label x:Name="durationLabel" Style="{StaticResource Text}"/>
+        <Entry x:Name="studentNameEntry"  Placeholder="ФИО учащегося" TextColor="#FFFFFF" HorizontalTextAlignment="Center"/>
+        <Button Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center" Clicked="startTestClicked"/>
     </StackLayout>
 </ContentPage>

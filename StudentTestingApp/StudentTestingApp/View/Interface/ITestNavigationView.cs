@@ -5,10 +5,10 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestNavigationView : IDerivedView
+    public interface ITestNavigationView : IView
     {
-        void ShowWithTimer(IParentView parentView, Test test);
-        ICollection<IQuestionView> QuestionViews { get; }
+        void ShowWithTimer(Test test);
+        void AddQuestionView(IQuestionView questionView);
         event Action OnTestEnd;
     }
 }

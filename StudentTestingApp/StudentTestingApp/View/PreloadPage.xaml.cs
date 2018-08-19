@@ -21,10 +21,10 @@ namespace StudentTestingApp.View
             App.Current.MainPage = this;
             new Timer(new TimerCallback(async (o) =>
             {
-                await AnimatedImage.RotateTo(-360, 500);
-                AnimatedImage.Rotation = 0;
-                await AnimatedImage.RotateYTo(360, 500);
-                AnimatedImage.RotationY = 0;
+                await animatedImage.RotateTo(-360, 500);
+                animatedImage.Rotation = 0;
+                await animatedImage.RotateYTo(360, 500);
+                animatedImage.RotationY = 0;
             }), null, 0, 1500);
         }
 

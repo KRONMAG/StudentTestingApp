@@ -13,7 +13,8 @@ namespace StudentTestingApp.Presenter
             preloadView.Show();
             new Task(() =>
             {
-                if (!DB.Instance.InitializeDB()) preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
+                if (!DB.Instance.InitializeDB())
+                    preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
                 new SubjectPresenter(App.Container.Resolve<ISubjectListView>());
             }).Start();
         }

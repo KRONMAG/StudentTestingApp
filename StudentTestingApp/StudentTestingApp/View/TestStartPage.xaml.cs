@@ -13,27 +13,39 @@ namespace StudentTestingApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            BindingContext = this;
         }
 
-        private void StartTestClicked(object sender, EventArgs e)
+        private void startTestClicked(object sender, EventArgs e)
         {
             OnStartTest?.Invoke();
         }
 
         #region ITestStartView
         public event Action OnStartTest;
-        public Test Test { get; set; }
-        public string StudentName { get; set; }
-
-        public void Show(IParentView parentView)
+        public string StudentName
         {
-            ((Page)parentView).Navigation.PushAsync(this);
+            get
+            {
+                return studentNameEntry.Text;
+            }
+        }
+
+        public void Show()
+        {
+            App.Current.MainPage.Navigation.PushAsync(this);
         }
 
         public void ShowError(string message)
         {
             DisplayAlert("Ошибка", message, "Назад");
+        }
+
+        public void SetTest(Test test)
+        {
+            nameLabel.Text = test.Name;
+            questionCountLabel.Text = $"Количество вопросов: {test.QuestionCount}";
+            if (test.Duration == null) durationLabel.Text = "Продолжительность неограниченна";
+            else durationLabel.Text = $"Продолжительность: {test.Duration} сек.";
         }
         #endregion
     }

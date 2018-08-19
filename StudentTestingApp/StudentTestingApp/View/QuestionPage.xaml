@@ -4,9 +4,17 @@
              x:Class="StudentTestingApp.View.QuestionPage">
     <ScrollView BackgroundColor="#616161">
         <StackLayout>
-            <Label Text="{Binding BindingContext.Question.Text}" Style="{StaticResource Title}" BackgroundColor="#616161" HorizontalTextAlignment="Center"/>
-            <Image Source="{Binding BindingContext.Question.Image, Converter={StaticResource ImageConverter}}"/>
-            <ListView Style="{StaticResource List}" ItemsSource="{Binding Answers}">
+            <StackLayout.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="QuestionPageTitle" TargetType="Label" BasedOn="{StaticResource Title}">
+                        <Setter Property="BackgroundColor" Value="#616161"/>
+                        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                    </Style>
+                </ResourceDictionary>
+            </StackLayout.Resources>
+            <Label x:Name="textLabel" Style="{StaticResource QuestionPageTitle}"/>
+            <Image x:Name="image"/>
+            <ListView x:Name="answersListView" Style="{StaticResource List}" ItemTapped="answerTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -14,6 +22,20 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout>
+                        <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}"/>
+                        <ListView x:Name="selectedAnswersListView" Style="{StaticResource List}" ItemTapped="selectedAnswerTapped">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Text="{Binding Text}" Style="{StaticResource ListItem}"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ListView.Footer>
             </ListView>
         </StackLayout>
     </ScrollView>

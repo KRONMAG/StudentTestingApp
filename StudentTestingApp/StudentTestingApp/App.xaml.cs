@@ -11,7 +11,7 @@ namespace StudentTestingApp
 {
     public partial class App : Application
     {
-        public static UnityContainer Container { get; private set; }
+        public static IUnityContainer Container { get; private set; }
 
         public App()
         {

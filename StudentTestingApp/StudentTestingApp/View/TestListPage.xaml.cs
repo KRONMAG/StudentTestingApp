@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,27 +10,39 @@ namespace StudentTestingApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestListPage : ContentPage, ITestListView
     {
+        public ObservableCollection<Test> tests;
+
         public TestListPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            Tests = new ObservableCollection<Test>();
-            BindingContext = this;
+            tests = new ObservableCollection<Test>();
+            testsListView.ItemsSource = tests;
         }
 
-        private void TestTapped(object sender, ItemTappedEventArgs e)
+        private void testTapped(object sender, ItemTappedEventArgs e)
         {
             OnSelectTest?.Invoke();
         }
 
         #region ITestListView
         public event Action OnSelectTest;
-        public ICollection<Test> Tests { get; }
-        public Test SelectedTest { get; set; }
-
-        public void Show(IParentView parentView)
+        public Test SelectedTest
         {
-            ((Page)parentView).Navigation.PushAsync(this);
+            get
+            {
+                return (Test)testsListView.SelectedItem;
+            }
+        }
+
+        public void Show()
+        {
+            App.Current.MainPage.Navigation.PushAsync(this);
+        }
+
+        public void AddTest(Test test)
+        {
+            tests.Add(test);
         }
         #endregion
     }

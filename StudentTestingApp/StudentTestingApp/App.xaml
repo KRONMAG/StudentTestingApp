@@ -4,8 +4,6 @@
              xmlns:converter="clr-namespace:StudentTestingApp.View.Converter"
              x:Class="StudentTestingApp.App">
     <Application.Resources>
-        <converter:DurationConverter x:Key="DurationConverter"/>
-        <converter:ImageConverter x:Key="ImageConverter"/>
         <Style x:Key="Header" TargetType="Label">
             <Setter Property="BackgroundColor" Value="#000000"/>
             <Setter Property="FontSize" Value="Large"/>

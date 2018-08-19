@@ -6,8 +6,8 @@
             BarBackgroundColor="#212121"
             Title="Тестирование">
     <TabbedPage.ToolbarItems>
-        <ToolbarItem Text="{Binding RemainingSeconds}"/>
-        <ToolbarItem Icon="{Binding ClockIconName}"/>
-        <ToolbarItem Icon="ok.png" Clicked="OkClicked"/>
+        <ToolbarItem x:Name="remainingSecondsToolbarItem"/>
+        <ToolbarItem x:Name="clockIconNameToolbarItem"/>
+        <ToolbarItem Icon="ok.png" Clicked="okClicked"/>
     </TabbedPage.ToolbarItems>
 </TabbedPage>

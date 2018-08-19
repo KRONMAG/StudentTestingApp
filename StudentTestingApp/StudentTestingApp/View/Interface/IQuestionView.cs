@@ -4,10 +4,10 @@ using StudentTestingApp.Model;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface IQuestionView
+    public interface IQuestionView : IView
     {
-        Question Question { get; set; }
-        ICollection<Answer> Answers { get; }
+        void SetQuestion(Question question);
+        void AddAnswer(Answer answer);
         IEnumerable<Answer> SelectedAnswers { get; }
     }
 }

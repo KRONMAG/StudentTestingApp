@@ -27,7 +27,7 @@
                 <Label Text="Testing" Style="{StaticResource Logo}"/>
                 <Label Text="App"  Style="{StaticResource Logo}"/>
             </StackLayout>
-            <Image Grid.Row="1" x:Name="AnimatedImage" Source="refresh.png" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Grid.Row="1" x:Name="animatedImage" Source="refresh.png" VerticalOptions="Center" HorizontalOptions="Center"/>
             <Label Grid.Row="2" Text="Загрузка тестов" VerticalOptions="Start" HorizontalOptions="Center" FontSize="Large" TextColor="#FFFFFF"/>
         </Grid>
     </ScrollView>

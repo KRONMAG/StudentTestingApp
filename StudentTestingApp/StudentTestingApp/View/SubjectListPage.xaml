@@ -13,7 +13,7 @@
             <Label Text="Предметы" Style="{StaticResource Title}"/>
         </StackLayout>
         <ScrollView Grid.Row="1">
-            <ListView Style="{StaticResource List}"  ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" ItemTapped="SubjectTapped">
+            <ListView x:Name="subjectstListView" Style="{StaticResource List}" ItemTapped="subjectTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

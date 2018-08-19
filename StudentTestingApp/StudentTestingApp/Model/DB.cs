@@ -43,6 +43,7 @@ namespace StudentTestingApp.Model
                 db.CreateTable<Test>();
                 db.CreateTable<Question>();
                 db.CreateTable<Answer>();
+                db.CreateTable<TestResult>();
                 return true;
             }
             else return false;
