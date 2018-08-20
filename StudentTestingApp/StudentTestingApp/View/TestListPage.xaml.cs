@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,9 +42,13 @@ namespace StudentTestingApp.View
             App.Current.MainPage.Navigation.PushAsync(this);
         }
 
-        public void AddTest(Test test)
+        public void SetTests(IEnumerable<Test> tests)
         {
-            tests.Add(test);
+            this.tests.Clear();
+            tests.ToList().ForEach((test) =>
+            {
+                this.tests.Add(test);
+            });
         }
         #endregion
     }

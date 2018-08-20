@@ -7,7 +7,7 @@ namespace StudentTestingApp.View.Interface
     public interface IQuestionView : IView
     {
         void SetQuestion(Question question);
-        void AddAnswer(Answer answer);
+        void SetAnswers(IEnumerable<Answer> answers);
         IEnumerable<Answer> SelectedAnswers { get; }
     }
 }

@@ -6,7 +6,7 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ITestListView : IView
     {
-        void AddTest(Test test);
+        void SetTests(IEnumerable<Test> tests);
         Test SelectedTest { get; }
         event Action OnSelectTest;
     }

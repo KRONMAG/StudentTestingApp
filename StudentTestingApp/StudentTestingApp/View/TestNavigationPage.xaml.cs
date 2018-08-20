@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.Model;
@@ -36,7 +38,7 @@ namespace StudentTestingApp.View
             App.Current.MainPage.Navigation.PushAsync(this);
             clockIconNameToolbarItem.Icon = "clock.png";
             remainingSecondsToolbarItem.Text = test.Duration.ToString();
-            new Timer((o) =>
+            new Timer((state) =>
             {
                 var remainingSeconds = int.Parse(remainingSecondsToolbarItem.Text) - 1;
                 Device.BeginInvokeOnMainThread(() => remainingSecondsToolbarItem.Text = remainingSeconds.ToString());
@@ -44,11 +46,18 @@ namespace StudentTestingApp.View
             }, null, 1000, 1000);
         }
 
-        public void AddQuestionView(IQuestionView questionView)
+        public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
         {
-            var page = (Page)questionView;
-            Children.Add(page);
-            page.Title = Children.Count.ToString();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Children.Clear();
+                questionViews.ToList().ForEach((questionView) =>
+                {
+                    var page = (Page)questionView;
+                    Children.Add(page);
+                    page.Title = Children.Count.ToString();
+                });
+            });
         }
         #endregion
     }

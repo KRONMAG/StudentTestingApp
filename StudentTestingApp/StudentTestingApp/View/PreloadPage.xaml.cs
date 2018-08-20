@@ -14,12 +14,12 @@ namespace StudentTestingApp.View
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
-
+ 
         #region IPreloadPage
         public void Show()
         {
             App.Current.MainPage = this;
-            new Timer(new TimerCallback(async (o) =>
+            new Timer(new TimerCallback(async (state) =>
             {
                 await animatedImage.RotateTo(-360, 500);
                 animatedImage.Rotation = 0;

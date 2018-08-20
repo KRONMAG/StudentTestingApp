@@ -1,5 +1,5 @@
 ﻿using System;
-using Xamarin.Forms;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using StudentTestingApp.Model;
 using StudentTestingApp.View.Interface;
@@ -18,12 +18,14 @@ namespace StudentTestingApp.Presenter
             new Task(() =>
             {
                 var questions = DB.Instance.GetQuestions(test);
+                var questionViews = new Collection<IQuestionView>();
                 foreach (var question in questions)
                 {
                     var questionView = App.Container.Resolve<IQuestionView>();
-                    Device.BeginInvokeOnMainThread(() => testNavigationView.AddQuestionView(questionView));
                     new QuestionPresenter(questionView, question);
+                    questionViews.Add(questionView);
                 }
+                testNavigationView.SetQuestionViews(questionViews);
             }).Start();
         }
     }

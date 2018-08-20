@@ -10,11 +10,6 @@ namespace StudentTestingApp.Model
     {
         private static DB instance;
 
-        private DB()
-        {
-
-        }
-
         public static DB Instance
         {
             get
@@ -22,6 +17,11 @@ namespace StudentTestingApp.Model
                 if (instance == null) instance = new DB();
                 return instance;
             }
+        }
+
+        private DB()
+        {
+
         }
 
         private SQLiteConnection db;

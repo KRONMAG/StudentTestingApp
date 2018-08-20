@@ -17,9 +17,9 @@ namespace StudentTestingApp.Presenter
             testListView.Show();
             new Task(() =>
             {
-                var tests = DB.Instance.GetTests(subject);
-                foreach (var test in tests)
-                    testListView.AddTest(test);
+                var test = DB.Instance.GetTests(subject);
+                if (test != null)
+                    testListView.SetTests(test);
             }).Start();
         }
 

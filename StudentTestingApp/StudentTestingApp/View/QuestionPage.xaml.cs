@@ -64,9 +64,13 @@ namespace StudentTestingApp.View
             }
         }
 
-        public void AddAnswer(Answer answer)
+        public void SetAnswers(IEnumerable<Answer> answers)
         {
-            answers.Add(answer);
+            this.answers.Clear();
+            answers.ToList().ForEach((answer) =>
+            {
+                this.answers.Add(answer);
+            });
         }
 
         public void Show()

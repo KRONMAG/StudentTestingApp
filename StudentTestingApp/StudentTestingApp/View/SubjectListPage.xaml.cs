@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,9 +42,13 @@ namespace StudentTestingApp.View
             App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
         }
 
-        public void AddSubject(Subject subject)
+        public void SetSubjects(IEnumerable<Subject> subjects)
         {
-            subjects.Add(subject);
+            this.subjects.Clear();
+            subjects.ToList().ForEach((subject) =>
+            {
+                this.subjects.Add(subject);
+            });
         }
         #endregion
     }

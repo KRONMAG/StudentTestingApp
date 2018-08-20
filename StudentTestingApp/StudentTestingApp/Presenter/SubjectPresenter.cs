@@ -18,8 +18,8 @@ namespace StudentTestingApp.Presenter
             new Task(() =>
             {
                 var subjects = DB.Instance.GetSubjects();
-                foreach (var subject in subjects)
-                    subjectListView.AddSubject(subject);
+                if (subjects != null)
+                    subjectListView.SetSubjects(subjects);
             }).Start();
         }
 

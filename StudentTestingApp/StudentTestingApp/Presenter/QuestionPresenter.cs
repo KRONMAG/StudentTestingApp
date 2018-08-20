@@ -13,8 +13,8 @@ namespace StudentTestingApp.Presenter
             new Task(() =>
             {
                 var answers = DB.Instance.GetAnswers(question);
-                foreach (var answer in answers)
-                    questionView.AddAnswer(answer);
+                if (answers != null)
+                    questionView.SetAnswers(answers);
             }).Start();
         }
     }
