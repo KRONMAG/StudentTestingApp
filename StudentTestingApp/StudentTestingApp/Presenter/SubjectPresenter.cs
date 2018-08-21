@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using StudentTestingApp.Model;
 using StudentTestingApp.View.Interface;
+using StudentTestingApp.Presenter.Interface;
 using Unity;
 
 namespace StudentTestingApp.Presenter
 {
-    public class SubjectPresenter
+    public class SubjectPresenter : IPresenter
     {
         private ISubjectListView subjectListView;
 
@@ -14,6 +15,10 @@ namespace StudentTestingApp.Presenter
         {
             this.subjectListView = subjectListView;
             subjectListView.OnSelectSubject += selectSubject;
+        }
+
+        public void Run()
+        {
             subjectListView.Show();
             new Task(() =>
             {
@@ -27,7 +32,7 @@ namespace StudentTestingApp.Presenter
         {
             new TestListPresenter(
                 App.Container.Resolve<ITestListView>(),
-                subjectListView.SelectedSubject);
+                subjectListView.SelectedSubject).Run();
         }
     }
 }

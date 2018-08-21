@@ -3,13 +3,23 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using StudentTestingApp.Model;
 using StudentTestingApp.View.Interface;
+using StudentTestingApp.Presenter.Interface;
 using Unity;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestNavigationPresenter
+    public class TestNavigationPresenter : IPresenter
     {
+        private ITestNavigationView testNavigationView;
+        private Test test;
+
         public TestNavigationPresenter(ITestNavigationView testNavigationView, Test test)
+        {
+            this.testNavigationView = testNavigationView;
+            this.test = test;
+        }
+
+        public void Run()
         {
             if (test.Duration != null)
                 testNavigationView.ShowWithTimer(test);
@@ -22,7 +32,7 @@ namespace StudentTestingApp.Presenter
                 foreach (var question in questions)
                 {
                     var questionView = App.Container.Resolve<IQuestionView>();
-                    new QuestionPresenter(questionView, question);
+                    new QuestionPresenter(questionView, question).Run();
                     questionViews.Add(questionView);
                 }
                 testNavigationView.SetQuestionViews(questionViews);

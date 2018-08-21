@@ -23,7 +23,7 @@ namespace StudentTestingApp
             Container.RegisterType<ITestStartView, TestStartPage>();
             Container.RegisterType<ITestNavigationView, TestNavigationPage>();
             Container.RegisterType<IQuestionView, QuestionPage>();
-            new PreloadPresenter(Container.Resolve<IPreloadView>());
+            new PreloadPresenter(Container.Resolve<IPreloadView>()).Run();
         }
 
         protected override void OnStart()
