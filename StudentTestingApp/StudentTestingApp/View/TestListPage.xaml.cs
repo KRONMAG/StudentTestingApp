@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -37,17 +37,28 @@ namespace StudentTestingApp.View
             }
         }
 
-        public void Show()
+        public void Show(IParentView parentView)
         {
-            App.Current.MainPage.Navigation.PushAsync(this);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ((Page)parentView).Navigation.PushAsync(this);
+            });
+        }
+
+        public void Close()
+        {
+
         }
 
         public void SetTests(IEnumerable<Test> tests)
         {
-            this.tests.Clear();
-            tests.ToList().ForEach((test) =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                this.tests.Add(test);
+                this.tests.Clear();
+                tests.ToList().ForEach((test) =>
+                {
+                    this.tests.Add(test);
+                });
             });
         }
         #endregion

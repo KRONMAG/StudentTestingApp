@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ISubjectListView : IView
+    public interface ISubjectListView : IParentView
     {
         void SetSubjects(IEnumerable<Subject> subjects);
         Subject SelectedSubject { get; }

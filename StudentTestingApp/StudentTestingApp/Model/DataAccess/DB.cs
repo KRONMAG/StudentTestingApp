@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using StudentTestingApp.Model.Entity;
 using SQLite;
 
-namespace StudentTestingApp.Model
+namespace StudentTestingApp.Model.DataAccess
 {
     public class DB
     {

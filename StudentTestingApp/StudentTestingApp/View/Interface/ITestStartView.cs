@@ -1,9 +1,9 @@
 ﻿using System;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestStartView : IView
+    public interface ITestStartView : IDerivedView
     {
         void ShowError(string message);
         void SetTest(Test test);

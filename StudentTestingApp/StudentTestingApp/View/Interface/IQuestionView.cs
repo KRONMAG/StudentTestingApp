@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {

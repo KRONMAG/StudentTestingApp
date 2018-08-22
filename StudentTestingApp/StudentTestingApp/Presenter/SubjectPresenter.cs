@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.View.Interface;
 using StudentTestingApp.Presenter.Interface;
 using Unity;
@@ -31,6 +32,7 @@ namespace StudentTestingApp.Presenter
         private void selectSubject()
         {
             new TestListPresenter(
+                subjectListView,
                 App.Container.Resolve<ITestListView>(),
                 subjectListView.SelectedSubject).Run();
         }

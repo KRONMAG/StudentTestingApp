@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -66,23 +66,24 @@ namespace StudentTestingApp.View
 
         public void SetAnswers(IEnumerable<Answer> answers)
         {
-            this.answers.Clear();
-            answers.ToList().ForEach((answer) =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                this.answers.Add(answer);
+                this.answers.Clear();
+                answers.ToList().ForEach((answer) =>
+                {
+                    this.answers.Add(answer);
+                });
             });
-        }
-
-        public void Show()
-        {
-
         }
 
         public void SetQuestion(Question question)
         {
-            textLabel.Text = question.Text;
-            if (question.Image != null)
-                image.Source = ImageSource.FromStream(() => new MemoryStream(question.Image));
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                textLabel.Text = question.Text;
+                if (question.Image != null)
+                    image.Source = ImageSource.FromStream(() => new MemoryStream(question.Image));
+            });
         }
         #endregion
     }

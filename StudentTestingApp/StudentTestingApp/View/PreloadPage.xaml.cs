@@ -14,23 +14,29 @@ namespace StudentTestingApp.View
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
- 
+
         #region IPreloadPage
         public void Show()
         {
-            App.Current.MainPage = this;
-            new Timer(new TimerCallback(async (state) =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                await animatedImage.RotateTo(-360, 500);
-                animatedImage.Rotation = 0;
-                await animatedImage.RotateYTo(360, 500);
-                animatedImage.RotationY = 0;
-            }), null, 0, 1500);
+                App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
+                new Timer(new TimerCallback(async (state) =>
+                {
+                    await animatedImage.RotateTo(-360, 500);
+                    animatedImage.Rotation = 0;
+                    await animatedImage.RotateYTo(360, 500);
+                    animatedImage.RotationY = 0;
+                }), null, 0, 1500);
+            });
         }
 
         public void ShowError(string message)
         {
-            DisplayAlert("Ошибка", message, "Назад");
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                DisplayAlert("Ошибка", message, "Назад");
+            });
         }
         #endregion
     }

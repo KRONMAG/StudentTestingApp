@@ -2,7 +2,7 @@
 using System.IO;
 using Dropbox.Api;
 
-namespace StudentTestingApp.Model
+namespace StudentTestingApp.Model.DataAccess
 {
     public class CloudStorage
     {
@@ -11,7 +11,7 @@ namespace StudentTestingApp.Model
         {
             try
             {
-                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAJRLFuvca789YP8P9OaXw1JBJb4s3wji3b2a78bdeExu3");
+                var client = new DropboxClient("xyKd_Ut2WXAAAAAAAAAAJxL6dlFCA8WSRjC_BYZTQpHd2tYan9fY2ezY9oTfZECc");
                 var buffer = client.Files.DownloadAsync(remoteFileName).Result.GetContentAsByteArrayAsync().Result;
                 File.WriteAllBytes(localFileName, buffer);
                 return true;

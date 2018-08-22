@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace StudentTestingApp.Model
+namespace StudentTestingApp.Model.Entity
 {
     [Table("test_results")]
     public class TestResult

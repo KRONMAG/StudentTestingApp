@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.View.Interface;
 using StudentTestingApp.Presenter.Interface;
 

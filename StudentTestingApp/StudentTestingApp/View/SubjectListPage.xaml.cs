@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -39,15 +39,21 @@ namespace StudentTestingApp.View
 
         public void Show()
         {
-            App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
+            });
         }
 
         public void SetSubjects(IEnumerable<Subject> subjects)
         {
-            this.subjects.Clear();
-            subjects.ToList().ForEach((subject) =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                this.subjects.Add(subject);
+                this.subjects.Clear();
+                subjects.ToList().ForEach((subject) =>
+                {
+                    this.subjects.Add(subject);
+                });
             });
         }
         #endregion

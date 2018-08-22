@@ -1,5 +1,5 @@
 ﻿using System;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 using StudentTestingApp.Presenter.Interface;
 using Unity;
@@ -8,11 +8,13 @@ namespace StudentTestingApp.Presenter
 {
     public class TestStartPresenter : IPresenter
     {
+        private IParentView parentView;
         private ITestStartView testStartView;
         private Test test;
 
-        public TestStartPresenter(ITestStartView testStartView, Test test)
+        public TestStartPresenter(IParentView parentView, ITestStartView testStartView, Test test)
         {
+            this.parentView = parentView;
             this.testStartView = testStartView;
             this.test = test;
             testStartView.OnStartTest += startTest;
@@ -20,8 +22,8 @@ namespace StudentTestingApp.Presenter
 
         public void Run()
         {
+            testStartView.Show(parentView);
             testStartView.SetTest(test);
-            testStartView.Show();
         }
 
         private void startTest()
@@ -29,7 +31,13 @@ namespace StudentTestingApp.Presenter
             if (string.IsNullOrEmpty(testStartView.StudentName) || string.IsNullOrWhiteSpace(testStartView.StudentName))
                 testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
             else
-                new TestNavigationPresenter(App.Container.Resolve<ITestNavigationView>(), test).Run();
+            {
+                testStartView.Close();
+                new TestNavigationPresenter(
+                    parentView,
+                    App.Container.Resolve<ITestNavigationView>(),
+                    test).Run();
+            }
         }
     }
 }

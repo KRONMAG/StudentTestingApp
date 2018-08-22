@@ -4,7 +4,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -16,6 +16,7 @@ namespace StudentTestingApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            clockIconNameToolbarItem.Icon = "lock_clock.png";
         }
 
         private async void okClicked(object sender, EventArgs e)
@@ -27,23 +28,32 @@ namespace StudentTestingApp.View
         #region ITestNavigationView
         public event Action OnTestEnd;
 
-        public void Show()
+        public void Show(IParentView parentView)
         {
-            App.Current.MainPage.Navigation.PushAsync(this);
-            clockIconNameToolbarItem.Icon = "lock_clock.png";
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ((Page)parentView).Navigation.PushAsync(this);
+            });
         }
 
-        public void ShowWithTimer(Test test)
+        public void Close()
         {
-            App.Current.MainPage.Navigation.PushAsync(this);
-            clockIconNameToolbarItem.Icon = "clock.png";
-            remainingSecondsToolbarItem.Text = test.Duration.ToString();
-            new Timer((state) =>
+
+        }
+
+        public void StartTimer(Test test)
+        {
+            Device.BeginInvokeOnMainThread(() =>
             {
-                var remainingSeconds = int.Parse(remainingSecondsToolbarItem.Text) - 1;
-                Device.BeginInvokeOnMainThread(() => remainingSecondsToolbarItem.Text = remainingSeconds.ToString());
-                if (remainingSeconds == 0) OnTestEnd?.Invoke();
-            }, null, 1000, 1000);
+                clockIconNameToolbarItem.Icon = "clock.png";
+                remainingSecondsToolbarItem.Text = test.Duration.ToString();
+                new Timer((state) =>
+                {
+                    var remainingSeconds = int.Parse(remainingSecondsToolbarItem.Text) - 1;
+                    Device.BeginInvokeOnMainThread(() => remainingSecondsToolbarItem.Text = remainingSeconds.ToString());
+                    if (remainingSeconds == 0) OnTestEnd?.Invoke();
+                }, null, 1000, 1000);
+            });
         }
 
         public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
