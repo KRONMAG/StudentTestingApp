@@ -1,9 +1,12 @@
-﻿using System;
-
-namespace StudentTestingApp.Presenter.Interface
+﻿namespace StudentTestingApp.Presenter.Interface
 {
-    interface IPresenter
+    public interface IPresenter
     {
         void Run();
+    }
+
+    public interface IPresenter<in T>
+    {
+        void Run(T parameter);
     }
 }

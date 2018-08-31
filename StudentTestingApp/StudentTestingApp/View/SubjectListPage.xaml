@@ -1,23 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:StudentTestingApp"
              x:Class="StudentTestingApp.View.SubjectListPage">
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <StackLayout Spacing="0">
-            <Label Text="Student Testing App" Style="{StaticResource Header}"/>
-            <Label Text="Предметы" Style="{StaticResource Title}"/>
+            <Label Text="Student Testing App" Style="{StaticResource Header}" />
+            <Label Text="Предметы" Style="{StaticResource Title}" />
         </StackLayout>
         <ScrollView Grid.Row="1">
-            <ListView x:Name="subjectstListView" Style="{StaticResource List}" ItemTapped="subjectTapped">
+            <ListView x:Name="SubjectsListView" Style="{StaticResource List}" ItemTapped="SubjectTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Name}" Style="{StaticResource ListItem}"/>
+                            <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

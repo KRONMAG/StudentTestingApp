@@ -1,13 +1,12 @@
 ﻿using System;
-using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestStartView : IDerivedView
+    public interface ITestStartView : IView
     {
-        void ShowError(string message);
-        void SetTest(Test test);
         string StudentName { get; }
+        void ShowError(string message);
+        void SetTest(string name, int questionCount, int? duration);
         event Action OnStartTest;
     }
 }

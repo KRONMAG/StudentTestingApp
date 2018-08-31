@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -15,52 +14,52 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void startTestClicked(object sender, EventArgs e)
+        private void StartTestClicked(object sender, EventArgs e)
         {
             OnStartTest?.Invoke();
         }
 
         #region ITestStartView
-        public event Action OnStartTest;
-        public string StudentName
-        {
-            get
-            {
-                return studentNameEntry.Text;
-            }
-        }
 
-        public void Show(IParentView parentView)
+        public event Action OnStartTest;
+        public string StudentName => StudentNameEntry.Text;
+
+        public void Show()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                ((Page)parentView).Navigation.PushAsync(this);
+                if (Application.Current.MainPage == null)
+                {
+                    Application.Current.MainPage = new NavigationPage(this);
+                }
+                else
+                {
+                    Application.Current.MainPage.Navigation.PushAsync(this);
+                }
             });
         }
 
         public void Close()
         {
-
         }
 
         public void ShowError(string message)
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                DisplayAlert("Ошибка", message, "Назад");
-            });
+            Device.BeginInvokeOnMainThread(() => { DisplayAlert("Ошибка", message, "Назад"); });
         }
 
-        public void SetTest(Test test)
+        public void SetTest(string name, int questionCount, int? duration)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                nameLabel.Text = test.Name;
-                questionCountLabel.Text = $"Количество вопросов: {test.QuestionCount}";
-                if (test.Duration == null) durationLabel.Text = "Продолжительность неограниченна";
-                else durationLabel.Text = $"Продолжительность: {test.Duration} сек.";
+                NameLabel.Text = name;
+                QuestionCountLabel.Text = $"Количество вопросов: {questionCount}";
+                DurationLabel.Text = duration == null
+                    ? "Продолжительность неограниченна"
+                    : $"Продолжительность: {duration} сек.";
             });
         }
+
         #endregion
     }
 }

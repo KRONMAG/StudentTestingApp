@@ -1,29 +1,33 @@
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using StudentTestingApp.Model.DataAccess;
+using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Model.Entity;
+using StudentTestingApp.Presenter;
 using StudentTestingApp.View;
 using StudentTestingApp.View.Interface;
-using StudentTestingApp.Presenter;
-using Unity;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace StudentTestingApp
 {
     public partial class App : Application
     {
-        public static IUnityContainer Container { get; private set; }
-
         public App()
         {
             InitializeComponent();
-            Container = new UnityContainer();
-            Container.RegisterType<IPreloadView, PreloadPage>();
-            Container.RegisterType<ISubjectListView, SubjectListPage>();
-            Container.RegisterType<ITestListView, TestListPage>();
-            Container.RegisterType<ITestStartView, TestStartPage>();
-            Container.RegisterType<ITestNavigationView, TestNavigationPage>();
-            Container.RegisterType<IQuestionView, QuestionPage>();
-            new PreloadPresenter(Container.Resolve<IPreloadView>()).Run();
+            ApplicationController.Instance.RegisterModel<IDbLoader, DbLoader>();
+            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>();
+            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
+            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
+            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>();
+            ApplicationController.Instance.RegisterView<IPreloadView, PreloadPage>();
+            ApplicationController.Instance.RegisterView<ISubjectListView, SubjectListPage>();
+            ApplicationController.Instance.RegisterView<ITestListView, TestListPage>();
+            ApplicationController.Instance.RegisterView<ITestStartView, TestStartPage>();
+            ApplicationController.Instance.RegisterView<ITestNavigationView, TestNavigationPage>();
+            ApplicationController.Instance.RegisterView<IQuestionView, QuestionPage>();
+            ApplicationController.Instance.Run<PreloadPresenter>();
         }
 
         protected override void OnStart()

@@ -1,42 +1,39 @@
-﻿using System;
-using StudentTestingApp.Model.Entity;
-using StudentTestingApp.View.Interface;
+﻿using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Interface;
-using Unity;
+using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestStartPresenter : IPresenter
+    public class TestStartPresenter : IPresenter<Test>
     {
-        private IParentView parentView;
-        private ITestStartView testStartView;
-        private Test test;
+        private readonly ITestStartView _testStartView;
+        private Test _test;
 
-        public TestStartPresenter(IParentView parentView, ITestStartView testStartView, Test test)
+        public TestStartPresenter(ITestStartView testStartView)
         {
-            this.parentView = parentView;
-            this.testStartView = testStartView;
-            this.test = test;
-            testStartView.OnStartTest += startTest;
+            _testStartView = testStartView;
         }
 
-        public void Run()
+        public void Run(Test parameter)
         {
-            testStartView.Show(parentView);
-            testStartView.SetTest(test);
+            _test = parameter;
+            _testStartView.SetTest(parameter.Name, parameter.QuestionCount, parameter.Duration);
+            _testStartView.OnStartTest += StartTest;
+            _testStartView.Show();
         }
 
-        private void startTest()
+        private void StartTest()
         {
-            if (string.IsNullOrEmpty(testStartView.StudentName) || string.IsNullOrWhiteSpace(testStartView.StudentName))
-                testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
+            var studentNameCorrect = string.IsNullOrEmpty(_testStartView.StudentName) ||
+                                     string.IsNullOrWhiteSpace(_testStartView.StudentName);
+            if (studentNameCorrect)
+            {
+                _testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
+            }
             else
             {
-                testStartView.Close();
-                new TestNavigationPresenter(
-                    parentView,
-                    App.Container.Resolve<ITestNavigationView>(),
-                    test).Run();
+                _testStartView.Close();
+                ApplicationController.Instance.Run<TestNavigationPresenter, Test>(_test);
             }
         }
     }

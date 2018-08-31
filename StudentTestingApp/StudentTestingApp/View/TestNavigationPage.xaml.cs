@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -12,48 +11,44 @@ namespace StudentTestingApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestNavigationPage : TabbedPage, ITestNavigationView
     {
+        private Timer _timer;
+
         public TestNavigationPage()
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
-            clockIconNameToolbarItem.Icon = "lock_clock.png";
+            ClockIconNameToolbarItem.Icon = "lock_clock.png";
         }
 
-        private async void okClicked(object sender, EventArgs e)
+        private async void OkClicked(object sender, EventArgs e)
         {
             if (await DisplayAlert("Выход", "Вы действительно хотите завершить тестирование?", "Да", "Нет"))
+            {
                 OnTestEnd?.Invoke();
+            }
         }
 
         #region ITestNavigationView
+
         public event Action OnTestEnd;
 
-        public void Show(IParentView parentView)
+        public void Show()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                ((Page)parentView).Navigation.PushAsync(this);
+                if (Application.Current.MainPage == null)
+                {
+                    Application.Current.MainPage = new NavigationPage(this);
+                }
+                else
+                {
+                    Application.Current.MainPage.Navigation.PushAsync(this);
+                }
             });
         }
 
         public void Close()
         {
-
-        }
-
-        public void StartTimer(Test test)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                clockIconNameToolbarItem.Icon = "clock.png";
-                remainingSecondsToolbarItem.Text = test.Duration.ToString();
-                new Timer((state) =>
-                {
-                    var remainingSeconds = int.Parse(remainingSecondsToolbarItem.Text) - 1;
-                    Device.BeginInvokeOnMainThread(() => remainingSecondsToolbarItem.Text = remainingSeconds.ToString());
-                    if (remainingSeconds == 0) OnTestEnd?.Invoke();
-                }, null, 1000, 1000);
-            });
         }
 
         public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
@@ -61,14 +56,34 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() =>
             {
                 Children.Clear();
-                questionViews.ToList().ForEach((questionView) =>
+                questionViews.ToList().ForEach(questionView =>
                 {
-                    var page = (Page)questionView;
+                    Page page = (Page) questionView;
                     Children.Add(page);
                     page.Title = Children.Count.ToString();
                 });
             });
         }
+
+        public void StartTimer(int testDuration)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ClockIconNameToolbarItem.Icon = "clock.png";
+                RemainingSecondsToolbarItem.Text = testDuration.ToString();
+                _timer = new Timer(state =>
+                {
+                    int remainingSeconds = int.Parse(RemainingSecondsToolbarItem.Text) - 1;
+                    Device.BeginInvokeOnMainThread(() =>
+                        RemainingSecondsToolbarItem.Text = remainingSeconds.ToString());
+                    if (remainingSeconds == 0)
+                    {
+                        OnTestEnd?.Invoke();
+                    }
+                }, null, 1000, 1000);
+            });
+        }
+
         #endregion
     }
 }

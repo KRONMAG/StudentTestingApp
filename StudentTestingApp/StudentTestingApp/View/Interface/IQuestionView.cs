@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
     public interface IQuestionView : IView
     {
-        void SetQuestion(Question question);
-        void SetAnswers(IEnumerable<Answer> answers);
-        IEnumerable<Answer> SelectedAnswers { get; }
+        int SelectedAnswerId { get; }
+        int UnselectedAnswerId { get; }
+        void SetSelectionMode(SelectionMode selectionMode);
+        void SetQuestion(string text, byte[] image);
+        void SetAnswers(IEnumerable<Tuple<int, string>> answers);
+        event Action OnSelectAnswer;
+        event Action OnUnselectAnswer;
     }
 }

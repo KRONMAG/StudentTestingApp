@@ -1,30 +1,34 @@
-﻿using System;
-using System.Threading.Tasks;
-using StudentTestingApp.Model.Entity;
-using StudentTestingApp.Model.DataAccess;
-using StudentTestingApp.View.Interface;
+﻿using System.Threading.Tasks;
+using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Presenter.Interface;
-using Unity;
+using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
     public class PreloadPresenter : IPresenter
     {
-        private IPreloadView preloadView;
+        private readonly IPreloadView _preloadView;
+        private readonly IDbLoader _dbLoader;
 
-        public PreloadPresenter(IPreloadView preloadView)
+        public PreloadPresenter(IPreloadView preloadView, IDbLoader dbLoader)
         {
-            this.preloadView = preloadView;
+            _preloadView = preloadView;
+            _dbLoader = dbLoader;
         }
 
         public void Run()
         {
-            preloadView.Show();
+            _preloadView.Show();
             new Task(() =>
             {
-                if (!DB.Instance.InitializeDB())
-                    preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
-                new SubjectPresenter(App.Container.Resolve<ISubjectListView>()).Run();
+                if (!_dbLoader.DbExist && !_dbLoader.LoadDb())
+                {
+                    _dbLoader.CreateEmptyDb();
+                    _preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
+                }
+
+                _preloadView.Close();
+                ApplicationController.Instance.Run<SubjectListPresenter>();
             }).Start();
         }
     }

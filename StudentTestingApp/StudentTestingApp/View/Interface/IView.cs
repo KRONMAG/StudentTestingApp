@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace StudentTestingApp.View.Interface
+﻿namespace StudentTestingApp.View.Interface
 {
     public interface IView
     {
-
+        void Show();
+        void Close();
     }
 }

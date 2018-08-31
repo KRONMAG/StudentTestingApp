@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ISubjectListView : IParentView
+    public interface ISubjectListView : IView
     {
-        void SetSubjects(IEnumerable<Subject> subjects);
-        Subject SelectedSubject { get; }
+        int SelectedSubjectId { get; }
+        void SetSubjects(IEnumerable<Tuple<int, string>> subjects);
         event Action OnSelectSubject;
     }
 }

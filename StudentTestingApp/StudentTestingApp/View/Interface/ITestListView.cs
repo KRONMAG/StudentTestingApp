@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestListView : IDerivedView
+    public interface ITestListView : IView
     {
-        void SetTests(IEnumerable<Test> tests);
-        Test SelectedTest { get; }
+        int SelectedTestId { get; }
+        void SetTests(IEnumerable<Tuple<int, string>> tests);
         event Action OnSelectTest;
     }
 }

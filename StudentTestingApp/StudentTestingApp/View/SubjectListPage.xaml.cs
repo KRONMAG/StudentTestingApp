@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -12,50 +10,43 @@ namespace StudentTestingApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubjectListPage : ContentPage, ISubjectListView
     {
-        private ObservableCollection<Subject> subjects;
-
         public SubjectListPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            subjects = new ObservableCollection<Subject>();
-            subjectstListView.ItemsSource = subjects;
         }
 
-        private void subjectTapped(object sender, ItemTappedEventArgs e)
+        private void SubjectTapped(object sender, ItemTappedEventArgs e)
         {
             OnSelectSubject?.Invoke();
         }
 
         #region ISubjectListView
+
         public event Action OnSelectSubject;
-        public Subject SelectedSubject
-        {
-            get
-            {
-                return (Subject)subjectstListView.SelectedItem;
-            }
-        }
+        public int SelectedSubjectId => ((Tuple<int, string>) SubjectsListView.SelectedItem).Item1;
 
         public void Show()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                App.Current.MainPage = new NavigationPage(this) { BarBackgroundColor = Color.FromHex("212121") };
+                Application.Current.MainPage = new NavigationPage(this)
+                    {BarBackgroundColor = Color.FromHex("212121")};
             });
         }
 
-        public void SetSubjects(IEnumerable<Subject> subjects)
+        public void Close()
+        {
+        }
+
+        public void SetSubjects(IEnumerable<Tuple<int, string>> subjects)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                this.subjects.Clear();
-                subjects.ToList().ForEach((subject) =>
-                {
-                    this.subjects.Add(subject);
-                });
+                SubjectsListView.ItemsSource = new ObservableCollection<Tuple<int, string>>(subjects);
             });
         }
+
         #endregion
     }
 }

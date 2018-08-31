@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using StudentTestingApp.Model.Entity;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -13,78 +11,80 @@ namespace StudentTestingApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QuestionPage : ContentPage, IQuestionView
     {
-        private ObservableCollection<Answer> answers;
-        private ObservableCollection<Answer> selectedAnswers;
+        private readonly ObservableCollection<Tuple<int, string>> _selectedAnswers;
+        private SelectionMode _selectionMode;
 
         public QuestionPage()
         {
             InitializeComponent();
-            answers = new ObservableCollection<Answer>();
-            answersListView.ItemsSource = answers;
-            selectedAnswers = new ObservableCollection<Answer>();
-            selectedAnswersListView.ItemsSource = selectedAnswers;
+            _selectedAnswers = new ObservableCollection<Tuple<int, string>>();
+            SelectedAnswersListView.ItemsSource = _selectedAnswers;
+            _selectionMode = SelectionMode.Single;
         }
 
-        private bool multipleChoiceAllowed()
+        private void AnswerTapped(object sender, ItemTappedEventArgs e)
         {
-            var rightAnswerCount = 0;
-            foreach (var answer in answers)
-                if (answer.Right)
-                    rightAnswerCount++;
-            return rightAnswerCount > 1;
-        }
+            var selectedAnswer = (Tuple<int, string>) AnswersListView.SelectedItem;
+            if (!_selectedAnswers.Contains(selectedAnswer))
+            {
+                if (_selectionMode == SelectionMode.Single)
+                {
+                    _selectedAnswers.Clear();
+                }
 
-        private void answerTapped(object sender, ItemTappedEventArgs e)
-        {
-            var selectedAnswer = (Answer)answersListView.SelectedItem;
-            if (multipleChoiceAllowed())
-            {
-                if (!selectedAnswers.Contains(selectedAnswer))
-                    selectedAnswers.Add(selectedAnswer);
-            }
-            else
-            {
-                selectedAnswers.Clear();
-                selectedAnswers.Add(selectedAnswer);
+                _selectedAnswers.Add(selectedAnswer);
+                OnSelectAnswer?.Invoke();
             }
         }
 
-        private void selectedAnswerTapped(object sender, ItemTappedEventArgs e)
+        private void SelectedAnswerTapped(object sender, ItemTappedEventArgs e)
         {
-            var unselectedAnswer = (Answer)selectedAnswersListView.SelectedItem;
-            selectedAnswers.Remove(unselectedAnswer);
+            OnUnselectAnswer?.Invoke();
+            var unselectedAnswer = (Tuple<int, string>) SelectedAnswersListView.SelectedItem;
+            _selectedAnswers.Remove(unselectedAnswer);
         }
 
         #region IQuestionView
-        public IEnumerable<Answer> SelectedAnswers
+
+        public event Action OnSelectAnswer;
+        public event Action OnUnselectAnswer;
+        public int SelectedAnswerId => ((Tuple<int, string>) AnswersListView.SelectedItem).Item1;
+        public int UnselectedAnswerId => ((Tuple<int, string>) SelectedAnswersListView.SelectedItem).Item1;
+
+        public void Show()
         {
-            get
-            {
-                return selectedAnswers.Select(x => x);
-            }
         }
 
-        public void SetAnswers(IEnumerable<Answer> answers)
+        public void Close()
+        {
+        }
+
+        public void SetSelectionMode(SelectionMode selectionMode)
+        {
+            _selectionMode = selectionMode;
+        }
+
+        public void SetQuestion(string text, byte[] image)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                this.answers.Clear();
-                answers.ToList().ForEach((answer) =>
+                TextLabel.Text = text;
+                if (image != null)
                 {
-                    this.answers.Add(answer);
-                });
+                    Image.Source = ImageSource.FromStream(() => new MemoryStream(image));
+                }
             });
         }
 
-        public void SetQuestion(Question question)
+        public void SetAnswers(IEnumerable<Tuple<int, string>> answers)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                textLabel.Text = question.Text;
-                if (question.Image != null)
-                    image.Source = ImageSource.FromStream(() => new MemoryStream(question.Image));
+                _selectedAnswers.Clear();
+                AnswersListView.ItemsSource = answers;
             });
         }
+
         #endregion
     }
 }

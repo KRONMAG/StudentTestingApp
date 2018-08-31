@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.View.TestNavigationPage"
-            xmlns:local="clr-namespace:StudentTestingApp.View"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="StudentTestingApp.View.TestNavigationPage"
             BarBackgroundColor="#212121"
             Title="Тестирование">
     <TabbedPage.ToolbarItems>
-        <ToolbarItem x:Name="remainingSecondsToolbarItem"/>
-        <ToolbarItem x:Name="clockIconNameToolbarItem"/>
-        <ToolbarItem Icon="ok.png" Clicked="okClicked"/>
+        <ToolbarItem x:Name="RemainingSecondsToolbarItem" />
+        <ToolbarItem x:Name="ClockIconNameToolbarItem" />
+        <ToolbarItem Icon="ok.png" Clicked="OkClicked" />
     </TabbedPage.ToolbarItems>
 </TabbedPage>

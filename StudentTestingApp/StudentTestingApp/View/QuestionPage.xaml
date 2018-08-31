@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StudentTestingApp.View.QuestionPage">
@@ -7,29 +8,30 @@
             <StackLayout.Resources>
                 <ResourceDictionary>
                     <Style x:Key="QuestionPageTitle" TargetType="Label" BasedOn="{StaticResource Title}">
-                        <Setter Property="BackgroundColor" Value="#616161"/>
-                        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                        <Setter Property="BackgroundColor" Value="#616161" />
+                        <Setter Property="HorizontalTextAlignment" Value="Center" />
                     </Style>
                 </ResourceDictionary>
             </StackLayout.Resources>
-            <Label x:Name="textLabel" Style="{StaticResource QuestionPageTitle}"/>
-            <Image x:Name="image"/>
-            <ListView x:Name="answersListView" Style="{StaticResource List}" ItemTapped="answerTapped">
+            <Label x:Name="TextLabel" Style="{StaticResource QuestionPageTitle}" />
+            <Image x:Name="Image" />
+            <ListView x:Name="AnswersListView" Style="{StaticResource List}" ItemTapped="AnswerTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Text}" Style="{StaticResource ListItem}"/>
+                            <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
                     <StackLayout>
-                        <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}"/>
-                        <ListView x:Name="selectedAnswersListView" Style="{StaticResource List}" ItemTapped="selectedAnswerTapped">
+                        <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}" />
+                        <ListView x:Name="SelectedAnswersListView" Style="{StaticResource List}"
+                                  ItemTapped="SelectedAnswerTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <Label Text="{Binding Text}" Style="{StaticResource ListItem}"/>
+                                        <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

@@ -1,45 +1,37 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq;
+using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity;
-using StudentTestingApp.Model.DataAccess;
-using StudentTestingApp.View.Interface;
 using StudentTestingApp.Presenter.Interface;
-using Unity;
+using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestListPresenter : IPresenter
+    public class TestListPresenter : IPresenter<Subject>
     {
-        private IParentView parentView;
-        private ITestListView testListView;
-        private Subject subject;
+        private readonly ITestListView _testListView;
+        private readonly IReadOnlyRepository<Test> _testRepository;
 
-        public TestListPresenter(IParentView parentView, ITestListView testListView, Subject subject)
+        public TestListPresenter(ITestListView testListView, IReadOnlyRepository<Test> testRepository)
         {
-            this.parentView = parentView;
-            this.testListView = testListView;
-            this.subject = subject;
-            testListView.OnSelectTest += selectTest;
+            _testListView = testListView;
+            _testRepository = testRepository;
         }
 
-        public void Run()
+        public void Run(Subject parameter)
         {
-            testListView.Show(parentView);
-            new Task(() =>
-            {
-                var test = DB.Instance.GetTests(subject);
-                if (test != null)
-                    testListView.SetTests(test);
-            }).Start();
+            var tests = _testRepository.GetItems(test => test.SubjectId == parameter.Id)
+                .Select(test => new Tuple<int, string>(test.Id, test.Name));
+            _testListView.SetTests(tests);
+            _testListView.OnSelectTest += SelectTest;
+            _testListView.Show();
         }
 
-        private void selectTest()
+        private void SelectTest()
         {
-            testListView.Close();
-            new TestStartPresenter(
-                parentView,
-                App.Container.Resolve<ITestStartView>(),
-                testListView.SelectedTest).Run();
+            _testListView.Close();
+            var selectedTest = _testRepository.GetItem(_testListView.SelectedTestId);
+            ApplicationController.Instance.Run<TestStartPresenter, Test>(selectedTest);
         }
     }
 }
