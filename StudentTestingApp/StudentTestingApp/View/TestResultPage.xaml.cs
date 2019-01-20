@@ -6,31 +6,19 @@ using StudentTestingApp.View.Interface;
 namespace StudentTestingApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PreloadPage : ContentPage, IPreloadView
+    public partial class TestResultPage : ContentPage, ITestResultView
     {
-        private Timer _timer;
-
-        public PreloadPage()
+        public TestResultPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        #region IPreloadPage
+        #region ITestResultView
 
         public void Show()
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                Application.Current.MainPage = new NavigationPage(this) {BarBackgroundColor = Color.FromHex("212121")};
-                _timer = new Timer(async state =>
-                {
-                    await AnimatedImage.RotateTo(-360, 500);
-                    AnimatedImage.Rotation = 0;
-                    await AnimatedImage.RotateYTo(360, 500);
-                    AnimatedImage.RotationY = 0;
-                }, null, 0, 1500);
-            });
+            Device.BeginInvokeOnMainThread(() => { Application.Current.MainPage = new NavigationPage(this); });
         }
 
         public void Close()
@@ -38,9 +26,23 @@ namespace StudentTestingApp.View
             
         }
 
-        public void ShowError(string message)
+        public void SetTestResult(int elapsedTime, double result)
         {
-            Device.BeginInvokeOnMainThread(() => { DisplayAlert("Ошибка", message, "Назад"); });
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ElapsedTimeLabel.Text = $"Затраченное время: {elapsedTime} сек.";
+                ResultLabel.Text = $"{result}%";
+                ResultProgressBar.Progress = 0;
+            });
+            var resultCopy = result;
+            new Timer(state =>
+            {
+                if (resultCopy > 0)
+                {
+                    Device.BeginInvokeOnMainThread(() => ResultProgressBar.Progress += 0.01);
+                    resultCopy -= 1;
+                }
+            }, null, 0, 20);
         }
 
         #endregion

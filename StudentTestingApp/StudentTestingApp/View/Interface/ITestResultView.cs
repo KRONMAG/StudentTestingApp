@@ -1,7 +1,7 @@
 namespace StudentTestingApp.View.Interface
 {
-    public interface ITestResultView
+    public interface ITestResultView : IView
     {
-        
+        void SetTestResult(int elapsedTime, double result);
     }
 }

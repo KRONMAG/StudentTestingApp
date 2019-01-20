@@ -24,13 +24,13 @@ namespace StudentTestingApp.View
         {
             if (await DisplayAlert("Выход", "Вы действительно хотите завершить тестирование?", "Да", "Нет"))
             {
-                OnTestEnd?.Invoke();
+                TestEnded?.Invoke();
             }
         }
 
         #region ITestNavigationView
 
-        public event Action OnTestEnd;
+        public event Action TestEnded;
 
         public void Show()
         {
@@ -49,6 +49,7 @@ namespace StudentTestingApp.View
 
         public void Close()
         {
+            
         }
 
         public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
@@ -71,17 +72,17 @@ namespace StudentTestingApp.View
             {
                 ClockIconNameToolbarItem.Icon = "clock.png";
                 RemainingSecondsToolbarItem.Text = testDuration.ToString();
-                _timer = new Timer(state =>
-                {
-                    int remainingSeconds = int.Parse(RemainingSecondsToolbarItem.Text) - 1;
-                    Device.BeginInvokeOnMainThread(() =>
-                        RemainingSecondsToolbarItem.Text = remainingSeconds.ToString());
-                    if (remainingSeconds == 0)
-                    {
-                        OnTestEnd?.Invoke();
-                    }
-                }, null, 1000, 1000);
             });
+            _timer = new Timer(state =>
+            {
+                int remainingSeconds = int.Parse(RemainingSecondsToolbarItem.Text) - 1;
+                Device.BeginInvokeOnMainThread(() =>
+                    RemainingSecondsToolbarItem.Text = remainingSeconds.ToString());
+                if (remainingSeconds == 0)
+                {
+                    TestEnded?.Invoke();
+                }
+            }, null, 1000, 1000);
         }
 
         #endregion

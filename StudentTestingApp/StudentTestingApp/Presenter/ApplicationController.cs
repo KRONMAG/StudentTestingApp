@@ -27,24 +27,24 @@ namespace StudentTestingApp.Presenter
             _container.RegisterType<TFrom, TTo>();
         }
 
-        public void Run<T>() where T : class, IPresenter
+        public T CreatePresenter<T>() where T : class, IPresenter
         {
             if (!_container.IsRegistered<T>())
             {
                 _container.RegisterType<T>();
             }
 
-            _container.Resolve<T>().Run();
+            return _container.Resolve<T>();
         }
 
-        public void Run<T, TU>(TU parameter) where T : class, IPresenter<TU>
+        public T CreatePresenter<T, TU>() where T : class, IPresenter<TU>
         {
             if (!_container.IsRegistered<T>())
             {
                 _container.RegisterType<T>();
             }
 
-            _container.Resolve<T>().Run(parameter);
+            return _container.Resolve<T>();
         }
     }
 }

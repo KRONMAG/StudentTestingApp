@@ -28,6 +28,9 @@
     <Compile Update="View\SubjectListPage.xaml.cs">
       <DependentUpon>SubjectListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="View\TestResultPage.xaml.cs">
+      <DependentUpon>TestResultPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

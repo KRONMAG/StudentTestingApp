@@ -17,12 +17,12 @@ namespace StudentTestingApp.View
 
         private void TestTapped(object sender, ItemTappedEventArgs e)
         {
-            OnSelectTest?.Invoke();
+            TestSelected?.Invoke();
         }
 
         #region ITestListView
 
-        public event Action OnSelectTest;
+        public event Action TestSelected;
         public int SelectedTestId => ((Tuple<int, string>) TestsListView.SelectedItem).Item1;
 
         public void Show()
@@ -42,6 +42,7 @@ namespace StudentTestingApp.View
 
         public void Close()
         {
+            
         }
 
         public void SetTests(IEnumerable<Tuple<int, string>> tests)

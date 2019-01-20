@@ -7,6 +7,6 @@ namespace StudentTestingApp.View.Interface
     {
         void SetQuestionViews(IEnumerable<IQuestionView> questionViews);
         void StartTimer(int testDuration);
-        event Action OnTestEnd;
+        event Action TestEnded;
     }
 }

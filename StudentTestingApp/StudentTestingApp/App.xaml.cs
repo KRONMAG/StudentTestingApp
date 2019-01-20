@@ -27,7 +27,8 @@ namespace StudentTestingApp
             ApplicationController.Instance.RegisterView<ITestStartView, TestStartPage>();
             ApplicationController.Instance.RegisterView<ITestNavigationView, TestNavigationPage>();
             ApplicationController.Instance.RegisterView<IQuestionView, QuestionPage>();
-            ApplicationController.Instance.Run<PreloadPresenter>();
+            ApplicationController.Instance.RegisterView<ITestResultView, TestResultPage>();
+            ApplicationController.Instance.CreatePresenter<PreloadPresenter>().Run();
         }
 
         protected override void OnStart()

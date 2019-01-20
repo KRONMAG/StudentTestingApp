@@ -14,14 +14,14 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void StartTestClicked(object sender, EventArgs e)
+        private void StartTestTapped(object sender, EventArgs e)
         {
-            OnStartTest?.Invoke();
+            TestStarted?.Invoke();
         }
 
         #region ITestStartView
 
-        public event Action OnStartTest;
+        public event Action TestStarted;
         public string StudentName => StudentNameEntry.Text;
 
         public void Show()
@@ -41,6 +41,7 @@ namespace StudentTestingApp.View
 
         public void Close()
         {
+            
         }
 
         public void ShowError(string message)

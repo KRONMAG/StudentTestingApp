@@ -10,7 +10,7 @@ namespace StudentTestingApp.View.Interface
         void SetSelectionMode(SelectionMode selectionMode);
         void SetQuestion(string text, byte[] image);
         void SetAnswers(IEnumerable<Tuple<int, string>> answers);
-        event Action OnSelectAnswer;
-        event Action OnUnselectAnswer;
+        event Action AnswerSelected;
+        event Action AnswerUnselected;
     }
 }

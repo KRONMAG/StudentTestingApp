@@ -18,25 +18,26 @@ namespace StudentTestingApp.View
 
         private void SubjectTapped(object sender, ItemTappedEventArgs e)
         {
-            OnSelectSubject?.Invoke();
+            SubjectSelected?.Invoke();
         }
 
         #region ISubjectListView
 
-        public event Action OnSelectSubject;
+        public event Action SubjectSelected;
         public int SelectedSubjectId => ((Tuple<int, string>) SubjectsListView.SelectedItem).Item1;
 
         public void Show()
         {
             Device.BeginInvokeOnMainThread(() =>
-            {
-                Application.Current.MainPage = new NavigationPage(this)
-                    {BarBackgroundColor = Color.FromHex("212121")};
-            });
+                {
+                    Application.Current.MainPage = new NavigationPage(this)
+                        {BarBackgroundColor = Color.FromHex("212121")};
+                });
         }
 
         public void Close()
         {
+            
         }
 
         public void SetSubjects(IEnumerable<Tuple<int, string>> subjects)

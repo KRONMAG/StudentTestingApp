@@ -13,6 +13,8 @@ namespace StudentTestingApp.Model.Entity
 
         [Column("student_name"), NotNull] public string StudentName { get; set; }
 
+        [Column("start_date"), NotNull] public DateTime StartDate { get; set; }
+        
         [Column("end_date"), NotNull] public DateTime EndDate { get; set; }
 
         [Column("result"), NotNull] public double Result { get; set; }

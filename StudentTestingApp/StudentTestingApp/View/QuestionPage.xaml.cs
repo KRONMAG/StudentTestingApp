@@ -33,30 +33,32 @@ namespace StudentTestingApp.View
                 }
 
                 _selectedAnswers.Add(selectedAnswer);
-                OnSelectAnswer?.Invoke();
+                AnswerSelected?.Invoke();
             }
         }
 
         private void SelectedAnswerTapped(object sender, ItemTappedEventArgs e)
         {
-            OnUnselectAnswer?.Invoke();
             var unselectedAnswer = (Tuple<int, string>) SelectedAnswersListView.SelectedItem;
             _selectedAnswers.Remove(unselectedAnswer);
+            AnswerUnselected?.Invoke();
         }
 
         #region IQuestionView
 
-        public event Action OnSelectAnswer;
-        public event Action OnUnselectAnswer;
+        public event Action AnswerSelected;
+        public event Action AnswerUnselected;
         public int SelectedAnswerId => ((Tuple<int, string>) AnswersListView.SelectedItem).Item1;
         public int UnselectedAnswerId => ((Tuple<int, string>) SelectedAnswersListView.SelectedItem).Item1;
 
         public void Show()
         {
+            
         }
 
         public void Close()
         {
+            
         }
 
         public void SetSelectionMode(SelectionMode selectionMode)

@@ -2,35 +2,18 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.View.PreloadPage"
-             BackgroundColor="#000000">
-    <ScrollView>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackLayout VerticalOptions="Center">
-                <StackLayout.Resources>
-                    <ResourceDictionary>
-                        <Style x:Key="Logo" TargetType="Label">
-                            <Setter Property="FontSize" Value="50" />
-                            <Setter Property="FontAttributes" Value="Bold" />
-                            <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa" />
-                            <Setter Property="TextColor" Value="#FFFFFF" />
-                            <Setter Property="HorizontalOptions" Value="Center" />
-                        </Style>
-                    </ResourceDictionary>
-                </StackLayout.Resources>
-                <Label Text="Student" Style="{StaticResource Logo}" />
-                <Label Text="Testing" Style="{StaticResource Logo}" />
-                <Label Text="App" Style="{StaticResource Logo}" />
-            </StackLayout>
-            <Image Grid.Row="1" x:Name="AnimatedImage" Source="refresh.png" VerticalOptions="Center"
-                   HorizontalOptions="Center" />
-            <Label Grid.Row="2" Text="Загрузка тестов" VerticalOptions="Start" HorizontalOptions="Center"
-                   FontSize="Large" TextColor="#FFFFFF" />
-        </Grid>
-    </ScrollView>
+             x:Class="StudentTestingApp.View.TestResultPage"
+             BackgroundColor="#616161">
+    <StackLayout BackgroundColor="#424242" VerticalOptions="Center" Padding="0">
+        <Label Text="Результаты тестирования" Style="{StaticResource Title}" HorizontalTextAlignment="Center" />
+        <Label x:Name="ResultLabel" Style="{StaticResource Text}" />
+        <StackLayout Padding="10">
+            <ProgressBar x:Name="ResultProgressBar" ProgressColor="#FFFFFF" />
+        </StackLayout>
+        <Label x:Name="ElapsedTimeLabel" Style="{StaticResource Text}" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Image Source="home.png" />
+            <Image Source="upload.png" />
+        </StackLayout>
+    </StackLayout>
 </ContentPage>

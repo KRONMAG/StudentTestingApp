@@ -7,6 +7,6 @@ namespace StudentTestingApp.View.Interface
     {
         int SelectedSubjectId { get; }
         void SetSubjects(IEnumerable<Tuple<int, string>> subjects);
-        event Action OnSelectSubject;
+        event Action SubjectSelected;
     }
 }

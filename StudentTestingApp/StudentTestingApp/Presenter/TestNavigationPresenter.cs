@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity;
@@ -10,59 +9,58 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestNavigationPresenter : IPresenter<Test>
+    public class TestNavigationPresenter : IPresenter<Tuple<Test, string>>
     {
         private readonly IReadOnlyRepository<Question> _questionRepository;
         private readonly ITestNavigationView _testNavigationView;
-        private readonly ICollection<IQuestionView> QuestionViews;
+        private readonly ICollection<QuestionPresenter> _questionPresenters;
+        private readonly TestResult _testResult;
 
         public TestNavigationPresenter(ITestNavigationView testNavigationView,
             IReadOnlyRepository<Question> questionRepository)
         {
             _testNavigationView = testNavigationView;
             _questionRepository = questionRepository;
-            var questionViews = new ObservableCollection<IQuestionView>();
-            questionViews.CollectionChanged += QuestionViewsChanged;
-            QuestionViews = questionViews;
+            _questionPresenters = new Collection<QuestionPresenter>();
+            _testResult = new TestResult();
         }
 
-        private void QuestionViewsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public void Run(Tuple<Test, string> parameter)
         {
-            _testNavigationView.SetQuestionViews(QuestionViews);
-        }
-
-        public void Run(Test parameter)
-        {
+            var questionViews = new Collection<IQuestionView>();
+            var test = parameter.Item1;
             var random = new Random();
-            var testNavigationHelper = new TestNavigationHelper(this);
-            var questions = _questionRepository.GetItems(question => question.TestId == parameter.Id)
-                .OrderBy(question => random.Next()).Take((parameter.QuestionCount));
+            var questions = _questionRepository.GetItems(question => question.TestId == test.Id)
+                .OrderBy(question => random.Next()).Take((test.QuestionCount));
             foreach (Question question in questions)
             {
-                ApplicationController.Instance.Run<QuestionPresenter, Tuple<TestNavigationHelper, Question>>(
-                    new Tuple<TestNavigationHelper, Question>(testNavigationHelper, question));
+                var questionPresenter = ApplicationController.Instance.CreatePresenter<QuestionPresenter, Question>();
+                questionPresenter.Run(question);
+                questionViews.Add(questionPresenter.QuestionView);
+                _questionPresenters.Add(questionPresenter);
             }
-
+            _testNavigationView.SetQuestionViews(questionViews);
+            _testNavigationView.TestEnded += TestEnded;
             _testNavigationView.Show();
-            if (parameter.Duration != null)
+            if (test.Duration != null)
             {
-                _testNavigationView.StartTimer((int) parameter.Duration);
+                _testNavigationView.StartTimer((int)test.Duration);
             }
+            var studentName = parameter.Item2;
+            _testResult.TestId = test.Id;
+            _testResult.StudentName = studentName;
+            _testResult.StartDate = DateTime.Now;
         }
 
-        public class TestNavigationHelper
+        private void TestEnded()
         {
-            private readonly TestNavigationPresenter _testNavigationPresenter;
-
-            public TestNavigationHelper(TestNavigationPresenter testNavigationPresenter)
-            {
-                _testNavigationPresenter = testNavigationPresenter;
-            }
-
-            public void AddQuestionView(IQuestionView questionView)
-            {
-                _testNavigationPresenter.QuestionViews.Add(questionView);
-            }
+            _testResult.EndDate = DateTime.Now;
+            _testResult.Result =
+                Math.Round(
+                    _questionPresenters.Count(questionPresenter => questionPresenter.RightAnswerSelected) /
+                    (_questionPresenters.Count * 1.0) * 100, 2);
+            _testNavigationView.Close();
+            ApplicationController.Instance.CreatePresenter<TestResultPresenter, TestResult>().Run(_testResult);
         }
     }
 }

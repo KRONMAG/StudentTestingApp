@@ -7,6 +7,6 @@ namespace StudentTestingApp.View.Interface
         string StudentName { get; }
         void ShowError(string message);
         void SetTest(string name, int questionCount, int? duration);
-        event Action OnStartTest;
+        event Action TestStarted;
     }
 }

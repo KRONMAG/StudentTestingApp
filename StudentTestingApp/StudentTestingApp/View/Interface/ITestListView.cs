@@ -7,6 +7,6 @@ namespace StudentTestingApp.View.Interface
     {
         int SelectedTestId { get; }
         void SetTests(IEnumerable<Tuple<int, string>> tests);
-        event Action OnSelectTest;
+        event Action TestSelected;
     }
 }

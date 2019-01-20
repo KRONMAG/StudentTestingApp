@@ -23,15 +23,15 @@ namespace StudentTestingApp.Presenter
             var tests = _testRepository.GetItems(test => test.SubjectId == parameter.Id)
                 .Select(test => new Tuple<int, string>(test.Id, test.Name));
             _testListView.SetTests(tests);
-            _testListView.OnSelectTest += SelectTest;
+            _testListView.TestSelected += TestSelected;
             _testListView.Show();
         }
 
-        private void SelectTest()
+        private void TestSelected()
         {
-            _testListView.Close();
             var selectedTest = _testRepository.GetItem(_testListView.SelectedTestId);
-            ApplicationController.Instance.Run<TestStartPresenter, Test>(selectedTest);
+            _testListView.Close();
+            ApplicationController.Instance.CreatePresenter<TestStartPresenter, Test>().Run(selectedTest);
         }
     }
 }

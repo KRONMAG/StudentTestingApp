@@ -1,4 +1,5 @@
-﻿using StudentTestingApp.Model.Entity;
+﻿using System;
+using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Interface;
 using StudentTestingApp.View.Interface;
 
@@ -18,22 +19,24 @@ namespace StudentTestingApp.Presenter
         {
             _test = parameter;
             _testStartView.SetTest(parameter.Name, parameter.QuestionCount, parameter.Duration);
-            _testStartView.OnStartTest += StartTest;
+            _testStartView.TestStarted += TestStarted;
             _testStartView.Show();
         }
 
-        private void StartTest()
+        private void TestStarted()
         {
-            var studentNameCorrect = string.IsNullOrEmpty(_testStartView.StudentName) ||
-                                     string.IsNullOrWhiteSpace(_testStartView.StudentName);
-            if (studentNameCorrect)
+            var studentName = _testStartView.StudentName;
+            var studentNameIncorrect = string.IsNullOrEmpty(studentName) ||
+                                     string.IsNullOrWhiteSpace(studentName);
+            if (studentNameIncorrect)
             {
                 _testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
             }
             else
             {
                 _testStartView.Close();
-                ApplicationController.Instance.Run<TestNavigationPresenter, Test>(_test);
+                ApplicationController.Instance.CreatePresenter<TestNavigationPresenter, Tuple<Test, string>>()
+                    .Run(new Tuple<Test, string>(_test, studentName));
             }
         }
     }

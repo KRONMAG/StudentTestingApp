@@ -22,7 +22,7 @@ namespace StudentTestingApp.View
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                Application.Current.MainPage = new NavigationPage(this) {BarBackgroundColor = Color.FromHex("212121")};
+                Application.Current.MainPage = new NavigationPage(this);
                 _timer = new Timer(async state =>
                 {
                     await AnimatedImage.RotateTo(-360, 500);
@@ -35,6 +35,7 @@ namespace StudentTestingApp.View
 
         public void Close()
         {
+            
         }
 
         public void ShowError(string message)

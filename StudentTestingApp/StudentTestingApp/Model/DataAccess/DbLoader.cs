@@ -26,7 +26,7 @@ namespace StudentTestingApp.Model.DataAccess
             var cloudStorage = new CloudStorage();
             return cloudStorage.DownloadFile($"/{DbInfo.Instance.DbRemoteFilePath}", DbInfo.Instance.DbLocalFilePath);
         }
-
+        
         #endregion
     }
 }

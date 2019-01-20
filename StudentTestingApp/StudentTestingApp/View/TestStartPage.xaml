@@ -10,7 +10,10 @@
         <Label x:Name="DurationLabel" Style="{StaticResource Text}" />
         <Entry x:Name="StudentNameEntry" Placeholder="ФИО учащегося" TextColor="#FFFFFF"
                HorizontalTextAlignment="Center" />
-        <Button Text="Начать" BackgroundColor="#FF0000" TextColor="#FFFFFF" HorizontalOptions="Center"
-                Clicked="StartTestClicked" />
+        <Image Source="start.png" HorizontalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="StartTestTapped"/>
+            </Image.GestureRecognizers>
+        </Image>
     </StackLayout>
 </ContentPage>

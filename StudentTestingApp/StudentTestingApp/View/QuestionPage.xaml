@@ -24,19 +24,21 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <StackLayout>
-                        <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}" />
-                        <ListView x:Name="SelectedAnswersListView" Style="{StaticResource List}"
-                                  ItemTapped="SelectedAnswerTapped">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
+                    <ScrollView>
+                        <StackLayout>
+                            <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}" />
+                            <ListView x:Name="SelectedAnswersListView" Style="{StaticResource List}"
+                                      ItemTapped="SelectedAnswerTapped">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </ScrollView>
                 </ListView.Footer>
             </ListView>
         </StackLayout>
