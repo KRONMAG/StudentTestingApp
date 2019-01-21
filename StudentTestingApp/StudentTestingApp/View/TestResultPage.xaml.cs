@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
@@ -14,7 +15,14 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
+        private void HomeTapped(object sender, EventArgs e)
+        {
+            DelayedResultUploadingSelected?.Invoke();
+        }
+
         #region ITestResultView
+
+        public event Action DelayedResultUploadingSelected;
 
         public void Show()
         {
@@ -43,6 +51,11 @@ namespace StudentTestingApp.View
                     resultCopy -= 1;
                 }
             }, null, 0, 20);
+        }
+
+        public async void ShowMessage(string message)
+        {
+            await DisplayAlert("Сообщение", message, "Назад");
         }
 
         #endregion

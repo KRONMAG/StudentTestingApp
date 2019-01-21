@@ -12,8 +12,12 @@
         </StackLayout>
         <Label x:Name="ElapsedTimeLabel" Style="{StaticResource Text}" />
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Image Source="home.png" />
-            <Image Source="upload.png" />
+            <Image Source="home.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="HomeTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="upload.png"/>
         </StackLayout>
     </StackLayout>
 </ContentPage>

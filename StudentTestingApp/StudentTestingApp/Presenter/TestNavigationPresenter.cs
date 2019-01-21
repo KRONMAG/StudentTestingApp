@@ -30,7 +30,7 @@ namespace StudentTestingApp.Presenter
             var questionViews = new Collection<IQuestionView>();
             var test = parameter.Item1;
             var random = new Random();
-            var questions = _questionRepository.GetItems(question => question.TestId == test.Id)
+            var questions = _questionRepository.GetAll(question => question.TestId == test.Id)
                 .OrderBy(question => random.Next()).Take((test.QuestionCount));
             foreach (Question question in questions)
             {

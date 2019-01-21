@@ -20,7 +20,7 @@ namespace StudentTestingApp.Presenter
 
         public void Run()
         {
-            var subjects = _subjectRepository.GetItems()
+            var subjects = _subjectRepository.GetAll()
                 .Select(subject => new Tuple<int, string>(subject.Id, subject.Name));
             _subjectListView.SetSubjects(subjects);
             _subjectListView.SubjectSelected += SubjectSelected;
@@ -29,7 +29,7 @@ namespace StudentTestingApp.Presenter
 
         private void SubjectSelected()
         {
-            var selectedSubject = _subjectRepository.GetItem(_subjectListView.SelectedSubjectId);
+            var selectedSubject = _subjectRepository.Get(_subjectListView.SelectedSubjectId);
             _subjectListView.Close();
             ApplicationController.Instance.CreatePresenter<TestListPresenter, Subject>().Run(selectedSubject);
         }

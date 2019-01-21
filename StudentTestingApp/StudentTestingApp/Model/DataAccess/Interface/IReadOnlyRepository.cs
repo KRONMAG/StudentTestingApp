@@ -6,7 +6,7 @@ namespace StudentTestingApp.Model.DataAccess.Interface
 {
     public interface IReadOnlyRepository<out T> where T : class, IEntity, new()
     {
-        T GetItem(int id);
-        IEnumerable<T> GetItems(Predicate<T> predicate = null);
+        T Get(int id);
+        IEnumerable<T> GetAll(Predicate<T> predicate = null);
     }
 }

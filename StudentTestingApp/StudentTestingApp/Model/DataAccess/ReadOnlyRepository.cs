@@ -9,22 +9,22 @@ namespace StudentTestingApp.Model.DataAccess
 {
     public class ReadOnlyRepository<T> : IReadOnlyRepository<T> where T : class, IEntity, new()
     {
-        private readonly SQLiteConnection _db;
+        protected readonly SQLiteConnection db;
 
         public ReadOnlyRepository()
         {
-            _db = new SQLiteConnection(DbInfo.Instance.DbLocalFilePath);
-            _db.CreateTable<T>();
+            db = new SQLiteConnection(DbInfo.Instance.DbLocalFilePath);
+            db.CreateTable<T>();
         }
 
-        public T GetItem(int id)
+        public T Get(int id)
         {
-            return _db.Table<T>().First(item => item.Id == id);
+            return db.Table<T>().First(item => item.Id == id);
         }
 
-        public IEnumerable<T> GetItems(Predicate<T> predicate = null)
+        public IEnumerable<T> GetAll(Predicate<T> predicate = null)
         {
-            var items = _db.Table<T>();
+            var items = db.Table<T>();
             if (predicate == null)
             {
                 return items;

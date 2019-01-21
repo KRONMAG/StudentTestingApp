@@ -50,7 +50,7 @@ namespace StudentTestingApp.Presenter
                     _selectedAnswers.Clear();
                 }
 
-                var selectedAnswer = _answerRepository.GetItem(selectedAnswerId);
+                var selectedAnswer = _answerRepository.Get(selectedAnswerId);
                 _selectedAnswers.Add(selectedAnswer.Id, selectedAnswer);
             }
         }
@@ -64,7 +64,7 @@ namespace StudentTestingApp.Presenter
         public void Run(Question parameter)
         {
             var random = new Random();
-            var answers = _answerRepository.GetItems(answer => answer.QuestionId == parameter.Id)
+            var answers = _answerRepository.GetAll(answer => answer.QuestionId == parameter.Id)
                 .OrderBy(answer => random.Next()).ToList();
             var rightAnswerNumber = answers.Count(answer => answer.Right);
             _rightAnswerNumber = rightAnswerNumber;

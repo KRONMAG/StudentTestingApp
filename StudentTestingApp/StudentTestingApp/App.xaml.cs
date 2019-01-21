@@ -21,6 +21,7 @@ namespace StudentTestingApp
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>();
+            ApplicationController.Instance.RegisterModel<IRepository<TestResult>, Repository<TestResult>>();
             ApplicationController.Instance.RegisterView<IPreloadView, PreloadPage>();
             ApplicationController.Instance.RegisterView<ISubjectListView, SubjectListPage>();
             ApplicationController.Instance.RegisterView<ITestListView, TestListPage>();

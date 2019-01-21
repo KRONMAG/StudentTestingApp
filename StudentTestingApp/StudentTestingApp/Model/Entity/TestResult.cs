@@ -7,7 +7,7 @@ namespace StudentTestingApp.Model.Entity
     [Table("test_results")]
     public class TestResult : IEntity
     {
-        [Column("id"), PrimaryKey] public int Id { get; set; }
+        [Column("id"), PrimaryKey, AutoIncrement] public int Id { get; set; }
 
         [Column("test_id"), NotNull] public int TestId { get; set; }
 
