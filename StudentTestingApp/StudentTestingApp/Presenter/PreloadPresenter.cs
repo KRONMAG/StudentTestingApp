@@ -27,7 +27,7 @@ namespace StudentTestingApp.Presenter
                     _preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
                 }
                 _preloadView.Close();
-                ApplicationController.Instance.CreatePresenter<SubjectListPresenter>().Run();
+                ApplicationController.Instance.CreatePresenter<MainPresenter>().Run();
             }).Start();
         }
     }

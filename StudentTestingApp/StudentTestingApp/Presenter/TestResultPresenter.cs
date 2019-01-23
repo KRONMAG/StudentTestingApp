@@ -33,7 +33,7 @@ namespace StudentTestingApp.Presenter
             _testResultRepository.Add(_testResult);
             _testResultView.ShowMessage("Результат тестирования был сохранен локально");
             _testResultView.Close();
-            ApplicationController.Instance.CreatePresenter<SubjectListPresenter>().Run();
+            ApplicationController.Instance.CreatePresenter<MainPresenter>().Run();
         }
     }
 }

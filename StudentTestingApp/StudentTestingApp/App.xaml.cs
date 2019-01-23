@@ -29,6 +29,7 @@ namespace StudentTestingApp
             ApplicationController.Instance.RegisterView<ITestNavigationView, TestNavigationPage>();
             ApplicationController.Instance.RegisterView<IQuestionView, QuestionPage>();
             ApplicationController.Instance.RegisterView<ITestResultView, TestResultPage>();
+            ApplicationController.Instance.RegisterView<IMainView, MainPage>();
             ApplicationController.Instance.CreatePresenter<PreloadPresenter>().Run();
         }
 

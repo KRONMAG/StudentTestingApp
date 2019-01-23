@@ -24,20 +24,26 @@ namespace StudentTestingApp.View
         #region ISubjectListView
 
         public event Action SubjectSelected;
-        public int SelectedSubjectId => ((Tuple<int, string>) SubjectsListView.SelectedItem).Item1;
+        public int SelectedSubjectId => ((Tuple<int, string>)SubjectsListView.SelectedItem).Item1;
 
         public void Show()
         {
             Device.BeginInvokeOnMainThread(() =>
                 {
-                    Application.Current.MainPage = new NavigationPage(this)
-                        {BarBackgroundColor = Color.FromHex("212121")};
+                    if (Application.Current.MainPage == null)
+                    {
+                        Application.Current.MainPage = new NavigationPage(this);
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.Navigation.PushAsync(this);
+                    }
                 });
         }
 
         public void Close()
         {
-            
+
         }
 
         public void SetSubjects(IEnumerable<Tuple<int, string>> subjects)

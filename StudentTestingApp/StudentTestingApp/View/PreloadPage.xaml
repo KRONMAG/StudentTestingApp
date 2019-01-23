@@ -12,17 +12,6 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackLayout VerticalOptions="Center">
-                <StackLayout.Resources>
-                    <ResourceDictionary>
-                        <Style x:Key="Logo" TargetType="Label">
-                            <Setter Property="FontSize" Value="50" />
-                            <Setter Property="FontAttributes" Value="Bold" />
-                            <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa" />
-                            <Setter Property="TextColor" Value="#FFFFFF" />
-                            <Setter Property="HorizontalOptions" Value="Center" />
-                        </Style>
-                    </ResourceDictionary>
-                </StackLayout.Resources>
                 <Label Text="Student" Style="{StaticResource Logo}" />
                 <Label Text="Testing" Style="{StaticResource Logo}" />
                 <Label Text="App" Style="{StaticResource Logo}" />
