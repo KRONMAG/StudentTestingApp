@@ -8,27 +8,27 @@ namespace StudentTestingApp.Presenter
     public class PreloadPresenter : IPresenter
     {
         private readonly IPreloadView _preloadView;
-        private readonly IDbLoader _dbLoader;
+        private readonly ITestsLoader _testsLoader;
 
-        public PreloadPresenter(IPreloadView preloadView, IDbLoader dbLoader)
+        public PreloadPresenter(IPreloadView preloadView, ITestsLoader testsLoader)
         {
             _preloadView = preloadView;
-            _dbLoader = dbLoader;
+            _testsLoader = testsLoader;
         }
 
         public void Run()
         {
             _preloadView.Show();
-            new Task(() =>
+            Task.Run(() =>
             {
-                if (!_dbLoader.DbExist && !_dbLoader.LoadDb())
-                {
-                    _dbLoader.CreateEmptyDb();
-                    _preloadView.ShowError("Не удалось загрузить тесты, проверьте наличие интернет-соединения");
-                }
+                if (!_testsLoader.TestsAreLoaded)
+                    if (!_testsLoader.InternetConnectionIsActive)
+                        _preloadView.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединения");
+                    else if (!_testsLoader.LoadTests())
+                        _preloadView.ShowMessage("При загрузке тестов возникла ошибка");
                 _preloadView.Close();
                 ApplicationController.Instance.CreatePresenter<MainPresenter>().Run();
-            }).Start();
+            });
         }
     }
 }

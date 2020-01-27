@@ -34,9 +34,7 @@ namespace StudentTestingApp.Presenter
         ~QuestionPresenter()
         {
             if (_viewShown)
-            {
                 _questionView.Close();
-            }
         }
 
         private void AnswerSelected()
@@ -46,10 +44,7 @@ namespace StudentTestingApp.Presenter
             if (!answerAlreadySelected)
             {
                 if (_rightAnswerNumber == 1)
-                {
                     _selectedAnswers.Clear();
-                }
-
                 var selectedAnswer = _answerRepository.Get(selectedAnswerId);
                 _selectedAnswers.Add(selectedAnswer.Id, selectedAnswer);
             }

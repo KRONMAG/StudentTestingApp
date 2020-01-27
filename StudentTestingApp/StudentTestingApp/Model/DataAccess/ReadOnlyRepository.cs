@@ -11,28 +11,21 @@ namespace StudentTestingApp.Model.DataAccess
     {
         protected readonly SQLiteConnection db;
 
-        public ReadOnlyRepository()
+        public ReadOnlyRepository(IDbHelper helper)
         {
-            db = new SQLiteConnection(DbInfo.Instance.DbLocalFilePath);
+            db = helper.GetConnection<T>();
             db.CreateTable<T>();
         }
 
-        public T Get(int id)
-        {
-            return db.Table<T>().First(item => item.Id == id);
-        }
+        public T Get(int id) =>
+            db.Table<T>().First(item => item.Id == id);
 
         public IEnumerable<T> GetAll(Predicate<T> predicate = null)
         {
             var items = db.Table<T>();
             if (predicate == null)
-            {
                 return items;
-            }
-            else
-            {
-                return items.Where(new Func<T, bool>(predicate));
-            }
+            return items.Where(new Func<T, bool>(predicate));
         }
     }
 }

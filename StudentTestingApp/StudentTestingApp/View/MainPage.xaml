@@ -4,27 +4,19 @@
              x:Class="StudentTestingApp.View.MainPage">
     <ScrollView>
         <Grid RowSpacing="0" BackgroundColor="#616161">
-            <Grid.Resources>
-                <Style x:Key="MenuItem" TargetType="Button">
-                    <Setter Property="BackgroundColor" Value="#212121"/>
-                    <Setter Property="TextColor" Value="#FFFFFF"/>
-                    <Setter Property="BorderRadius" Value="10"/>
-                    <Setter Property="Margin" Value="10"/>
-                </Style>
-            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackLayout VerticalOptions="Center">
+            <StackLayout VerticalOptions="Center" Margin="0, 50">
                 <Label Text="Student" Style="{StaticResource Logo}" />
                 <Label Text="Testing" Style="{StaticResource Logo}" />
                 <Label Text="App" Style="{StaticResource Logo}" />
             </StackLayout>
             <StackLayout Grid.Row="1" VerticalOptions="Start">
-                <Button Text="Тестирование" Image="edit.png" Style="{StaticResource MenuItem}" Clicked="SubjectListViewClicked"/>
-                <Button Text="Результаты" Image="chart.png" Style="{StaticResource MenuItem}"/>
-                <Button Text="Настройки" Image="settings.png" Style="{StaticResource MenuItem}"/>
+                <Button Text="Тестирование" ImageSource="edit.png" Style="{StaticResource MenuItem}" Clicked="SubjectListViewClicked"/>
+                <Button Text="Результаты" ImageSource="chart.png" Style="{StaticResource MenuItem}"/>
+                <Button Text="Настройки" ImageSource="settings.png" Style="{StaticResource MenuItem}" Clicked="SettingsViewClicked"/>
             </StackLayout>
         </Grid>
     </ScrollView>

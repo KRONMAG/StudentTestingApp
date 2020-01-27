@@ -15,19 +15,16 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void HomeTapped(object sender, EventArgs e)
-        {
+        private void HomeTapped(object sender, EventArgs e) =>
             DelayedResultUploadingSelected?.Invoke();
-        }
 
         #region ITestResultView
 
         public event Action DelayedResultUploadingSelected;
 
-        public void Show()
-        {
-            Device.BeginInvokeOnMainThread(() => { Application.Current.MainPage = new NavigationPage(this); });
-        }
+        public void Show() =>
+            Device.BeginInvokeOnMainThread(() =>
+                Application.Current.MainPage = new NavigationPage(this));
 
         public void Close()
         {
@@ -53,10 +50,9 @@ namespace StudentTestingApp.View
             }, null, 0, 20);
         }
 
-        public async void ShowMessage(string message)
-        {
-            await DisplayAlert("Сообщение", message, "Назад");
-        }
+        public void ShowMessage(string message) =>
+            Device.BeginInvokeOnMainThread(() =>
+                DisplayAlert(string.Empty, message, "Назад"));
 
         #endregion
     }

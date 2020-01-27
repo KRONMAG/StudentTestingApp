@@ -8,8 +8,6 @@ namespace StudentTestingApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PreloadPage : ContentPage, IPreloadView
     {
-        private Timer _timer;
-
         public PreloadPage()
         {
             InitializeComponent();
@@ -20,10 +18,10 @@ namespace StudentTestingApp.View
 
         public void Show()
         {
+            Application.Current.MainPage = new NavigationPage(this);
             Device.BeginInvokeOnMainThread(() =>
             {
-                Application.Current.MainPage = new NavigationPage(this);
-                _timer = new Timer(async state =>
+                new Timer(async state =>
                 {
                     await AnimatedImage.RotateTo(-360, 500);
                     AnimatedImage.Rotation = 0;
@@ -35,13 +33,12 @@ namespace StudentTestingApp.View
 
         public void Close()
         {
-            
+
         }
 
-        public void ShowError(string message)
-        {
-            Device.BeginInvokeOnMainThread(() => { DisplayAlert("Ошибка", message, "Назад"); });
-        }
+        public void ShowMessage(string message) =>
+            Device.BeginInvokeOnMainThread(() =>
+                DisplayAlert(string.Empty, message, "Назад"));
 
         #endregion
     }

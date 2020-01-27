@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
@@ -16,30 +17,18 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void SubjectTapped(object sender, ItemTappedEventArgs e)
-        {
+        private void SubjectTapped(object sender, ItemTappedEventArgs e) =>
             SubjectSelected?.Invoke();
-        }
 
         #region ISubjectListView
 
         public event Action SubjectSelected;
+
         public int SelectedSubjectId => ((Tuple<int, string>)SubjectsListView.SelectedItem).Item1;
 
-        public void Show()
-        {
+        public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (Application.Current.MainPage == null)
-                    {
-                        Application.Current.MainPage = new NavigationPage(this);
-                    }
-                    else
-                    {
-                        Application.Current.MainPage.Navigation.PushAsync(this);
-                    }
-                });
-        }
+                Application.Current.MainPage.Navigation.PushAsync(this));
 
         public void Close()
         {
@@ -50,6 +39,9 @@ namespace StudentTestingApp.View
         {
             Device.BeginInvokeOnMainThread(() =>
             {
+                var isEmpty = !subjects.Any();
+                EmptySubjectListLabel.IsVisible = isEmpty;
+                SubjectListScrollView.IsVisible = !isEmpty;
                 SubjectsListView.ItemsSource = new ObservableCollection<Tuple<int, string>>(subjects);
             });
         }

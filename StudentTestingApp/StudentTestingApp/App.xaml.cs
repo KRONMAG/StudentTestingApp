@@ -16,7 +16,10 @@ namespace StudentTestingApp
         public App()
         {
             InitializeComponent();
-            ApplicationController.Instance.RegisterModel<IDbLoader, DbLoader>();
+            ApplicationController.Instance.RegisterModelAsSingleton<ICloudStorage, CloudStorage>();
+            ApplicationController.Instance.RegisterModelAsSingleton<IDbInfo, DbInfo>();
+            ApplicationController.Instance.RegisterModelAsSingleton<ITestsLoader, TestsLoader>();
+            ApplicationController.Instance.RegisterModelAsSingleton<IDbHelper, DbHelper>();
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>();
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
             ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
@@ -29,6 +32,7 @@ namespace StudentTestingApp
             ApplicationController.Instance.RegisterView<ITestNavigationView, TestNavigationPage>();
             ApplicationController.Instance.RegisterView<IQuestionView, QuestionPage>();
             ApplicationController.Instance.RegisterView<ITestResultView, TestResultPage>();
+            ApplicationController.Instance.RegisterView<ISettingsView, SettingsPage>();
             ApplicationController.Instance.RegisterView<IMainView, MainPage>();
             ApplicationController.Instance.CreatePresenter<PreloadPresenter>().Run();
         }

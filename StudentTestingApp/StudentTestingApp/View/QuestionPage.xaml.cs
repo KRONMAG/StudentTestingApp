@@ -5,6 +5,7 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
+using SelectionMode = StudentTestingApp.View.Interface.SelectionMode;
 
 namespace StudentTestingApp.View
 {
@@ -12,6 +13,7 @@ namespace StudentTestingApp.View
     public partial class QuestionPage : ContentPage, IQuestionView
     {
         private readonly ObservableCollection<Tuple<int, string>> _selectedAnswers;
+
         private SelectionMode _selectionMode;
 
         public QuestionPage()
@@ -24,14 +26,11 @@ namespace StudentTestingApp.View
 
         private void AnswerTapped(object sender, ItemTappedEventArgs e)
         {
-            var selectedAnswer = (Tuple<int, string>) AnswersListView.SelectedItem;
+            var selectedAnswer = (Tuple<int, string>)AnswersListView.SelectedItem;
             if (!_selectedAnswers.Contains(selectedAnswer))
             {
                 if (_selectionMode == SelectionMode.Single)
-                {
                     _selectedAnswers.Clear();
-                }
-
                 _selectedAnswers.Add(selectedAnswer);
                 AnswerSelected?.Invoke();
             }
@@ -39,7 +38,7 @@ namespace StudentTestingApp.View
 
         private void SelectedAnswerTapped(object sender, ItemTappedEventArgs e)
         {
-            var unselectedAnswer = (Tuple<int, string>) SelectedAnswersListView.SelectedItem;
+            var unselectedAnswer = (Tuple<int, string>)SelectedAnswersListView.SelectedItem;
             _selectedAnswers.Remove(unselectedAnswer);
             AnswerUnselected?.Invoke();
         }
@@ -47,24 +46,25 @@ namespace StudentTestingApp.View
         #region IQuestionView
 
         public event Action AnswerSelected;
+
         public event Action AnswerUnselected;
-        public int SelectedAnswerId => ((Tuple<int, string>) AnswersListView.SelectedItem).Item1;
-        public int UnselectedAnswerId => ((Tuple<int, string>) SelectedAnswersListView.SelectedItem).Item1;
+
+        public int SelectedAnswerId => ((Tuple<int, string>)AnswersListView.SelectedItem).Item1;
+
+        public int UnselectedAnswerId => ((Tuple<int, string>)SelectedAnswersListView.SelectedItem).Item1;
 
         public void Show()
         {
-            
+
         }
 
         public void Close()
         {
-            
+
         }
 
-        public void SetSelectionMode(SelectionMode selectionMode)
-        {
+        public void SetSelectionMode(SelectionMode selectionMode) =>
             _selectionMode = selectionMode;
-        }
 
         public void SetQuestion(string text, byte[] image)
         {
@@ -72,9 +72,7 @@ namespace StudentTestingApp.View
             {
                 TextLabel.Text = text;
                 if (image != null)
-                {
                     Image.Source = ImageSource.FromStream(() => new MemoryStream(image));
-                }
             });
         }
 

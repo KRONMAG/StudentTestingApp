@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="StudentTestingApp.View.SettingsPage"
+             BackgroundColor="#616161">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackLayout Spacing="0">
+            <Label Text="Student Testing App" Style="{StaticResource Header}" />
+            <Label Text="Настройки" Style="{StaticResource Title}" />
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <Button Style="{StaticResource MenuItem}" Text="Обновление тестов" ImageSource="download.png"
+                        FontAttributes="None" HeightRequest="50" Clicked="UpdateTestsClicked"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

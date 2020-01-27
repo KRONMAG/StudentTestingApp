@@ -10,10 +10,8 @@ namespace StudentTestingApp.Presenter
         private readonly ITestStartView _testStartView;
         private Test _test;
 
-        public TestStartPresenter(ITestStartView testStartView)
-        {
+        public TestStartPresenter(ITestStartView testStartView) =>
             _testStartView = testStartView;
-        }
 
         public void Run(Test parameter)
         {
@@ -29,9 +27,7 @@ namespace StudentTestingApp.Presenter
             var studentNameIncorrect = string.IsNullOrEmpty(studentName) ||
                                      string.IsNullOrWhiteSpace(studentName);
             if (studentNameIncorrect)
-            {
-                _testStartView.ShowError("Введите свои фамилию, имя, отчество для начала тестирования");
-            }
+                _testStartView.ShowMessage("Введите свои фамилию, имя, отчество для начала тестирования");
             else
             {
                 _testStartView.Close();

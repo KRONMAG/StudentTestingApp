@@ -14,40 +14,27 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void StartTestTapped(object sender, EventArgs e)
-        {
+        private void StartTestTapped(object sender, EventArgs e) =>
             TestStarted?.Invoke();
-        }
 
         #region ITestStartView
 
         public event Action TestStarted;
+
         public string StudentName => StudentNameEntry.Text;
 
-        public void Show()
-        {
+        public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Application.Current.MainPage == null)
-                {
-                    Application.Current.MainPage = new NavigationPage(this);
-                }
-                else
-                {
-                    Application.Current.MainPage.Navigation.PushAsync(this);
-                }
-            });
-        }
+                Application.Current.MainPage.Navigation.PushAsync(this));
 
         public void Close()
         {
-            
+
         }
 
-        public void ShowError(string message)
-        {
-            Device.BeginInvokeOnMainThread(() => { DisplayAlert("Ошибка", message, "Назад"); });
-        }
+        public void ShowMessage(string message) =>
+            Device.BeginInvokeOnMainThread(() =>
+            DisplayAlert(string.Empty, message, "Назад"));
 
         public void SetTest(string name, int questionCount, int? duration)
         {

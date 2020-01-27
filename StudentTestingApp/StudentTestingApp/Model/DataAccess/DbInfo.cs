@@ -1,23 +1,21 @@
 ﻿using System;
+using StudentTestingApp.Model.DataAccess.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
-    public class DbInfo
+    public class DbInfo : IDbInfo
     {
-        private static DbInfo _instance;
+        public string TestsDbFileName => "StudentTestingDb.db";
 
-        public static DbInfo Instance => _instance ?? (_instance = new DbInfo());
+        public string TestsDbLocalFilePath => GetLocalFilePath(TestsDbFileName);
 
-        public string DbFileName { get; }
-        public string DbLocalFilePath { get; }
-        public string DbRemoteFilePath { get; }
+        public string TestsDbRemoteFilePath => $"/{TestsDbFileName}";
 
-        private DbInfo()
-        {
-            var dbFileName = "StudentTestingDb.db";
-            DbFileName = dbFileName;
-            DbLocalFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/{dbFileName}";
-            DbRemoteFilePath = dbFileName;
-        }
+        public string AppDbFileName => "App.db";
+
+        public string AppDbFilePath => GetLocalFilePath(AppDbFileName);
+
+        private string GetLocalFilePath(string fileName) =>
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/{fileName}";
     }
 }

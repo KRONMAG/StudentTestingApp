@@ -2,6 +2,6 @@
 {
     public interface IPreloadView : IView
     {
-        void ShowError(string message);
+        void ShowMessage(string message);
     }
 }

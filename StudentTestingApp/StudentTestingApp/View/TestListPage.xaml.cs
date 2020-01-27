@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,39 +16,33 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void TestTapped(object sender, ItemTappedEventArgs e)
-        {
+        private void TestTapped(object sender, ItemTappedEventArgs e) =>
             TestSelected?.Invoke();
-        }
 
         #region ITestListView
 
         public event Action TestSelected;
-        public int SelectedTestId => ((Tuple<int, string>) TestsListView.SelectedItem).Item1;
 
-        public void Show()
-        {
+        public int SelectedTestId => ((Tuple<int, string>)TestsListView.SelectedItem).Item1;
+
+        public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Application.Current.MainPage == null)
-                {
-                    Application.Current.MainPage = new NavigationPage(this);
-                }
-                else
-                {
-                    Application.Current.MainPage.Navigation.PushAsync(this);
-                }
-            });
-        }
+                Application.Current.MainPage.Navigation.PushAsync(this));
 
         public void Close()
         {
-            
+
         }
 
         public void SetTests(IEnumerable<Tuple<int, string>> tests)
         {
-            Device.BeginInvokeOnMainThread(() => { TestsListView.ItemsSource = tests; });
+            var isEmpty = !tests.Any();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                EmptyTestListLabel.IsVisible = isEmpty;
+                TestListScrollView.IsVisible = !isEmpty;
+                TestsListView.ItemsSource = tests;
+            });
         }
 
         #endregion

@@ -12,7 +12,8 @@
             <Label Text="Student Testing App" Style="{StaticResource Header}" />
             <Label Text="Предметы" Style="{StaticResource Title}" />
         </StackLayout>
-        <ScrollView Grid.Row="1">
+        <Label Grid.Row="1" x:Name="EmptySubjectListLabel" Style="{StaticResource EmptyListMessage}" Text="Список предметов пуст"/>
+        <ScrollView Grid.Row="1" x:Name="SubjectListScrollView" IsVisible="False">
             <ListView x:Name="SubjectsListView" Style="{StaticResource List}" ItemTapped="SubjectTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
