@@ -1,11 +1,11 @@
-﻿namespace StudentTestingApp.Presenter.Interface
+﻿namespace StudentTestingApp.Presenter.Common
 {
     public interface IPresenter
     {
         void Run();
     }
 
-    public interface IPresenter<in T>
+    public interface IPresenter<T>
     {
         void Run(T parameter);
     }

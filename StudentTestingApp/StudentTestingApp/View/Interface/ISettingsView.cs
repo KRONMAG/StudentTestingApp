@@ -4,7 +4,7 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ISettingsView : IView
     {
-        event Action TestsUpdateSelected;
+        event Action UpdateTestsSelected;
         void ShowMessage(string message);
     }
 }

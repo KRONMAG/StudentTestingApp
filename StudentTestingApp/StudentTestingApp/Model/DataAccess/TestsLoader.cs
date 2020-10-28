@@ -10,12 +10,13 @@ namespace StudentTestingApp.Model.DataAccess
     {
         private const string FILE_HASH_KEY = "tests-file-hash";
 
-        private IDbInfo _dbInfo;
-        private ICloudStorage _cloudStorage;
-        private ISettings _settings;
+        private readonly DbInfo _dbInfo;
+        private readonly CloudStorage _cloudStorage;
+        private readonly ISettings _settings;
 
-        public bool TestsAreLoaded => File.Exists(_dbInfo.TestsDbLocalFilePath) &&
-                                      _settings.GetValueOrDefault(FILE_HASH_KEY, null) != null;
+        public bool TestsAreLoaded =>
+            File.Exists(_dbInfo.TestsDbLocalFilePath) &&
+                _settings.GetValueOrDefault(FILE_HASH_KEY, null) != null;
 
         public bool TestsAreUpdated
         {
@@ -30,9 +31,10 @@ namespace StudentTestingApp.Model.DataAccess
             }
         }
 
-        public bool InternetConnectionIsActive => Connectivity.NetworkAccess == NetworkAccess.Internet;
+        public bool IsInternetConnectionActive =>
+            Connectivity.NetworkAccess == NetworkAccess.Internet;
 
-        public TestsLoader(IDbInfo dbInfo, ICloudStorage cloudStorage)
+        public TestsLoader(DbInfo dbInfo, CloudStorage cloudStorage)
         {
             _dbInfo = dbInfo;
             _cloudStorage = cloudStorage;

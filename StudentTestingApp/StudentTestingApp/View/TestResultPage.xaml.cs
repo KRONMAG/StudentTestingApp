@@ -26,11 +26,6 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage = new NavigationPage(this));
 
-        public void Close()
-        {
-            
-        }
-
         public void SetTestResult(int elapsedTime, double result)
         {
             Device.BeginInvokeOnMainThread(() =>

@@ -1,40 +1,42 @@
-﻿using System.Threading.Tasks;
-using StudentTestingApp.Presenter.Interface;
+﻿using StudentTestingApp.View.Interface;
+using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.Model.DataAccess.Interface;
-using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class SettingsPresenter : IPresenter
+    public class SettingsPresenter : BasePresenter<ISettingsView>
     {
-        private ISettingsView _settingsView;
-        private ITestsLoader _testsLoader;
+        private readonly ITestsLoader _testsLoader;
 
-        public SettingsPresenter(ISettingsView settingsView, ITestsLoader testsLoader)
+        public SettingsPresenter(ApplicationController controller, ISettingsView view, ITestsLoader testsLoader) :
+            base(controller, view)
         {
-            _settingsView = settingsView;
             _testsLoader = testsLoader;
+            view.UpdateTestsSelected += UpdateTestSelected;
         }
 
-        public void Run()
+        private void UpdateTestSelected()
         {
-            _settingsView.TestsUpdateSelected += TestsUpdateSelected;
-            _settingsView.Show();
-        }
-
-        private void TestsUpdateSelected()
-        {
-            Task.Run(() =>
-            {
-                if (!_testsLoader.InternetConnectionIsActive)
-                    _settingsView.ShowMessage("Отсутствует интернет-соединение для проверки обновлений");
-                else if (_testsLoader.TestsAreUpdated)
-                    _settingsView.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
-                else if (!_testsLoader.LoadTests())
-                    _settingsView.ShowMessage("При обновлении тестов возникла ошибка");
-                else
-                    _settingsView.ShowMessage("Тесты успешно обновлены");
-            });
+            if (!_testsLoader.IsInternetConnectionActive)
+                view.ShowMessage("Отсутствует интернет-соединение для проверки обновлений");
+            else if (_testsLoader.TestsAreUpdated)
+                view.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
+            else
+                Worker.Run
+                (
+                    () => _testsLoader.LoadTests(),
+                    result =>
+                    {
+                        if (result)
+                        {
+                            view.ShowMessage("Тесты успешно обновлены");
+                            controller.CreatePresenter<MainPresenter>().Run();
+                        }
+                        else
+                            view.ShowMessage("При обновлении тестов возникла ошибка");
+                    },
+                    _ => { }
+                );
         }
     }
 }

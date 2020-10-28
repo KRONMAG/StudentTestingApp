@@ -15,20 +15,15 @@ namespace StudentTestingApp.View
         }
 
         private void UpdateTestsClicked(object sender, EventArgs e) =>
-            TestsUpdateSelected?.Invoke();
+            UpdateTestsSelected?.Invoke();
 
         #region ISettingsView
 
-        public event Action TestsUpdateSelected;
+        public event Action UpdateTestsSelected;
 
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));
-
-        public void Close()
-        {
-
-        }
 
         public void ShowMessage(string message) =>
             Device.BeginInvokeOnMainThread(() =>

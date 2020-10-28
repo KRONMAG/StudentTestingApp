@@ -5,7 +5,7 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
-using SelectionMode = StudentTestingApp.View.Interface.SelectionMode;
+using SelectionMode = StudentTestingApp.View.SelectionMode;
 
 namespace StudentTestingApp.View
 {
@@ -54,11 +54,6 @@ namespace StudentTestingApp.View
         public int UnselectedAnswerId => ((Tuple<int, string>)SelectedAnswersListView.SelectedItem).Item1;
 
         public void Show()
-        {
-
-        }
-
-        public void Close()
         {
 
         }

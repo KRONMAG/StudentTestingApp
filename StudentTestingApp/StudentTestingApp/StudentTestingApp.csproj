@@ -30,6 +30,9 @@
     <Compile Update="View\SubjectListPage.xaml.cs">
       <DependentUpon>SubjectListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="View\TestsPage.xaml.cs">
+      <DependentUpon>TestsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\TestResultPage.xaml.cs">
       <DependentUpon>TestResultPage.xaml</DependentUpon>
     </Compile>
@@ -51,7 +54,7 @@
     <EmbeddedResource Update="View\PreloadPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\TestListPage.xaml">
+    <EmbeddedResource Update="View\TestsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\TestNavigationPage.xaml">

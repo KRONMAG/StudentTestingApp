@@ -1,9 +1,8 @@
 ﻿using System;
-using StudentTestingApp.Model.DataAccess.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
-    public class DbInfo : IDbInfo
+    public class DbInfo
     {
         public string TestsDbFileName => "StudentTestingDb.db";
 

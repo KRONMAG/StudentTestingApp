@@ -1,4 +1,4 @@
-﻿namespace StudentTestingApp.View.Interface
+﻿namespace StudentTestingApp.View
 {
     public enum SelectionMode
     {

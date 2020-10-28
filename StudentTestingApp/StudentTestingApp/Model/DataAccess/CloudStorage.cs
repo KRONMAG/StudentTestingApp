@@ -1,19 +1,22 @@
 ﻿using System.IO;
 using Dropbox.Api;
-using StudentTestingApp.Model.DataAccess.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
-    public class CloudStorage : ICloudStorage
+    public class CloudStorage
     {
-        private const string ACCESS_TOKEN = "ACCESS TOKEN ON DROPBOX API";
+        private const string ACCESS_TOKEN = "QiNJ84AteaUAAAAAAAAAAWNpABuTzBfouVCnhUDdfzBtcmq5TvADh39UmsoRmssR";
 
         public bool DownloadFile(string remoteFilePath, string localFilePath)
         {
             try
             {
                 var client = new DropboxClient(ACCESS_TOKEN);
-                var buffer = client.Files.DownloadAsync(remoteFilePath).Result.GetContentAsByteArrayAsync().Result;
+                var buffer = client.Files
+                    .DownloadAsync(remoteFilePath)
+                    .Result
+                    .GetContentAsByteArrayAsync()
+                    .Result;
                 File.WriteAllBytes(localFilePath, buffer);
                 return true;
             }

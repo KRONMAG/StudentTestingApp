@@ -1,39 +1,26 @@
 ﻿using System;
 using StudentTestingApp.Model.Entity;
-using StudentTestingApp.Presenter.Interface;
+using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestStartPresenter : IPresenter<Test>
+    public class TestStartPresenter : BasePresenter<ITestStartView, Test>
     {
-        private readonly ITestStartView _testStartView;
         private Test _test;
 
-        public TestStartPresenter(ITestStartView testStartView) =>
-            _testStartView = testStartView;
+        public TestStartPresenter(ApplicationController controller, ITestStartView view) :
+            base(controller, view) =>
+            view.TestStarted += TestStarted;
 
-        public void Run(Test parameter)
-        {
-            _test = parameter;
-            _testStartView.SetTest(parameter.Name, parameter.QuestionCount, parameter.Duration);
-            _testStartView.TestStarted += TestStarted;
-            _testStartView.Show();
-        }
+        private void TestStarted() =>
+            controller.CreatePresenter<TestNavigationPresenter, Test>().Run(_test);
 
-        private void TestStarted()
+        public override void Run(Test test)
         {
-            var studentName = _testStartView.StudentName;
-            var studentNameIncorrect = string.IsNullOrEmpty(studentName) ||
-                                     string.IsNullOrWhiteSpace(studentName);
-            if (studentNameIncorrect)
-                _testStartView.ShowMessage("Введите свои фамилию, имя, отчество для начала тестирования");
-            else
-            {
-                _testStartView.Close();
-                ApplicationController.Instance.CreatePresenter<TestNavigationPresenter, Tuple<Test, string>>()
-                    .Run(new Tuple<Test, string>(_test, studentName));
-            }
+            _test = test;
+            view.SetTest(test.Name, test.QuestionsCount, test.Duration);
+            view.Show();
         }
     }
 }

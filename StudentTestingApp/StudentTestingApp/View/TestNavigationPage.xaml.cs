@@ -35,11 +35,6 @@ namespace StudentTestingApp.View
                     BarBackgroundColor = Color.FromHex("212121")
                 });
 
-        public void Close()
-        {
-
-        }
-
         public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
         {
             Device.BeginInvokeOnMainThread(() =>

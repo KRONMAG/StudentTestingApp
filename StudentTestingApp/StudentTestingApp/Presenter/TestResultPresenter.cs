@@ -1,39 +1,28 @@
 using StudentTestingApp.Model.Entity;
-using StudentTestingApp.Model.DataAccess.Interface;
-using StudentTestingApp.Presenter.Interface;
 using StudentTestingApp.View.Interface;
-using System.Linq;
+using StudentTestingApp.Presenter.Common;
 
 namespace StudentTestingApp.Presenter
 {
-    public class TestResultPresenter : IPresenter<TestResult>
+    public class TestResultPresenter : BasePresenter<ITestResultView, TestResult>
     {
-        private readonly ITestResultView _testResultView;
-        private readonly IRepository<TestResult> _testResultRepository;
-        private TestResult _testResult;
+        public TestResultPresenter(
+            ApplicationController controller,
+            ITestResultView view) :
+            base(controller, view) =>
+            view.DelayedResultUploadingSelected += GoToMainViewSelected;
 
-        public TestResultPresenter(ITestResultView testResultView, IRepository<TestResult> testResultRepository)
-        {
-            _testResultView = testResultView;
-            _testResultRepository = testResultRepository;
-        }
+        private void GoToMainViewSelected() =>
+            controller.CreatePresenter<MainPresenter>().Run();
 
-        public void Run(TestResult parameter)
+        public override void Run(TestResult testResult)
         {
-            var elapsedTime = (int) (parameter.EndDate - parameter.StartDate).TotalSeconds;
-            var result = parameter.Result;
-            _testResult = parameter;
-            _testResultView.DelayedResultUploadingSelected += DelayedResultUploadingSelected;
-            _testResultView.Show();
-            _testResultView.SetTestResult(elapsedTime, result);
-        }
-
-        private void DelayedResultUploadingSelected()
-        {
-            _testResultRepository.Add(_testResult);
-            _testResultView.ShowMessage("Результат тестирования был сохранен локально");
-            _testResultView.Close();
-            ApplicationController.Instance.CreatePresenter<MainPresenter>().Run();
+            view.SetTestResult
+            (
+                (int)(testResult.EndDate - testResult.StartDate).TotalSeconds,
+                testResult.Score
+            );
+            view.Show();
         }
     }
 }

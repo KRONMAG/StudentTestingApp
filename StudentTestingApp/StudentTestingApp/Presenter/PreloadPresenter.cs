@@ -1,34 +1,36 @@
-﻿using System.Threading.Tasks;
-using StudentTestingApp.Model.DataAccess.Interface;
-using StudentTestingApp.Presenter.Interface;
+﻿using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    public class PreloadPresenter : IPresenter
+    public class PreloadPresenter : BasePresenter<IPreloadView>
     {
-        private readonly IPreloadView _preloadView;
         private readonly ITestsLoader _testsLoader;
 
-        public PreloadPresenter(IPreloadView preloadView, ITestsLoader testsLoader)
-        {
-            _preloadView = preloadView;
+        public PreloadPresenter
+            (ApplicationController controller,
+            IPreloadView view, ITestsLoader testsLoader) :
+            base(controller, view) =>
             _testsLoader = testsLoader;
-        }
 
-        public void Run()
+        public override void Run()
         {
-            _preloadView.Show();
-            Task.Run(() =>
-            {
-                if (!_testsLoader.TestsAreLoaded)
-                    if (!_testsLoader.InternetConnectionIsActive)
-                        _preloadView.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединения");
-                    else if (!_testsLoader.LoadTests())
-                        _preloadView.ShowMessage("При загрузке тестов возникла ошибка");
-                _preloadView.Close();
-                ApplicationController.Instance.CreatePresenter<MainPresenter>().Run();
-            });
+            view.Show();
+            Worker.Run
+            (
+                () =>
+                {
+                    if (!_testsLoader.TestsAreLoaded)
+                        if (!_testsLoader.IsInternetConnectionActive)
+                            view.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединения");
+                        else if (!_testsLoader.LoadTests())
+                            view.ShowMessage("При загрузке тестов возникла ошибка");
+                    return true;
+                },
+                _ => controller.CreatePresenter<MainPresenter>().Run(),
+                _ => { }
+            );
         }
     }
 }

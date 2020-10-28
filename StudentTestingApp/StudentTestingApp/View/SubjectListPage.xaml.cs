@@ -9,9 +9,9 @@ using StudentTestingApp.View.Interface;
 namespace StudentTestingApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SubjectListPage : ContentPage, ISubjectListView
+    public partial class SubjectsPage : ContentPage, ISubjectsView
     {
-        public SubjectListPage()
+        public SubjectsPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
@@ -29,11 +29,6 @@ namespace StudentTestingApp.View
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));
-
-        public void Close()
-        {
-
-        }
 
         public void SetSubjects(IEnumerable<Tuple<int, string>> subjects)
         {

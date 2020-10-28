@@ -1,11 +1,9 @@
 ﻿using SQLite;
-using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity;
-using StudentTestingApp.Model.Entity.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
-    public class DbHelper : IDbHelper
+    public class DbHelper
     {
         private DbInfo _dbInfo;
 
@@ -14,7 +12,7 @@ namespace StudentTestingApp.Model.DataAccess
             _dbInfo = dbInfo;
         }
 
-        public SQLiteConnection GetConnection<T>() where T: class, IEntity, new()
+        public SQLiteConnection GetConnection<T>()
         {
             SQLiteConnection connection;
             if (typeof(T) == typeof(TestResult))

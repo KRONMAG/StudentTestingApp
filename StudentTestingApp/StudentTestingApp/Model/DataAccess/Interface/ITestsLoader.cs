@@ -4,7 +4,7 @@
     {
         bool TestsAreLoaded { get; }
         bool TestsAreUpdated { get; }
-        bool InternetConnectionIsActive { get; }
+        bool IsInternetConnectionActive { get; }
         bool LoadTests();
     }
 }

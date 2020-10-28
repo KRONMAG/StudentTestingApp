@@ -1,26 +1,21 @@
-﻿using StudentTestingApp.Presenter.Interface;
+﻿using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
-    class MainPresenter : IPresenter
+    class MainPresenter : BasePresenter<IMainView>
     {
-        private readonly IMainView _mainView;
-
-        public MainPresenter(IMainView mainView) =>
-            _mainView = mainView;
-
-        public void Run()
+        public MainPresenter(ApplicationController controller, IMainView view) :
+            base(controller, view)
         {
-            _mainView.SubjectListViewSelected += SubjectListViewSelected;
-            _mainView.SettingsViewSelected += SettingsViewSelected;
-            _mainView.Show();
+            view.SubjectListViewSelected += SubjectListViewSelected;
+            view.SettingsViewSelected += SettingsViewSelected;
         }
 
         private void SubjectListViewSelected() =>
-            ApplicationController.Instance.CreatePresenter<SubjectListPresenter>().Run();
+            controller.CreatePresenter<SubjectsPresenter>().Run();
 
         private void SettingsViewSelected() =>
-            ApplicationController.Instance.CreatePresenter<SettingsPresenter>().Run();
+            controller.CreatePresenter<SettingsPresenter>().Run();
     }
 }

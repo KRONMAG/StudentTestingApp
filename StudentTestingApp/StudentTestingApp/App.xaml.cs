@@ -6,6 +6,7 @@ using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter;
 using StudentTestingApp.View;
 using StudentTestingApp.View.Interface;
+using StudentTestingApp.Presenter.Common;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
@@ -16,40 +17,41 @@ namespace StudentTestingApp
         public App()
         {
             InitializeComponent();
-            ApplicationController.Instance.RegisterModelAsSingleton<ICloudStorage, CloudStorage>();
-            ApplicationController.Instance.RegisterModelAsSingleton<IDbInfo, DbInfo>();
-            ApplicationController.Instance.RegisterModelAsSingleton<ITestsLoader, TestsLoader>();
-            ApplicationController.Instance.RegisterModelAsSingleton<IDbHelper, DbHelper>();
-            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>();
-            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
-            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
-            ApplicationController.Instance.RegisterModel<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>();
-            ApplicationController.Instance.RegisterModel<IRepository<TestResult>, Repository<TestResult>>();
-            ApplicationController.Instance.RegisterView<IPreloadView, PreloadPage>();
-            ApplicationController.Instance.RegisterView<ISubjectListView, SubjectListPage>();
-            ApplicationController.Instance.RegisterView<ITestListView, TestListPage>();
-            ApplicationController.Instance.RegisterView<ITestStartView, TestStartPage>();
-            ApplicationController.Instance.RegisterView<ITestNavigationView, TestNavigationPage>();
-            ApplicationController.Instance.RegisterView<IQuestionView, QuestionPage>();
-            ApplicationController.Instance.RegisterView<ITestResultView, TestResultPage>();
-            ApplicationController.Instance.RegisterView<ISettingsView, SettingsPage>();
-            ApplicationController.Instance.RegisterView<IMainView, MainPage>();
-            ApplicationController.Instance.CreatePresenter<PreloadPresenter>().Run();
+            var controller = new ApplicationController();
+            controller.RegisterSingleton<CloudStorage>();
+            controller.RegisterSingleton<DbInfo>();
+            controller.RegisterSingleton<ITestsLoader, TestsLoader>();
+            controller.RegisterSingleton<DbHelper>();
+            controller.Register<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>();
+            controller.Register<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
+            controller.Register<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
+            controller.Register<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>();
+            controller.Register<IRepository<TestResult>, Repository<TestResult>>();
+            controller.Register<IPreloadView, PreloadPage>();
+            controller.Register<ISubjectsView, SubjectsPage>();
+            controller.Register<ITestsView, TestsPage>();
+            controller.Register<ITestStartView, TestStartPage>();
+            controller.Register<ITestNavigationView, TestNavigationPage>();
+            controller.Register<IQuestionView, QuestionPage>();
+            controller.Register<ITestResultView, TestResultPage>();
+            controller.Register<ISettingsView, SettingsPage>();
+            controller.Register<IMainView, MainPage>();
+            controller.CreatePresenter<PreloadPresenter>().Run();
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+
         }
     }
 }

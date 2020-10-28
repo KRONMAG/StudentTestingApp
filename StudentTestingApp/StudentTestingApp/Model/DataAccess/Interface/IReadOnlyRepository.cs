@@ -4,9 +4,9 @@ using StudentTestingApp.Model.Entity.Interface;
 
 namespace StudentTestingApp.Model.DataAccess.Interface
 {
-    public interface IReadOnlyRepository<out T> where T : class, IEntity, new()
+    public interface IReadOnlyRepository<T> where T : class, IEntity, new()
     {
         T Get(int id);
-        IEnumerable<T> GetAll(Predicate<T> predicate = null);
+        List<T> Get(Predicate<T> predicate = null);
     }
 }

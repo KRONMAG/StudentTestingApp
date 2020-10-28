@@ -27,14 +27,9 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));
 
-        public void Close()
-        {
-
-        }
-
         public void ShowMessage(string message) =>
             Device.BeginInvokeOnMainThread(() =>
-            DisplayAlert(string.Empty, message, "Назад"));
+                DisplayAlert(string.Empty, message, "Назад"));
 
         public void SetTest(string name, int questionCount, int? duration)
         {
@@ -43,7 +38,7 @@ namespace StudentTestingApp.View
                 NameLabel.Text = name;
                 QuestionCountLabel.Text = $"Количество вопросов: {questionCount}";
                 DurationLabel.Text = duration == null
-                    ? "Продолжительность неограниченна"
+                    ? "Продолжительность неограничена"
                     : $"Продолжительность: {duration} сек.";
             });
         }

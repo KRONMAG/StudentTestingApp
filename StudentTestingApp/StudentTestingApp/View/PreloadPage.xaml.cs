@@ -31,11 +31,6 @@ namespace StudentTestingApp.View
             });
         }
 
-        public void Close()
-        {
-
-        }
-
         public void ShowMessage(string message) =>
             Device.BeginInvokeOnMainThread(() =>
                 DisplayAlert(string.Empty, message, "Назад"));
