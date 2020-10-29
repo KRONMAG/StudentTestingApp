@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
@@ -16,6 +17,7 @@ namespace StudentTestingApp.Presenter
         private readonly IRepository<TestResult> _testResultsRepository;
         private readonly List<QuestionPresenter> _presenters;
         private TestResult _testResult;
+        private Timer _timer;
 
         public TestNavigationPresenter
             (ApplicationController controller,
@@ -29,11 +31,12 @@ namespace StudentTestingApp.Presenter
             _subjectsRepository = subjectsRepository;
             _testResultsRepository = testResultsRepository;
             _presenters = new List<QuestionPresenter>();
-            view.TestEnded += TestEnded;
+            view.FinishTestEarlySelected += TestEnded;
         }
 
         private void TestEnded()
         {
+            _timer?.Dispose();
             _testResult.EndDate = DateTime.Now;
             _testResult.Score = Math.Round
             (
@@ -64,7 +67,15 @@ namespace StudentTestingApp.Presenter
             view.SetQuestionViews(views);
             if (test.Duration != null)
             {
-                view.StartTimer((int)test.Duration);
+                var remainingTime = test.Duration.Value;
+                view.SetRemainingTime(remainingTime);
+                _timer = new Timer(state =>
+                {
+                    if ((remainingTime -= 1) > 0)
+                        view.SetRemainingTime(remainingTime);
+                    else
+                        TestEnded();
+                }, null, 1000, 1000);
             }
             _testResult = new TestResult();
             _testResult.SubjectName = _subjectsRepository
@@ -73,7 +84,6 @@ namespace StudentTestingApp.Presenter
                 .Name;
             _testResult.TestName = test.Name;
             _testResult.StartDate = DateTime.Now;
-            _testResult.IsSended = false;
             view.Show();
         }
     }

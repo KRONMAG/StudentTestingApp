@@ -4,8 +4,8 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ITestResultView : IView
     {
-        void SetTestResult(int elapsedTime, double result);
+        event Action GoToMainViewSelected;
+        void SetTestResult(int elapsedTime, double score);
         void ShowMessage(string message);
-        event Action DelayedResultUploadingSelected;
     }
 }

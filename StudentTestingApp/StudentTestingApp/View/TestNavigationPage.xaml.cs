@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
@@ -15,18 +14,18 @@ namespace StudentTestingApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
-            ClockIconNameToolbarItem.IconImageSource = "lock_clock.png";
+            ClockToolbarItem.IconImageSource = "lock_clock.png";
         }
 
-        private async void OkClicked(object sender, EventArgs e)
+        private async void FinishTestEarlyClicked(object sender, EventArgs e)
         {
             if (await DisplayAlert("Выход", "Вы действительно хотите завершить тестирование?", "Да", "Нет"))
-                TestEnded?.Invoke();
+                FinishTestEarlySelected?.Invoke();
         }
 
         #region ITestNavigationView
 
-        public event Action TestEnded;
+        public event Action FinishTestEarlySelected;
 
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
@@ -49,21 +48,13 @@ namespace StudentTestingApp.View
             });
         }
 
-        public void StartTimer(int testDuration)
+        public void SetRemainingTime(int seconds)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                ClockIconNameToolbarItem.IconImageSource = "clock.png";
-                RemainingSecondsToolbarItem.Text = testDuration.ToString();
+                ClockToolbarItem.IconImageSource = "clock.png";
+                RemainingSecondsToolbarItem.Text = seconds.ToString();
             });
-            new Timer(state =>
-            {
-                int remainingSeconds = int.Parse(RemainingSecondsToolbarItem.Text) - 1;
-                Device.BeginInvokeOnMainThread(() =>
-                    RemainingSecondsToolbarItem.Text = remainingSeconds.ToString());
-                if (remainingSeconds == 0)
-                    TestEnded?.Invoke();
-            }, null, 1000, 1000);
         }
 
         #endregion

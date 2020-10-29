@@ -14,16 +14,20 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void SubjectListViewClicked(object sender, EventArgs e) =>
-            SubjectListViewSelected?.Invoke();
+        private void SubjectsViewClicked(object sender, EventArgs e) =>
+            SubjectsViewSelected?.Invoke();
 
-        private void SettingsViewClicked(object sender, EventArgs e) =>
-            SettingsViewSelected?.Invoke();
+        private void TestResultsViewClicked(object sender, EventArgs e) =>
+            TestResultsViewSelected?.Invoke();
+
+        private void UpdateTestsClicked(object sender, EventArgs e) =>
+            UpdateTestsSelected?.Invoke();
 
         #region IMainView
 
-        public event Action SubjectListViewSelected;
-        public event Action SettingsViewSelected;
+        public event Action SubjectsViewSelected;
+        public event Action TestResultsViewSelected;
+        public event Action UpdateTestsSelected;
 
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
@@ -31,6 +35,10 @@ namespace StudentTestingApp.View
                 {
                     BarBackgroundColor = Color.FromHex("212121")
                 });
+
+        public void ShowMessage(string message) =>
+            Device.BeginInvokeOnMainThread(() =>
+                DisplayAlert(string.Empty, message, "Назад"));
 
         #endregion
     }

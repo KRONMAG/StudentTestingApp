@@ -19,6 +19,7 @@ namespace StudentTestingApp.Presenter
             view;
 
         public bool RightAnswerSelected =>
+            _selectedAnswers.Values.Count == _rightAnswersCount &&
             _selectedAnswers.Count(pair => pair.Value.Right) == _rightAnswersCount;
 
         public QuestionPresenter
@@ -61,8 +62,16 @@ namespace StudentTestingApp.Presenter
                 .ToList();
             _rightAnswersCount = answers.Count(answer => answer.Right);
             view.SetQuestion(question.Text, question.Image);
-            view.SetSelectionMode(_rightAnswersCount == 1 ? SelectionMode.Single : SelectionMode.Multiply);
-            view.SetAnswers(answers.Select(answer => new Tuple<int, string>(answer.Id, answer.Text)));
+            view.SetSelectionMode
+            (
+                _rightAnswersCount == 1 ? SelectionMode.Single : SelectionMode.Multiply
+            );
+            view.SetAnswers
+            (
+                answers
+                    .Select(answer => new Tuple<int, string>(answer.Id, answer.Text))
+                    .ToList()
+            );
             view.Show();
         }
     }

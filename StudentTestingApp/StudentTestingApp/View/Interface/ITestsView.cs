@@ -5,8 +5,8 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ITestsView : IView
     {
-        int SelectedTestId { get; }
-        void SetTests(IEnumerable<Tuple<int, string>> tests);
         event Action TestSelected;
+        int SelectedTestId { get; }
+        void SetTests(IReadOnlyList<Tuple<int, string>> tests);
     }
 }

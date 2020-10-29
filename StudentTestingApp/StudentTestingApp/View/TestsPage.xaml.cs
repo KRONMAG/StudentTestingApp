@@ -29,13 +29,13 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));
 
-        public void SetTests(IEnumerable<Tuple<int, string>> tests)
+        public void SetTests(IReadOnlyList<Tuple<int, string>> tests)
         {
             var isEmpty = !tests.Any();
             Device.BeginInvokeOnMainThread(() =>
             {
-                EmptyTestListLabel.IsVisible = isEmpty;
-                TestListScrollView.IsVisible = !isEmpty;
+                EmptyTestsLabel.IsVisible = isEmpty;
+                TestsListView.IsVisible = !isEmpty;
                 TestsListView.ItemsSource = tests;
             });
         }

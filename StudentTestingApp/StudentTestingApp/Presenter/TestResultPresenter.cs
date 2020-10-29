@@ -10,7 +10,7 @@ namespace StudentTestingApp.Presenter
             ApplicationController controller,
             ITestResultView view) :
             base(controller, view) =>
-            view.DelayedResultUploadingSelected += GoToMainViewSelected;
+            view.GoToMainViewSelected += GoToMainViewSelected;
 
         private void GoToMainViewSelected() =>
             controller.CreatePresenter<MainPresenter>().Run();

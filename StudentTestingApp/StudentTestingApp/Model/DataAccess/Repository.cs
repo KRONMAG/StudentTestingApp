@@ -13,8 +13,8 @@ namespace StudentTestingApp.Model.DataAccess
         public void Add(T item) =>
             dbConnection.Insert(item);
 
-        public void Remove(T item) =>
-            dbConnection.Delete(item);
+        public void Remove(int id) =>
+            dbConnection.Delete<T>(id);
 
         public void Clear() =>
             dbConnection.DeleteAll<T>();

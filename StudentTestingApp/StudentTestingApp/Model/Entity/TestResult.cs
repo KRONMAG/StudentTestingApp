@@ -10,12 +10,6 @@ namespace StudentTestingApp.Model.Entity
         [Column("id"), PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [Column("class_name")]
-        public string ClassName { get; set; }
-
-        [Column("student_name")]
-        public string StudentName { get; set; }
-
         [Column("subject_name"), NotNull]
         public string SubjectName { get; set; }
 
@@ -30,8 +24,5 @@ namespace StudentTestingApp.Model.Entity
 
         [Column("score"), NotNull]
         public double Score { get; set; }
-
-        [Column("is_sended")]
-        public bool IsSended { get; set; }
     }
 }

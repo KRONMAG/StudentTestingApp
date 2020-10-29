@@ -5,8 +5,8 @@ namespace StudentTestingApp.View.Interface
 {
     public interface ITestNavigationView : IView
     {
+        event Action FinishTestEarlySelected;
         void SetQuestionViews(IEnumerable<IQuestionView> questionViews);
-        void StartTimer(int testDuration);
-        event Action TestEnded;
+        void SetRemainingTime(int seconds);
     }
 }

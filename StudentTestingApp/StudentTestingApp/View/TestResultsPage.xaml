@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StudentTestingApp.View.TestResultsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource MiniLogo}" />
+            <Label Style="{StaticResource Title}" Text="Результаты" />
+        </StackLayout>
+        <Label
+            x:Name="EmptyTestResultsLabel"
+            Grid.Row="1"
+            Style="{StaticResource EmptyListMessage}"
+            Text="Список результатов пуст" />
+        <ListView
+            x:Name="TestResultsListView"
+            Grid.Row="1"
+            IsVisible="False"
+            ItemTapped="TestResultTapped"
+            Style="{StaticResource List}">
+            <ListView.Header>
+                <Button
+                    Clicked="RemoveAllTestResultsClicked"
+                    Style="{StaticResource Command}"
+                    Text="Удалить все" />
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label HorizontalTextAlignment="Center" Style="{StaticResource ListItem}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Item3}" />
+                                    <Span Text=" (" />
+                                    <Span Text="{Binding Item4}" />
+                                    <Span Text=")" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

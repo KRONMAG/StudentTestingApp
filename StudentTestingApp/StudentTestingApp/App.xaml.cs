@@ -17,26 +17,27 @@ namespace StudentTestingApp
         public App()
         {
             InitializeComponent();
-            var controller = new ApplicationController();
-            controller.RegisterSingleton<CloudStorage>();
-            controller.RegisterSingleton<DbInfo>();
-            controller.RegisterSingleton<ITestsLoader, TestsLoader>();
-            controller.RegisterSingleton<DbHelper>();
-            controller.Register<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>();
-            controller.Register<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>();
-            controller.Register<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>();
-            controller.Register<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>();
-            controller.Register<IRepository<TestResult>, Repository<TestResult>>();
-            controller.Register<IPreloadView, PreloadPage>();
-            controller.Register<ISubjectsView, SubjectsPage>();
-            controller.Register<ITestsView, TestsPage>();
-            controller.Register<ITestStartView, TestStartPage>();
-            controller.Register<ITestNavigationView, TestNavigationPage>();
-            controller.Register<IQuestionView, QuestionPage>();
-            controller.Register<ITestResultView, TestResultPage>();
-            controller.Register<ISettingsView, SettingsPage>();
-            controller.Register<IMainView, MainPage>();
-            controller.CreatePresenter<PreloadPresenter>().Run();
+            new ApplicationController()
+                .RegisterSingleton<CloudStorage>()
+                .RegisterSingleton<DbInfo>()
+                .RegisterSingleton<ITestsLoader, TestsLoader>()
+                .RegisterSingleton<DbHelper>()
+                .Register<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>()
+                .Register<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>()
+                .Register<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>()
+                .Register<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>()
+                .Register<IRepository<TestResult>, Repository<TestResult>>()
+                .Register<IPreloadView, PreloadPage>()
+                .Register<ISubjectsView, SubjectsPage>()
+                .Register<ITestsView, TestsPage>()
+                .Register<ITestStartView, TestStartPage>()
+                .Register<ITestNavigationView, TestNavigationPage>()
+                .Register<IQuestionView, QuestionPage>()
+                .Register<ITestResultView, TestResultPage>()
+                .Register<ITestResultsView, TestResultsPage>()
+                .Register<IMainView, MainPage>()
+                .CreatePresenter<PreloadPresenter, bool>()
+                .Run(false);
         }
 
         protected override void OnStart()

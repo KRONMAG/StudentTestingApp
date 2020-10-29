@@ -14,14 +14,12 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void StartTestTapped(object sender, EventArgs e) =>
-            TestStarted?.Invoke();
+        private void StartTestClicked(object sender, EventArgs e) =>
+            StartTestSelected?.Invoke();
 
         #region ITestStartView
 
-        public event Action TestStarted;
-
-        public string StudentName => StudentNameEntry.Text;
+        public event Action StartTestSelected;
 
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>

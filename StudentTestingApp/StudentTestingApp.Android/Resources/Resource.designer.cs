@@ -9032,16 +9032,13 @@ namespace StudentTestingApp.Droid
 			public const int settings = 2131165506;
 			
 			// aapt resource value: 0x7F070143
-			public const int start = 2131165507;
+			public const int tooltip_frame_dark = 2131165507;
 			
 			// aapt resource value: 0x7F070144
-			public const int tooltip_frame_dark = 2131165508;
+			public const int tooltip_frame_light = 2131165508;
 			
 			// aapt resource value: 0x7F070145
-			public const int tooltip_frame_light = 2131165509;
-			
-			// aapt resource value: 0x7F070146
-			public const int upload = 2131165510;
+			public const int upload = 2131165509;
 			
 			static Drawable()
 			{

@@ -16,6 +16,9 @@ namespace StudentTestingApp.View
 
         #region IPreloadPage
 
+        public void SetProcessName(string processName) =>
+            Device.BeginInvokeOnMainThread(() => ProcessNameLabel.Text = processName);
+
         public void Show()
         {
             Application.Current.MainPage = new NavigationPage(this);

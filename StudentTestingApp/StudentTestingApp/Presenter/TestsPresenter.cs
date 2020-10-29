@@ -31,6 +31,7 @@ namespace StudentTestingApp.Presenter
                 _repository
                     .Get(test => test.SubjectId == subject.Id)
                     .Select(test => new Tuple<int, string>(test.Id, test.Name))
+                    .ToList()
             );
             view.Show();
         }

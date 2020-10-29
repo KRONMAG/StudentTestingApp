@@ -1,23 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.View.TestResultPage"
-             BackgroundColor="#616161">
-    <StackLayout BackgroundColor="#424242" VerticalOptions="Center" Padding="0">
-        <Label Text="Результаты тестирования" Style="{StaticResource Title}" HorizontalTextAlignment="Center" />
-        <Label x:Name="ResultLabel" Style="{StaticResource Text}" />
+<ContentPage
+    x:Class="StudentTestingApp.View.TestResultPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#616161">
+    <StackLayout
+        Padding="0"
+        BackgroundColor="#424242"
+        VerticalOptions="Center">
+        <Label
+            HorizontalTextAlignment="Center"
+            Style="{StaticResource Title}"
+            Text="Результат тестирования" />
+        <Label x:Name="ScoreLabel" Style="{StaticResource Text}" />
         <StackLayout Padding="10">
-            <ProgressBar x:Name="ResultProgressBar" ProgressColor="#FFFFFF" />
+            <ProgressBar x:Name="ScoreProgressBar" ProgressColor="#FFFFFF" />
         </StackLayout>
         <Label x:Name="ElapsedTimeLabel" Style="{StaticResource Text}" />
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Image Source="home.png">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="HomeTapped"/>
-                </Image.GestureRecognizers>
-            </Image>
-            <Image Source="upload.png"/>
-        </StackLayout>
+        <Button
+            Clicked="GoToMainPageClicked"
+            HorizontalOptions="Center"
+            Style="{StaticResource Command}"
+            Text="На главную" />
     </StackLayout>
 </ContentPage>

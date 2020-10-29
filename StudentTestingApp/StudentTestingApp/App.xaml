@@ -1,21 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.App">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="StudentTestingApp.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
-        <Style x:Key="Logo" TargetType="Label">
-            <Setter Property="FontSize" Value="50" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa" />
-            <Setter Property="TextColor" Value="#FFFFFF" />
-            <Setter Property="HorizontalOptions" Value="Center" />
+        <Style x:Key="Logo" TargetType="ContentView">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <StackLayout>
+                        <StackLayout.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="50" />
+                                <Setter Property="FontAttributes" Value="Bold" />
+                                <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                                <Setter Property="HorizontalOptions" Value="Center" />
+                            </Style>
+                        </StackLayout.Resources>
+                        <Label Text="Student" />
+                        <Label Text="Testing" />
+                        <Label Text="App" />
+                    </StackLayout>
+                </Setter.Value>
+            </Setter>
         </Style>
-        <Style x:Key="Header" TargetType="Label">
+        <Style x:Key="MiniLogo" TargetType="Label">
             <Setter Property="BackgroundColor" Value="#000000" />
             <Setter Property="FontSize" Value="Large" />
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="FontFamily" Value="Phorsa.ttf#Phorsa" />
             <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="Text" Value="Student Testing App" />
         </Style>
         <Style x:Key="Title" TargetType="Label">
             <Setter Property="BackgroundColor" Value="#212121" />
@@ -23,12 +38,12 @@
             <Setter Property="TextColor" Value="#FFFFFF" />
         </Style>
         <Style x:Key="EmptyListMessage" TargetType="Label">
-            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="VerticalTextAlignment" Value="Center"/>
-            <Setter Property="BackgroundColor" Value="#616161"/>
-            <Setter Property="TextColor" Value="#FFFFFF"/>
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="BackgroundColor" Value="#616161" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontSize" Value="Medium" />
         </Style>
         <Style x:Key="Text" TargetType="Label">
             <Setter Property="FontSize" Value="Medium" />
@@ -46,13 +61,19 @@
             <Setter Property="TextColor" Value="#FFFFFF" />
             <Setter Property="Margin" Value="10" />
         </Style>
-        <Style x:Key="MenuItem" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#212121"/>
-            <Setter Property="TextColor" Value="#FFFFFF"/>
-            <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="CornerRadius" Value="10"/>
-            <Setter Property="Margin" Value="10"/>
+        <Style x:Key="Command" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#212121" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+        <Style
+            x:Key="MenuItem"
+            BasedOn="{StaticResource Command}"
+            TargetType="Button">
+            <Setter Property="FontSize" Value="Medium" />
         </Style>
     </Application.Resources>
 </Application>

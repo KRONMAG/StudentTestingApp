@@ -2,9 +2,10 @@
 
 namespace StudentTestingApp.View.Interface
 {
-    interface IMainView : IView
+    public interface IMainView : IView
     {
-        event Action SubjectListViewSelected;
-        event Action SettingsViewSelected;
+        event Action SubjectsViewSelected;
+        event Action TestResultsViewSelected;
+        event Action UpdateTestsSelected;
     }
 }

@@ -1,19 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.View.TestStartPage"
-             BackgroundColor="#616161">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StudentTestingApp.View.TestStartPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#616161">
     <StackLayout BackgroundColor="#424242" VerticalOptions="Center">
-        <Label x:Name="NameLabel" Style="{StaticResource Title}" HorizontalTextAlignment="Center" />
+        <Label
+            x:Name="NameLabel"
+            HorizontalTextAlignment="Center"
+            Style="{StaticResource Title}" />
         <Label x:Name="QuestionCountLabel" Style="{StaticResource Text}" />
         <Label x:Name="DurationLabel" Style="{StaticResource Text}" />
-        <Entry x:Name="StudentNameEntry" Placeholder="ФИО учащегося" TextColor="#FFFFFF"
-               HorizontalTextAlignment="Center" />
-        <Image Source="start.png" HorizontalOptions="Center">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Tapped="StartTestTapped"/>
-            </Image.GestureRecognizers>
-        </Image>
+        <Button
+            Clicked="StartTestClicked"
+            HorizontalOptions="Center"
+            Style="{StaticResource Command}"
+            Text="Начать" />
     </StackLayout>
 </ContentPage>

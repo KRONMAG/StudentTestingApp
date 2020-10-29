@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="StudentTestingApp.View.TestsPage"
+    x:Class="StudentTestingApp.View.SubjectsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Grid RowSpacing="0">
@@ -10,18 +10,18 @@
         </Grid.RowDefinitions>
         <StackLayout Spacing="0">
             <Label Style="{StaticResource MiniLogo}" />
-            <Label Style="{StaticResource Title}" Text="Тесты" />
+            <Label Style="{StaticResource Title}" Text="Предметы" />
         </StackLayout>
         <Label
-            x:Name="EmptyTestsLabel"
+            x:Name="EmptySubjectsLabel"
             Grid.Row="1"
             Style="{StaticResource EmptyListMessage}"
-            Text="Список тестов пуст" />
+            Text="Список предметов пуст" />
         <ListView
-            x:Name="TestsListView"
+            x:Name="SubjectsListView"
             Grid.Row="1"
             IsVisible="False"
-            ItemTapped="TestTapped"
+            ItemTapped="SubjectTapped"
             Style="{StaticResource List}">
             <ListView.ItemTemplate>
                 <DataTemplate>

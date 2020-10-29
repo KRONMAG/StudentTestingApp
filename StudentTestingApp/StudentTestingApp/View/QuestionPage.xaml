@@ -1,46 +1,51 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentTestingApp.View.QuestionPage">
-    <ScrollView BackgroundColor="#616161">
-        <StackLayout>
-            <StackLayout.Resources>
-                <ResourceDictionary>
-                    <Style x:Key="QuestionPageTitle" TargetType="Label" BasedOn="{StaticResource Title}">
-                        <Setter Property="BackgroundColor" Value="#616161" />
-                        <Setter Property="HorizontalTextAlignment" Value="Center" />
-                    </Style>
-                </ResourceDictionary>
-            </StackLayout.Resources>
-            <Label x:Name="TextLabel" Style="{StaticResource QuestionPageTitle}" />
-            <Image x:Name="Image" />
-            <ListView x:Name="AnswersListView" Style="{StaticResource List}" ItemTapped="AnswerTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Footer>
-                    <ScrollView>
-                        <StackLayout>
-                            <Label Text="Ваш ответ" Style="{StaticResource QuestionPageTitle}" />
-                            <ListView x:Name="SelectedAnswersListView" Style="{StaticResource List}"
-                                      ItemTapped="SelectedAnswerTapped">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Label Text="{Binding Item2}" Style="{StaticResource ListItem}" />
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackLayout>
-                    </ScrollView>
-                </ListView.Footer>
-            </ListView>
-        </StackLayout>
-    </ScrollView>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StudentTestingApp.View.QuestionPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#616161">
+    <StackLayout>
+        <StackLayout.Resources>
+            <ResourceDictionary>
+                <Style
+                    x:Key="QuestionPageTitle"
+                    BasedOn="{StaticResource Title}"
+                    TargetType="Label">
+                    <Setter Property="BackgroundColor" Value="#616161" />
+                    <Setter Property="HorizontalTextAlignment" Value="Center" />
+                </Style>
+            </ResourceDictionary>
+        </StackLayout.Resources>
+        <Label x:Name="TextLabel" Style="{StaticResource QuestionPageTitle}" />
+        <Image x:Name="Image" />
+        <ListView
+            x:Name="AnswersListView"
+            ItemTapped="AnswerTapped"
+            Style="{StaticResource List}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Style="{StaticResource ListItem}" Text="{Binding Item2}" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <StackLayout>
+                    <Label Style="{StaticResource QuestionPageTitle}" Text="Ваш ответ" />
+                    <ListView
+                        x:Name="SelectedAnswersListView"
+                        ItemTapped="SelectedAnswerTapped"
+                        Style="{StaticResource List}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label Style="{StaticResource ListItem}" Text="{Binding Item2}" />
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+    </StackLayout>
 </ContentPage>

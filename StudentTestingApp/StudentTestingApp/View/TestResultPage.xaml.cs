@@ -15,33 +15,29 @@ namespace StudentTestingApp.View
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void HomeTapped(object sender, EventArgs e) =>
-            DelayedResultUploadingSelected?.Invoke();
+        private void GoToMainPageClicked(object sender, EventArgs e) =>
+            GoToMainViewSelected?.Invoke();
 
         #region ITestResultView
 
-        public event Action DelayedResultUploadingSelected;
+        public event Action GoToMainViewSelected;
 
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage = new NavigationPage(this));
 
-        public void SetTestResult(int elapsedTime, double result)
+        public void SetTestResult(int elapsedTime, double score)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 ElapsedTimeLabel.Text = $"Затраченное время: {elapsedTime} сек.";
-                ResultLabel.Text = $"{result}%";
-                ResultProgressBar.Progress = 0;
+                ScoreLabel.Text = $"{score}%";
+                ScoreProgressBar.Progress = 0;
             });
-            var resultCopy = result;
             new Timer(state =>
             {
-                if (resultCopy > 0)
-                {
-                    Device.BeginInvokeOnMainThread(() => ResultProgressBar.Progress += 0.01);
-                    resultCopy -= 1;
-                }
+                if (ScoreProgressBar.Progress * 100 < score)
+                    Device.BeginInvokeOnMainThread(() => ScoreProgressBar.Progress += 0.01);
             }, null, 0, 20);
         }
 

@@ -71,7 +71,7 @@ namespace StudentTestingApp.View
             });
         }
 
-        public void SetAnswers(IEnumerable<Tuple<int, string>> answers)
+        public void SetAnswers(IReadOnlyList<Tuple<int, string>> answers)
         {
             Device.BeginInvokeOnMainThread(() =>
             {

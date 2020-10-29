@@ -30,13 +30,13 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));
 
-        public void SetSubjects(IEnumerable<Tuple<int, string>> subjects)
+        public void SetSubjects(IReadOnlyList<Tuple<int, string>> subjects)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 var isEmpty = !subjects.Any();
-                EmptySubjectListLabel.IsVisible = isEmpty;
-                SubjectListScrollView.IsVisible = !isEmpty;
+                EmptySubjectsLabel.IsVisible = isEmpty;
+                SubjectsListView.IsVisible = !isEmpty;
                 SubjectsListView.ItemsSource = new ObservableCollection<Tuple<int, string>>(subjects);
             });
         }

@@ -11,7 +11,7 @@ namespace StudentTestingApp.Presenter
 
         public TestStartPresenter(ApplicationController controller, ITestStartView view) :
             base(controller, view) =>
-            view.TestStarted += TestStarted;
+            view.StartTestSelected += TestStarted;
 
         private void TestStarted() =>
             controller.CreatePresenter<TestNavigationPresenter, Test>().Run(_test);
