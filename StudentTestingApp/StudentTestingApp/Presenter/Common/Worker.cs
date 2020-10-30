@@ -9,10 +9,9 @@ namespace StudentTestingApp.Presenter.Common
     public static class Worker
     {
         /// <summary>
-        /// Запуск задачи в фоновом режиме
+        /// Запуск указанной задачи в фоновом режиме
         /// </summary>
         /// <typeparam name="T">Тип возвращаемого операцией значения</typeparam>
-        /// <param name="view">Представление, для которого вызывается операция</param>
         /// <param name="task">Делегает, представляющий операцию</param>
         /// <param name="onSuccess">Делегат, вызываемый в случае успешного завершения операции</param>
         /// <param name="onError">Делегат, вызываемый при возникновении исключения в ходе выполнения операции</param>

@@ -10,44 +10,91 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
+    /// <summary>
+    /// Представитель представления навигации по вопросам теста
+    /// </summary>
     public class TestNavigationPresenter : BasePresenter<ITestNavigationView, Test>
     {
-        private readonly IReadOnlyRepository<Question> _questionsRepository;
+        /// <summary>
+        /// Хранилище учебных предметов
+        /// </summary>
         private readonly IReadOnlyRepository<Subject> _subjectsRepository;
+
+        /// <summary>
+        /// Хранилище вопросов тестов
+        /// </summary>
+        private readonly IReadOnlyRepository<Question> _questionsRepository;
+
+        /// <summary>
+        /// Хранилище результатов тестирования
+        /// </summary>
         private readonly IRepository<TestResult> _testResultsRepository;
+
+        /// <summary>
+        /// Представители представлений вопросов теста
+        /// </summary>
         private readonly List<QuestionPresenter> _presenters;
+
+        /// <summary>
+        /// Результат тестирования
+        /// </summary>
         private TestResult _testResult;
+
+        /// <summary>
+        /// Таймер отсчета оставшегося времени тестирования
+        /// </summary>
         private Timer _timer;
 
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        /// <param name="controller">Контроллер приложения</param>
+        /// <param name="view">Представление навигации во вопросам теста</param>
+        /// <param name="subjectsRepository">Хранилище учебных предметов</param>
+        /// <param name="questionsRepository">Хранилище вопросов тестов</param>
+        /// <param name="testResultsRepository">Хранилище результатов тестирования</param>
         public TestNavigationPresenter
             (ApplicationController controller,
             ITestNavigationView view,
-            IReadOnlyRepository<Question> questionsRepository,
             IReadOnlyRepository<Subject> subjectsRepository,
+            IReadOnlyRepository<Question> questionsRepository,
             IRepository<TestResult> testResultsRepository) :
             base(controller, view)
         {
-            _questionsRepository = questionsRepository;
             _subjectsRepository = subjectsRepository;
+            _questionsRepository = questionsRepository;
             _testResultsRepository = testResultsRepository;
             _presenters = new List<QuestionPresenter>();
-            view.FinishTestEarlySelected += TestEnded;
+            view.FinishTest += FinishTest;
         }
 
-        private void TestEnded()
+        /// <summary>
+        /// Обработчик запроса завершения тестирования
+        /// </summary>
+        private void FinishTest()
         {
             _timer?.Dispose();
             _testResult.EndDate = DateTime.Now;
             _testResult.Score = Math.Round
             (
-                _presenters.Count(questionPresenter => questionPresenter.RightAnswerSelected) /
-                    (_presenters.Count * 1.0) * 100,
+                Convert.ToDecimal
+                (
+                    _presenters.Count(questionPresenter => questionPresenter.AreRightAnswersSelected) /
+                    (_presenters.Count * 1.0) * 100
+                ),
                 2
             );
             _testResultsRepository.Add(_testResult);
             controller.CreatePresenter<TestResultPresenter, TestResult>().Run(_testResult);
         }
 
+        /// <summary>
+        /// Формирование случайной выборки вопросов выбранного теста,
+        /// добавление представлений вопросов в представление навигации по вопросам теста,
+        /// установка таймера отсчета оставшегося времени тестирования,
+        /// показ представления
+        /// </summary>
+        /// <param name="test">Выбранный тест</param>
         public override void Run(Test test)
         {
             _presenters.Clear();
@@ -64,17 +111,17 @@ namespace StudentTestingApp.Presenter
                 views.Add(presenter.View);
                 _presenters.Add(presenter);
             }
-            view.SetQuestionViews(views);
+            view.ShowQuestionViews(views);
             if (test.Duration != null)
             {
                 var remainingTime = test.Duration.Value;
-                view.SetRemainingTime(remainingTime);
+                view.ShowRemainingTime(remainingTime);
                 _timer = new Timer(state =>
                 {
                     if ((remainingTime -= 1) > 0)
-                        view.SetRemainingTime(remainingTime);
+                        view.ShowRemainingTime(remainingTime);
                     else
-                        TestEnded();
+                        FinishTest();
                 }, null, 1000, 1000);
             }
             _testResult = new TestResult();
@@ -84,7 +131,7 @@ namespace StudentTestingApp.Presenter
                 .Name;
             _testResult.TestName = test.Name;
             _testResult.StartDate = DateTime.Now;
-            view.Show();
+            base.Run(test);
         }
     }
 }

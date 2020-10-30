@@ -1,26 +1,37 @@
-﻿using System;
-using StudentTestingApp.Model.Entity;
+﻿using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
+    /// <summary>
+    /// Представитель представления отображения данных выбранного теста
+    /// </summary>
     public class TestStartPresenter : BasePresenter<ITestStartView, Test>
     {
-        private Test _test;
-
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        /// <param name="controller">Контроллер приложения</param>
+        /// <param name="view">Представление отображения данных выбранного теста</param>
         public TestStartPresenter(ApplicationController controller, ITestStartView view) :
             base(controller, view) =>
-            view.StartTestSelected += TestStarted;
+            view.StartTest += StartTest;
 
-        private void TestStarted() =>
-            controller.CreatePresenter<TestNavigationPresenter, Test>().Run(_test);
+        /// <summary>
+        /// Обработчик запроса начала тестирования
+        /// </summary>
+        private void StartTest() =>
+            controller.CreatePresenter<TestNavigationPresenter, Test>().Run(parameter);
 
+        /// <summary>
+        /// Показ данных о выбранном тесте, представления
+        /// </summary>
+        /// <param name="test"></param>
         public override void Run(Test test)
         {
-            _test = test;
-            view.SetTest(test.Name, test.QuestionsCount, test.Duration);
-            view.Show();
+            view.ShowTestInfo(test.Name, test.QuestionsCount, test.Duration);
+            base.Run(test);
         }
     }
 }

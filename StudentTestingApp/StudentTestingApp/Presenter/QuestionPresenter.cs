@@ -9,19 +9,45 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.Presenter
 {
+    /// <summary>
+    /// Представитель представления отображения вопроса теста
+    /// </summary>
     public class QuestionPresenter : BasePresenter<IQuestionView, Question>
     {
+        /// <summary>
+        /// Хранилище вариантов ответов на вопросы
+        /// </summary>
         private readonly IReadOnlyRepository<Answer> _repository;
-        private readonly IDictionary<int, Answer> _selectedAnswers;
+
+        /// <summary>
+        /// Выбранные варианты ответа
+        /// </summary>
+        private readonly Dictionary<int, Answer> _selectedAnswers;
+
+        /// <summary>
+        /// Количество правильных среди выбранных вариантов ответа на вопрос
+        /// </summary>
         private int _rightAnswersCount;
 
+        /// <summary>
+        /// Представление вопроса теста
+        /// </summary>
         public IQuestionView View =>
             view;
 
-        public bool RightAnswerSelected =>
+        /// <summary>
+        /// Выбраны ли верные варианты ответа на вопрос
+        /// </summary>
+        public bool AreRightAnswersSelected =>
             _selectedAnswers.Values.Count == _rightAnswersCount &&
             _selectedAnswers.Count(pair => pair.Value.Right) == _rightAnswersCount;
 
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        /// <param name="controller">Контроллер приложения</param>
+        /// <param name="view">Представление вопроса теста</param>
+        /// <param name="repository">Хранилище вариантов ответов на вопросы</param>
         public QuestionPresenter
             (ApplicationController controller,
             IQuestionView view,
@@ -31,11 +57,14 @@ namespace StudentTestingApp.Presenter
             _repository = repository;
             _selectedAnswers = new Dictionary<int, Answer>();
             _rightAnswersCount = 0;
-            view.AnswerSelected += AnswerSelected;
-            view.AnswerUnselected += AnswerUnselected;
+            view.SelectAnswer += SelectAnswer;
+            view.UnselectAnswer += UnselectAnswer;
         }
 
-        private void AnswerSelected()
+        /// <summary>
+        /// Обработчик выбора варианта ответа
+        /// </summary>
+        private void SelectAnswer()
         {
             if (!_selectedAnswers.Keys.Contains(view.SelectedAnswerId))
             {
@@ -48,9 +77,16 @@ namespace StudentTestingApp.Presenter
             }
         }
         
-        private void AnswerUnselected() =>
+        /// <summary>
+        /// Обработчик отмены выбора варианта ответа
+        /// </summary>
+        private void UnselectAnswer() =>
             _selectedAnswers.Remove(view.UnselectedAnswerId);
 
+        /// <summary>
+        /// Показ вопроса, вариантов ответов, представления
+        /// </summary>
+        /// <param name="question">Вопрос, отображаемый в представлении</param>
         public override void Run(Question question)
         {
             _selectedAnswers.Clear();
@@ -61,18 +97,18 @@ namespace StudentTestingApp.Presenter
                 .OrderBy(answer => random.Next())
                 .ToList();
             _rightAnswersCount = answers.Count(answer => answer.Right);
-            view.SetQuestion(question.Text, question.Image);
+            view.ShowQuestion(question.Text, question.Image);
             view.SetSelectionMode
             (
                 _rightAnswersCount == 1 ? SelectionMode.Single : SelectionMode.Multiply
             );
-            view.SetAnswers
+            view.ShowAnswers
             (
                 answers
                     .Select(answer => new Tuple<int, string>(answer.Id, answer.Text))
                     .ToList()
             );
-            view.Show();
+            base.Run(question);
         }
     }
 }

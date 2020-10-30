@@ -9,6 +9,6 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="RemainingSecondsToolbarItem" />
         <ToolbarItem x:Name="ClockToolbarItem" IconImageSource="lock_clock.png" />
-        <ToolbarItem Clicked="FinishTestEarlyClicked" Icon="ok.png" />
+        <ToolbarItem Clicked="FinishTestClicked" Icon="ok.png" />
     </TabbedPage.ToolbarItems>
 </TabbedPage>

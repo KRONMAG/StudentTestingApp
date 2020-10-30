@@ -7,15 +7,28 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Страница со списком результатов тестирования
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestResultsPage : ContentPage, ITestResultsView
     {
+        /// <summary>
+        /// Инициализация страницы
+        /// </summary>
         public TestResultsPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
+        /// <summary>
+        /// Обработчик нажатия на элемент списка результатов тестирования
+        /// Показывает подробные данные о выбранном результате
+        /// с возможностью выбора опции его удаления
+        /// </summary>
+        /// <param name="sender">Источник события</param>
+        /// <param name="e">Параметры события</param>
         private async void TestResultTapped(object sender, ItemTappedEventArgs e)
         {
             var result = GetSelectedTestResult();
@@ -34,6 +47,13 @@ namespace StudentTestingApp.View
                 RemoveTestResult?.Invoke();
         }
 
+        /// <summary>
+        /// Обработчик нажатия кнопки удаления всех результатов тестирования
+        /// Запрашивает у пользователя разрешение на удаление
+        /// Если получен положительный ответ, генерирует соответствующее событие представления
+        /// </summary>
+        /// <param name="sender">Источник события</param>
+        /// <param name="e">Параметры события</param>
         private async void RemoveAllTestResultsClicked(object sender, EventArgs e)
         {
             var needToRemoveAllResults = await DisplayAlert
@@ -47,18 +67,44 @@ namespace StudentTestingApp.View
                 RemoveAllTestResults?.Invoke();
         }
 
-        private Tuple<int, string, string, DateTime, int, double> GetSelectedTestResult() =>
-            ((Tuple<int, string, string, DateTime, int, double>)TestResultsListView.SelectedItem);
+        /// <summary>
+        /// Получение выбранного результата тестирования из списка
+        /// </summary>
+        /// <returns>Выбранный результат тестирования</returns>
+        private Tuple<int, string, string, DateTime, int, decimal> GetSelectedTestResult() =>
+            ((Tuple<int, string, string, DateTime, int, decimal>)TestResultsListView.SelectedItem);
 
         #region ITestResultsView
 
+        /// <summary>
+        /// Событие запроса удаления результата тестирования
+        /// </summary>
+        public event Action RemoveTestResult;
+
+        /// <summary>
+        /// Событие запроса удаления всех результатов тестирования
+        /// </summary>
+        public event Action RemoveAllTestResults;
+
+        /// <summary>
+        /// Идентификатор результата тестирования для удаления
+        /// </summary>
         public int TestResultToRemoveId =>
             GetSelectedTestResult().Item1;
 
-        public event Action RemoveTestResult;
-        public event Action RemoveAllTestResults;
-
-        public void SetTestResults(IReadOnlyList<Tuple<int, string, string, DateTime, int, double>> results)
+        /// <summary>
+        /// Показ результатов тестирования
+        /// </summary>
+        /// <param name="results">
+        /// Результаты тестирования:
+        /// - первый элемент кортежа - идентификатор результата тестирования;
+        /// - второй элемент кортежа - наименование учебного предмета пройденного теста;
+        /// - третий элемент кортежа - наименование пройденного теста;
+        /// - четвертый элемент кортежа - дата и время начала тестирования;
+        /// - пятый элемент кортежа - время в секундах, затраченное на прохождения теста;
+        /// - шестой элемент кортежа - процент правильных ответов
+        /// </param>
+        public void ShowTestResults(IReadOnlyList<Tuple<int, string, string, DateTime, int, decimal>> results)
         {
             var isEmpty = !results.Any();
             Device.BeginInvokeOnMainThread(() =>
@@ -69,6 +115,9 @@ namespace StudentTestingApp.View
             });
         }
 
+        /// <summary>
+        /// Отображение страницы
+        /// </summary>
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
                 Application.Current.MainPage.Navigation.PushAsync(this));

@@ -9,11 +9,16 @@ using StudentTestingApp.View.Interface;
 using StudentTestingApp.Presenter.Common;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace StudentTestingApp
 {
+    /// <summary>
+    /// Класс, определяющий точку входа в приложение
+    /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Запуск приложения: внедрение зависимостей, показ страницы предварительной настройки приложения
+        /// </summary>
         public App()
         {
             InitializeComponent();
@@ -38,21 +43,6 @@ namespace StudentTestingApp
                 .Register<IMainView, MainPage>()
                 .CreatePresenter<PreloadPresenter, bool>()
                 .Run(false);
-        }
-
-        protected override void OnStart()
-        {
-
-        }
-
-        protected override void OnSleep()
-        {
-
-        }
-
-        protected override void OnResume()
-        {
-
         }
     }
 }

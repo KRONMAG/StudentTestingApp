@@ -7,39 +7,49 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Страница навигации по вопросам теста
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestNavigationPage : TabbedPage, ITestNavigationView
     {
+        /// <summary>
+        /// Инициализация страницы
+        /// </summary>
         public TestNavigationPage()
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
-            ClockToolbarItem.IconImageSource = "lock_clock.png";
         }
 
-        private async void FinishTestEarlyClicked(object sender, EventArgs e)
+        /// <summary>
+        /// Обработчик нажатия кнопки завершения тестирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void FinishTestClicked(object sender, EventArgs e)
         {
             if (await DisplayAlert("Выход", "Вы действительно хотите завершить тестирование?", "Да", "Нет"))
-                FinishTestEarlySelected?.Invoke();
+                FinishTest?.Invoke();
         }
 
         #region ITestNavigationView
 
-        public event Action FinishTestEarlySelected;
+        /// <summary>
+        /// Событие запроса завершения тестирования
+        /// </summary>
+        public event Action FinishTest;
 
-        public void Show() =>
-            Device.BeginInvokeOnMainThread(() =>
-                Application.Current.MainPage = new NavigationPage(this)
-                {
-                    BarBackgroundColor = Color.FromHex("212121")
-                });
-
-        public void SetQuestionViews(IEnumerable<IQuestionView> questionViews)
+        /// <summary>
+        /// Показ сраниц с вопросами теста
+        /// </summary>
+        /// <param name="views">Список страниц с вопросами теста</param>
+        public void ShowQuestionViews(IReadOnlyList<IQuestionView> views)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 Children.Clear();
-                questionViews.ToList().ForEach(questionView =>
+                views.ToList().ForEach(questionView =>
                 {
                     Page page = (Page)questionView;
                     Children.Add(page);
@@ -48,7 +58,11 @@ namespace StudentTestingApp.View
             });
         }
 
-        public void SetRemainingTime(int seconds)
+        /// <summary>
+        /// Показ оставшегося времени тестирования
+        /// </summary>
+        /// <param name="seconds">Оставшееся время тестирования в секундах</param>
+        public void ShowRemainingTime(int seconds)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -56,6 +70,16 @@ namespace StudentTestingApp.View
                 RemainingSecondsToolbarItem.Text = seconds.ToString();
             });
         }
+
+        /// <summary>
+        /// Показ страницы
+        /// </summary>
+        public void Show() =>
+            Device.BeginInvokeOnMainThread(() =>
+                Application.Current.MainPage = new NavigationPage(this)
+                {
+                    BarBackgroundColor = Color.FromHex("212121")
+                });
 
         #endregion
     }

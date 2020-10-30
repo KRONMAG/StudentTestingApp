@@ -4,25 +4,38 @@ using StudentTestingApp.Presenter.Common;
 
 namespace StudentTestingApp.Presenter
 {
+    /// <summary>
+    /// Представитель представления результата тестирования
+    /// </summary>
     public class TestResultPresenter : BasePresenter<ITestResultView, TestResult>
     {
-        public TestResultPresenter(
-            ApplicationController controller,
-            ITestResultView view) :
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        /// <param name="controller">Контроллер приложения</param>
+        /// <param name="view">Представление результата тестирования</param>
+        public TestResultPresenter(ApplicationController controller, ITestResultView view) :
             base(controller, view) =>
-            view.GoToMainViewSelected += GoToMainViewSelected;
+            view.GoToMainView += GoToMainView;
 
-        private void GoToMainViewSelected() =>
+        /// <summary>
+        /// Обработчик запроса перехода к представлению меню приложения
+        /// </summary>
+        private void GoToMainView() =>
             controller.CreatePresenter<MainPresenter>().Run();
 
+        /// <summary>
+        /// Показ результата тестирования, представления
+        /// </summary>
+        /// <param name="testResult">Результат тестирования</param>
         public override void Run(TestResult testResult)
         {
-            view.SetTestResult
+            view.ShowTestResult
             (
                 (int)(testResult.EndDate - testResult.StartDate).TotalSeconds,
                 testResult.Score
             );
-            view.Show();
+            base.Run(testResult);
         }
     }
 }

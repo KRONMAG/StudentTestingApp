@@ -5,17 +5,28 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
-using SelectionMode = StudentTestingApp.View.SelectionMode;
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Страница отображения вопроса и варианов ответа на него
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QuestionPage : ContentPage, IQuestionView
     {
+        /// <summary>
+        /// Выбранные варианты ответа
+        /// </summary>
         private readonly ObservableCollection<Tuple<int, string>> _selectedAnswers;
 
+        /// <summary>
+        /// Режим выбора вариантов ответа
+        /// </summary>
         private SelectionMode _selectionMode;
 
+        /// <summary>
+        /// Инициализация страницы
+        /// </summary>
         public QuestionPage()
         {
             InitializeComponent();
@@ -24,6 +35,11 @@ namespace StudentTestingApp.View
             _selectionMode = SelectionMode.Single;
         }
 
+        /// <summary>
+        /// Обработчик нажатия на элемент списка вариантов ответов
+        /// </summary>
+        /// <param name="sender">Источник события</param>
+        /// <param name="e">Параметры события</param>
         private void AnswerTapped(object sender, ItemTappedEventArgs e)
         {
             var selectedAnswer = (Tuple<int, string>)AnswersListView.SelectedItem;
@@ -32,36 +48,57 @@ namespace StudentTestingApp.View
                 if (_selectionMode == SelectionMode.Single)
                     _selectedAnswers.Clear();
                 _selectedAnswers.Add(selectedAnswer);
-                AnswerSelected?.Invoke();
+                SelectAnswer?.Invoke();
             }
         }
 
+        /// <summary>
+        /// Обработчик нажатия на элемент списка выбранных вариантов ответов
+        /// </summary>
+        /// <param name="sender">Источник события</param>
+        /// <param name="e">Параметры события</param>
         private void SelectedAnswerTapped(object sender, ItemTappedEventArgs e)
         {
             var unselectedAnswer = (Tuple<int, string>)SelectedAnswersListView.SelectedItem;
             _selectedAnswers.Remove(unselectedAnswer);
-            AnswerUnselected?.Invoke();
+            UnselectAnswer?.Invoke();
         }
 
         #region IQuestionView
 
-        public event Action AnswerSelected;
+        /// <summary>
+        /// Событие выбора варианта ответа
+        /// </summary>
+        public event Action SelectAnswer;
 
-        public event Action AnswerUnselected;
+        /// <summary>
+        /// Событие отмены выбора варианта ответа
+        /// </summary>
+        public event Action UnselectAnswer;
 
+        /// <summary>
+        /// Идентификатор выбранного варианта ответа
+        /// </summary>
         public int SelectedAnswerId => ((Tuple<int, string>)AnswersListView.SelectedItem).Item1;
 
+        /// <summary>
+        /// Идентификатор варианта ответа для отмены выбора
+        /// </summary>
         public int UnselectedAnswerId => ((Tuple<int, string>)SelectedAnswersListView.SelectedItem).Item1;
 
-        public void Show()
-        {
-
-        }
-
+        /// <summary>
+        /// Установка режима выбора вариантов ответов
+        /// </summary>
+        /// <param name="selectionMode">Режим выбора ответов</param>
         public void SetSelectionMode(SelectionMode selectionMode) =>
             _selectionMode = selectionMode;
 
-        public void SetQuestion(string text, byte[] image)
+        /// <summary>
+        /// Показ вопроса
+        /// </summary>
+        /// <param name="text">Текст вопроса</param>
+        /// <param name="image">Изображение, поясняющее текст вопроса</param>
+        public void ShowQuestion(string text, byte[] image = null)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -71,13 +108,29 @@ namespace StudentTestingApp.View
             });
         }
 
-        public void SetAnswers(IReadOnlyList<Tuple<int, string>> answers)
+        /// <summary>
+        /// Показ вариантов ответа на вопрос
+        /// </summary>
+        /// <param name="answers">
+        /// Варианты ответа на вопрос:
+        /// - первый элемент кортежа - идентификатор варианта ответа;
+        /// - второй элемент кортежа - текст варианта ответа</param>
+        public void ShowAnswers(IReadOnlyList<Tuple<int, string>> answers)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 _selectedAnswers.Clear();
                 AnswersListView.ItemsSource = answers;
             });
+        }
+
+        /// <summary>
+        /// Страница не заносится в стек навигации, так как она является элементом
+        /// страницы с вкладками вопросов TestNavigationPage и отображается внутри нее
+        /// </summary>
+        public void Show()
+        {
+
         }
 
         #endregion

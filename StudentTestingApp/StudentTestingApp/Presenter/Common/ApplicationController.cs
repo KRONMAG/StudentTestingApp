@@ -75,6 +75,7 @@ namespace StudentTestingApp.Presenter.Common
         /// его экземпляра и вызовом метода запуска
         /// </summary>
         /// <typeparam name="T">Тип представителя</typeparam>
+        /// <returns>Экземпляр представителя указанного типа</returns>
         public T CreatePresenter<T>() where T : class, IPresenter
         {
             if (!_container.IsRegistered<T>())
@@ -88,7 +89,7 @@ namespace StudentTestingApp.Presenter.Common
         /// </summary>
         /// <typeparam name="T">Тип представителя</typeparam>
         /// <typeparam name="U">Тип параметра представителя</typeparam>
-        /// <param name="parameter">Параметр представителя</param>
+        /// <returns>Экземпляр параметризованного представителя указанного типа</returns>
         public T CreatePresenter<T, U>() where T : class, IPresenter<U>
         {
             if (!_container.IsRegistered<T>())

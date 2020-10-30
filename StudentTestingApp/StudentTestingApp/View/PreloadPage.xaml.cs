@@ -5,9 +5,15 @@ using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Страница предварительной настройки приложения
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PreloadPage : ContentPage, IPreloadView
     {
+        /// <summary>
+        /// Инициализация страницы
+        /// </summary>
         public PreloadPage()
         {
             InitializeComponent();
@@ -16,9 +22,24 @@ namespace StudentTestingApp.View
 
         #region IPreloadPage
 
-        public void SetProcessName(string processName) =>
+        /// <summary>
+        /// Показ наименования текущего шага процесса предварительной настройки приложения
+        /// </summary>
+        /// <param name="header">Наименование шага</param>
+        public void ShowStepName(string processName) =>
             Device.BeginInvokeOnMainThread(() => ProcessNameLabel.Text = processName);
 
+        /// <summary>
+        /// Показ сообщения
+        /// </summary>
+        /// <param name="message">Текст сообщения</param>
+        public void ShowMessage(string message) =>
+            Device.BeginInvokeOnMainThread(() =>
+                DisplayAlert(string.Empty, message, "Назад"));
+
+        /// <summary>
+        /// Показ представления, анимации ожидания
+        /// </summary>
         public void Show()
         {
             Application.Current.MainPage = new NavigationPage(this);
@@ -33,10 +54,6 @@ namespace StudentTestingApp.View
                 }, null, 0, 1500);
             });
         }
-
-        public void ShowMessage(string message) =>
-            Device.BeginInvokeOnMainThread(() =>
-                DisplayAlert(string.Empty, message, "Назад"));
 
         #endregion
     }

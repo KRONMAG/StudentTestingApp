@@ -2,10 +2,31 @@
 
 namespace StudentTestingApp.View.Interface
 {
+    /// <summary>
+    /// Представление отображения описания выбранного теста
+    /// </summary>
     public interface ITestStartView : IView
     {
-        event Action StartTestSelected;
+        /// <summary>
+        /// Событие запроса начала тестирования
+        /// </summary>
+        event Action StartTest;
+
+        /// <summary>
+        /// Показ описания теста
+        /// </summary>
+        /// <param name="name">Наименование теста</param>
+        /// <param name="questionCount">Количество вопросов в тесте</param>
+        /// <param name="duration">
+        /// Продолжительность тестирования в секундах,
+        /// значение null - продолжительность не ограничена
+        /// </param>
+        void ShowTestInfo(string name, int questionCount, int? duration);
+
+        /// <summary>
+        /// Показ сообщения
+        /// </summary>
+        /// <param name="message">Текст сообщения</param>
         void ShowMessage(string message);
-        void SetTest(string name, int questionCount, int? duration);
     }
 }

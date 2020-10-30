@@ -31,7 +31,7 @@ namespace StudentTestingApp.Presenter.Common
         }
 
         /// <summary>
-        /// Запуск представителя, показ представления
+        /// Запуск представителя: показ представления
         /// </summary>
         public virtual void Run() =>
             view.Show();
@@ -72,7 +72,7 @@ namespace StudentTestingApp.Presenter.Common
         }
 
         /// <summary>
-        /// Запуск представителя с параметром, показ представления
+        /// Запуск представителя с параметром: показ представления
         /// </summary>
         /// <param name="parameter">Параметр</param>
         public virtual void Run(U parameter)

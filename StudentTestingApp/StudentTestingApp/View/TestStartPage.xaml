@@ -12,6 +12,7 @@
         <Label x:Name="QuestionCountLabel" Style="{StaticResource Text}" />
         <Label x:Name="DurationLabel" Style="{StaticResource Text}" />
         <Button
+            x:Name="StartTestButton"
             Clicked="StartTestClicked"
             HorizontalOptions="Center"
             Style="{StaticResource Command}"
