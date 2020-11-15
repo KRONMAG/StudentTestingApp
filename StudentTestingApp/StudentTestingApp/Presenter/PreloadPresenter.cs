@@ -8,7 +8,7 @@ namespace StudentTestingApp.Presenter
     /// <summary>
     /// Представитель представления предварительной настройки приложения
     /// </summary>
-    public class PreloadPresenter : BasePresenter<IPreloadView, bool>
+    public class PreloadPresenter : BasePresenter<IPreloadView>
     {
         private readonly IMessageDialog _messageDialog;
 
@@ -35,44 +35,25 @@ namespace StudentTestingApp.Presenter
         }
 
         /// <summary>
-        /// Загрузка (обновление) базы данных тестов, показ представления
+        /// Загрузка базы данных тестов, показ представления
         /// </summary>
-        /// <param name="updateTests">
-        /// Требуется ли выполнить обновление базы данных тестов вместо ее загрузки
-        /// </param>
-        public override void Run(bool updateTests = false)
+        public override void Run()
         {
             Worker.Run
             (
                 () =>
                 {
-                    if (updateTests && _testsLoader.HaveTestsBeenLoaded)
-                    {
-                        view.ShowStepName("Обновление тестов");
+                    if (!_testsLoader.HaveTestsBeenLoaded)
                         if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-                            _messageDialog.ShowMessage("Невозможно обновить тесты: отсутствует интернет-соединение");
-                        else if (_testsLoader.HaveTestsBeenUpdated)
-                            _messageDialog.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
+                            _messageDialog.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединение");
                         else if (!_testsLoader.LoadTests())
-                            _messageDialog.ShowMessage("При обновлении тестов возникла ошибка");
-                        else
-                            _messageDialog.ShowMessage("Тесты успешно обновлены");
-                    }
-                    else
-                    {
-                        view.ShowStepName("Загрузка тестов");
-                        if (!_testsLoader.HaveTestsBeenLoaded)
-                            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-                                _messageDialog.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединение");
-                            else if (!_testsLoader.LoadTests())
-                                _messageDialog.ShowMessage("При загрузке тестов возникла ошибка");
-                    }
+                            _messageDialog.ShowMessage("При загрузке тестов возникла ошибка");
                     return true;
                 },
                 _ => controller.CreatePresenter<MainPresenter>().Run(),
                 _ => { }
             );
-            base.Run(updateTests);
+            base.Run();
         }
     }
 }

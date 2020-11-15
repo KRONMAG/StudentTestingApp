@@ -11,26 +11,64 @@ namespace StudentTestingApp.Presenter
         private readonly IMessageDialog _messageDialog;
         private readonly IWaitingAnimation _waitingAnimation;
         private readonly DnevnikApiAuthentificator _authentificator;
+        private readonly TestsLoader _testsLoader;
 
         public SettingsPresenter
             (ApplicationController controller,
             ISettingsView view,
             IMessageDialog messageDialog,
             IWaitingAnimation waitingAnimation,
-            DnevnikApiAuthentificator authentificator) :
+            DnevnikApiAuthentificator authentificator,
+            TestsLoader testsLoader) :
             base(controller, view)
         {
             _messageDialog = messageDialog;
             _waitingAnimation = waitingAnimation;
             _authentificator = authentificator;
+            _testsLoader = testsLoader;
 
             view.UpdateTests += UpdateTests;
             view.TryLogInToDnevnik += TryLogInToDnevnik;
             view.LogOutFromDnevnik += LogOutFromDnevnik;
         }
 
-        private void UpdateTests() =>
-            controller.CreatePresenter<PreloadPresenter, bool>().Run(true);
+        private void UpdateTests()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                _messageDialog.ShowMessage("Невозможно обновить тесты: отсутствует интернет-соединение");
+            else
+            {
+                _waitingAnimation.StartAnimation("Обновление тестов");
+                Worker.Run
+                (
+                    () =>
+                    {
+                        if (_testsLoader.HaveTestsBeenUpdated)
+                        {
+                            _messageDialog.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
+                            return false;
+                        }
+                        else if (!_testsLoader.LoadTests())
+                        {
+                            _messageDialog.ShowMessage("При обновлении тестов возникла ошибка");
+                            return false;
+                        }
+                        else
+                        {
+                            _messageDialog.ShowMessage("Тесты успешно обновлены");
+                            return true;
+                        }
+                    },
+                    result =>
+                    {
+                        _waitingAnimation.StopAnimation();
+                        if (result)
+                            controller.CreatePresenter<MainPresenter>().Run();
+                    },
+                    _ => { }
+                ); ;
+            }
+        }
 
         private void TryLogInToDnevnik()
         {

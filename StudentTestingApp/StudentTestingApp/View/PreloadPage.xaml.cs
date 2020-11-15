@@ -22,13 +22,6 @@ namespace StudentTestingApp.View
         #region IPreloadPage
 
         /// <summary>
-        /// Показ наименования текущего шага процесса предварительной настройки приложения
-        /// </summary>
-        /// <param name="header">Наименование шага</param>
-        public void ShowStepName(string processName) =>
-            Device.BeginInvokeOnMainThread(() => ProcessNameLabel.Text = processName);
-
-        /// <summary>
         /// Показ представления
         /// </summary>
         public void Show() =>

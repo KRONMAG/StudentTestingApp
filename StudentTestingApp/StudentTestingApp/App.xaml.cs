@@ -44,7 +44,7 @@ namespace StudentTestingApp
                 .Register<ITestResultsView, TestResultsPage>()
                 .Register<ISettingsView, SettingsPage>()
                 .Register<IMainView, MainPage>()
-                .CreatePresenter<PreloadPresenter, bool>()
+                .CreatePresenter<PreloadPresenter>()
                 .Run();
         }
     }

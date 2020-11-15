@@ -23,10 +23,10 @@
                 VerticalOptions="Center"
                 Color="#FFFFFF" />
             <Label
-                x:Name="ProcessNameLabel"
                 Grid.Row="2"
                 FontSize="Large"
                 HorizontalOptions="Center"
+                Text="Загрузка тестов"
                 TextColor="#FFFFFF"
                 VerticalOptions="Start" />
         </Grid>
