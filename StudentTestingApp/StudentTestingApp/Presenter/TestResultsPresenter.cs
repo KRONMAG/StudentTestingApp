@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
@@ -15,7 +15,7 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Хранилище результатов тестирования
         /// </summary>
-        private IRepository<TestResult> _repository;
+        private Repository<TestResult> _repository;
 
         /// <summary>
         /// Создание экземпляра класса
@@ -26,7 +26,7 @@ namespace StudentTestingApp.Presenter
         public TestResultsPresenter
             (ApplicationController controller,
             ITestResultsView view,
-            IRepository<TestResult> repository) :
+            Repository<TestResult> repository) :
             base(controller, view)
         {
             _repository = repository;

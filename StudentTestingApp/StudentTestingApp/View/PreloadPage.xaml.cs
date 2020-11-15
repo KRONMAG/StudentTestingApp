@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.View.Interface;
 
@@ -30,30 +29,10 @@ namespace StudentTestingApp.View
             Device.BeginInvokeOnMainThread(() => ProcessNameLabel.Text = processName);
 
         /// <summary>
-        /// Показ сообщения
+        /// Показ представления
         /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        public void ShowMessage(string message) =>
-            Device.BeginInvokeOnMainThread(() =>
-                DisplayAlert(string.Empty, message, "Назад"));
-
-        /// <summary>
-        /// Показ представления, анимации ожидания
-        /// </summary>
-        public void Show()
-        {
+        public void Show() =>
             Application.Current.MainPage = new NavigationPage(this);
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                new Timer(async state =>
-                {
-                    await AnimatedImage.RotateTo(-360, 500);
-                    AnimatedImage.Rotation = 0;
-                    await AnimatedImage.RotateYTo(360, 500);
-                    AnimatedImage.RotationY = 0;
-                }, null, 0, 1500);
-            });
-        }
 
         #endregion
     }

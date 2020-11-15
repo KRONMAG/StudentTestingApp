@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
-using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
@@ -18,17 +18,17 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Хранилище учебных предметов
         /// </summary>
-        private readonly IReadOnlyRepository<Subject> _subjectsRepository;
+        private readonly ReadOnlyRepository<Subject> _subjectsRepository;
 
         /// <summary>
         /// Хранилище вопросов тестов
         /// </summary>
-        private readonly IReadOnlyRepository<Question> _questionsRepository;
+        private readonly ReadOnlyRepository<Question> _questionsRepository;
 
         /// <summary>
         /// Хранилище результатов тестирования
         /// </summary>
-        private readonly IRepository<TestResult> _testResultsRepository;
+        private readonly Repository<TestResult> _testResultsRepository;
 
         /// <summary>
         /// Представители представлений вопросов теста
@@ -56,9 +56,9 @@ namespace StudentTestingApp.Presenter
         public TestNavigationPresenter
             (ApplicationController controller,
             ITestNavigationView view,
-            IReadOnlyRepository<Subject> subjectsRepository,
-            IReadOnlyRepository<Question> questionsRepository,
-            IRepository<TestResult> testResultsRepository) :
+            ReadOnlyRepository<Subject> subjectsRepository,
+            ReadOnlyRepository<Question> questionsRepository,
+            Repository<TestResult> testResultsRepository) :
             base(controller, view)
         {
             _subjectsRepository = subjectsRepository;

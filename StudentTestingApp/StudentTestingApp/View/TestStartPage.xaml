@@ -9,8 +9,14 @@
             x:Name="NameLabel"
             HorizontalTextAlignment="Center"
             Style="{StaticResource Title}" />
-        <Label x:Name="QuestionCountLabel" Style="{StaticResource Text}" />
-        <Label x:Name="DurationLabel" Style="{StaticResource Text}" />
+        <Label
+            x:Name="QuestionCountLabel"
+            HorizontalOptions="Center"
+            Style="{StaticResource Text}" />
+        <Label
+            x:Name="DurationLabel"
+            HorizontalOptions="Center"
+            Style="{StaticResource Text}" />
         <Button
             x:Name="StartTestButton"
             Clicked="StartTestClicked"

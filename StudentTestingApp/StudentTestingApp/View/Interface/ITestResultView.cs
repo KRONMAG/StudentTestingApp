@@ -18,11 +18,5 @@ namespace StudentTestingApp.View.Interface
         /// <param name="elapsedTime">Время прохождения теста в секундах</param>
         /// <param name="score">Процент правильных ответов</param>
         void ShowTestResult(int elapsedTime, decimal score);
-
-        /// <summary>
-        /// Показ сообщения
-        /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        void ShowMessage(string message);
     }
 }

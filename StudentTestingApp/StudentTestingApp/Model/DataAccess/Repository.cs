@@ -1,5 +1,4 @@
-﻿using StudentTestingApp.Model.DataAccess.Interface;
-using StudentTestingApp.Model.Entity.Interface;
+﻿using StudentTestingApp.Model.Entity.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
@@ -7,7 +6,7 @@ namespace StudentTestingApp.Model.DataAccess
     /// Хранилище сущностей с доступом на чтение и запись
     /// </summary>
     /// <typeparam name="T">Тип хранимых сущностей</typeparam>
-    public class Repository<T> : ReadOnlyRepository<T>, IRepository<T> where T : class, IEntity, new()
+    public class Repository<T> : ReadOnlyRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
         /// Создание экземпляра класса

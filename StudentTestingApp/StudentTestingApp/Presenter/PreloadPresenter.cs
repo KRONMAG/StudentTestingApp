@@ -1,6 +1,7 @@
-﻿using StudentTestingApp.Model.DataAccess.Interface;
+﻿using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
+using Xamarin.Essentials;
 
 namespace StudentTestingApp.Presenter
 {
@@ -9,10 +10,12 @@ namespace StudentTestingApp.Presenter
     /// </summary>
     public class PreloadPresenter : BasePresenter<IPreloadView, bool>
     {
+        private readonly IMessageDialog _messageDialog;
+
         /// <summary>
         /// Загрузчик базы данных тестов
         /// </summary>
-        private readonly ITestsLoader _testsLoader;
+        private readonly TestsLoader _testsLoader;
 
         /// <summary>
         /// Создание экземпляра класса
@@ -23,9 +26,13 @@ namespace StudentTestingApp.Presenter
         public PreloadPresenter
             (ApplicationController controller,
             IPreloadView view,
-            ITestsLoader testsLoader) :
-            base(controller, view) =>
+            IMessageDialog messageDialog,
+            TestsLoader testsLoader) :
+            base(controller, view)
+        {
+            _messageDialog = messageDialog;
             _testsLoader = testsLoader;
+        }
 
         /// <summary>
         /// Загрузка (обновление) базы данных тестов, показ представления
@@ -42,23 +49,23 @@ namespace StudentTestingApp.Presenter
                     if (updateTests && _testsLoader.HaveTestsBeenLoaded)
                     {
                         view.ShowStepName("Обновление тестов");
-                        if (!_testsLoader.IsInternetConnectionActive)
-                            view.ShowMessage("Невозможно обновить тесты: отсутствует интернет-соединение");
+                        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                            _messageDialog.ShowMessage("Невозможно обновить тесты: отсутствует интернет-соединение");
                         else if (_testsLoader.HaveTestsBeenUpdated)
-                            view.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
+                            _messageDialog.ShowMessage("Загружена последняя версия тестов, обновление не требуется");
                         else if (!_testsLoader.LoadTests())
-                            view.ShowMessage("При обновлении тестов возникла ошибка");
+                            _messageDialog.ShowMessage("При обновлении тестов возникла ошибка");
                         else
-                            view.ShowMessage("Тесты успешно обновлены");
+                            _messageDialog.ShowMessage("Тесты успешно обновлены");
                     }
                     else
                     {
                         view.ShowStepName("Загрузка тестов");
                         if (!_testsLoader.HaveTestsBeenLoaded)
-                            if (!_testsLoader.IsInternetConnectionActive)
-                                view.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединение");
+                            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                                _messageDialog.ShowMessage("Невозможно загрузить тесты: отсутствует интернет-соединение");
                             else if (!_testsLoader.LoadTests())
-                                view.ShowMessage("При загрузке тестов возникла ошибка");
+                                _messageDialog.ShowMessage("При загрузке тестов возникла ошибка");
                     }
                     return true;
                 },

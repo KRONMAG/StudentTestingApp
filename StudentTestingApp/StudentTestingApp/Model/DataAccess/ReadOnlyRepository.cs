@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SQLite;
-using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
@@ -11,7 +10,7 @@ namespace StudentTestingApp.Model.DataAccess
     /// Хранилище сущностей с доступом на чтение
     /// </summary>
     /// <typeparam name="T">Тип хранимых сущностей</typeparam>
-    public class ReadOnlyRepository<T> : IReadOnlyRepository<T> where T : class, IEntity, new()
+    public class ReadOnlyRepository<T> where T : class, IEntity, new()
     {
         /// <summary>
         /// Подключение к базе данных

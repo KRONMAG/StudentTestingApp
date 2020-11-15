@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View;
@@ -17,7 +17,7 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Хранилище вариантов ответов на вопросы
         /// </summary>
-        private readonly IReadOnlyRepository<Answer> _repository;
+        private readonly ReadOnlyRepository<Answer> _repository;
 
         /// <summary>
         /// Выбранные варианты ответа
@@ -51,7 +51,7 @@ namespace StudentTestingApp.Presenter
         public QuestionPresenter
             (ApplicationController controller,
             IQuestionView view,
-            IReadOnlyRepository<Answer> repository) :
+            ReadOnlyRepository<Answer> repository) :
             base(controller, view)
         {
             _repository = repository;

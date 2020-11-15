@@ -1,15 +1,13 @@
 ﻿using System.IO;
-using Xamarin.Essentials;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using StudentTestingApp.Model.DataAccess.Interface;
 
 namespace StudentTestingApp.Model.DataAccess
 {
     /// <summary>
     /// Загрузчик базы данных тестов
     /// </summary>
-    public class TestsLoader : ITestsLoader
+    public class TestsLoader
     {
         /// <summary>
         /// Ключ хранилища настроек приложения,
@@ -54,12 +52,6 @@ namespace StudentTestingApp.Model.DataAccess
                 return true;
             }
         }
-
-        /// <summary>
-        /// Имеет ли устройство в данный момент доступ к сети интернет
-        /// </summary>
-        public bool IsInternetConnectionActive =>
-            Connectivity.NetworkAccess == NetworkAccess.Internet;
 
         /// <summary>
         /// Создание экзмпляра класса

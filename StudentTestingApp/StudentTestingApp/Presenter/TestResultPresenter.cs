@@ -15,8 +15,10 @@ namespace StudentTestingApp.Presenter
         /// <param name="controller">Контроллер приложения</param>
         /// <param name="view">Представление результата тестирования</param>
         public TestResultPresenter(ApplicationController controller, ITestResultView view) :
-            base(controller, view) =>
+            base(controller, view)
+        {
             view.GoToMainView += GoToMainView;
+        }
 
         /// <summary>
         /// Обработчик запроса перехода к представлению меню приложения

@@ -61,14 +61,6 @@ namespace StudentTestingApp.View
         }
 
         /// <summary>
-        /// Показ сообщения
-        /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        public void ShowMessage(string message) =>
-            Device.BeginInvokeOnMainThread(() =>
-                DisplayAlert(string.Empty, message, "Назад"));
-
-        /// <summary>
         /// Показ страницы
         /// </summary>
         public void Show() =>

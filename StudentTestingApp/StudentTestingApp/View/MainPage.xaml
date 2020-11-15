@@ -25,10 +25,10 @@
                     Style="{StaticResource MenuItem}"
                     Text="Результаты" />
                 <Button
-                    Clicked="UpdateTestsClicked"
-                    ImageSource="download.png"
+                    Clicked="SettingsViewClicked"
+                    ImageSource="settings.png"
                     Style="{StaticResource MenuItem}"
-                    Text="Обновление тестов" />
+                    Text="Настройки" />
             </StackLayout>
         </Grid>
     </ScrollView>

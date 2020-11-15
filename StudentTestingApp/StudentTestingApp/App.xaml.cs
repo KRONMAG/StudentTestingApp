@@ -1,7 +1,6 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.Model.DataAccess;
-using StudentTestingApp.Model.DataAccess.Interface;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter;
 using StudentTestingApp.View;
@@ -25,13 +24,16 @@ namespace StudentTestingApp
             new ApplicationController()
                 .RegisterSingleton<CloudStorage>()
                 .RegisterSingleton<DbInfo>()
-                .RegisterSingleton<ITestsLoader, TestsLoader>()
+                .RegisterSingleton<TestsLoader>()
                 .RegisterSingleton<DbHelper>()
-                .Register<IReadOnlyRepository<Subject>, ReadOnlyRepository<Subject>>()
-                .Register<IReadOnlyRepository<Test>, ReadOnlyRepository<Test>>()
-                .Register<IReadOnlyRepository<Question>, ReadOnlyRepository<Question>>()
-                .Register<IReadOnlyRepository<Answer>, ReadOnlyRepository<Answer>>()
-                .Register<IRepository<TestResult>, Repository<TestResult>>()
+                .RegisterSingleton<DnevnikApiAuthentificator>()
+                .Register<ReadOnlyRepository<Subject>>()
+                .Register<ReadOnlyRepository<Test>>()
+                .Register<ReadOnlyRepository<Question>>()
+                .Register<ReadOnlyRepository<Answer>>()
+                .Register<Repository<TestResult>>()
+                .RegisterSingleton<IMessageDialog, MessageDialog>()
+                .RegisterSingleton<IWaitingAnimation, WaitingAnimation>()
                 .Register<IPreloadView, PreloadPage>()
                 .Register<ISubjectsView, SubjectsPage>()
                 .Register<ITestsView, TestsPage>()
@@ -40,9 +42,10 @@ namespace StudentTestingApp
                 .Register<IQuestionView, QuestionPage>()
                 .Register<ITestResultView, TestResultPage>()
                 .Register<ITestResultsView, TestResultsPage>()
+                .Register<ISettingsView, SettingsPage>()
                 .Register<IMainView, MainPage>()
                 .CreatePresenter<PreloadPresenter, bool>()
-                .Run(false);
+                .Run();
         }
     }
 }

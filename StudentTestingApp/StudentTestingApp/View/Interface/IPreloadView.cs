@@ -10,11 +10,5 @@
         /// </summary>
         /// <param name="header">Наименование шага</param>
         void ShowStepName(string header);
-
-        /// <summary>
-        /// Показ сообщения
-        /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        void ShowMessage(string message);
     }
 }

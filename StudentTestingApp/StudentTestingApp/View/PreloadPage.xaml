@@ -16,12 +16,12 @@
                 Margin="0,50,0,0"
                 Style="{StaticResource Logo}"
                 VerticalOptions="Center" />
-            <Image
-                x:Name="AnimatedImage"
+            <ActivityIndicator
                 Grid.Row="1"
                 HorizontalOptions="Center"
-                Source="refresh.png"
-                VerticalOptions="Center" />
+                IsRunning="True"
+                VerticalOptions="Center"
+                Color="#FFFFFF" />
             <Label
                 x:Name="ProcessNameLabel"
                 Grid.Row="2"

@@ -22,11 +22,5 @@ namespace StudentTestingApp.View.Interface
         /// значение null - продолжительность не ограничена
         /// </param>
         void ShowTestInfo(string name, int questionCount, int? duration);
-
-        /// <summary>
-        /// Показ сообщения
-        /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        void ShowMessage(string message);
     }
 }

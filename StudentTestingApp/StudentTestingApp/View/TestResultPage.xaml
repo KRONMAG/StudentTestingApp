@@ -9,15 +9,21 @@
         Padding="0"
         BackgroundColor="#424242"
         VerticalOptions="Center">
+        <StackLayout.Resources>
+            <Style BasedOn="{StaticResource Text}" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </StackLayout.Resources>
         <Label
             HorizontalTextAlignment="Center"
             Style="{StaticResource Title}"
             Text="Результат тестирования" />
-        <Label x:Name="ScoreLabel" Style="{StaticResource Text}" />
-        <StackLayout Padding="10">
-            <ProgressBar x:Name="ScoreProgressBar" ProgressColor="#FFFFFF" />
-        </StackLayout>
-        <Label x:Name="ElapsedTimeLabel" Style="{StaticResource Text}" />
+        <Label x:Name="ScoreLabel" />
+        <ProgressBar
+            x:Name="ScoreProgressBar"
+            Margin="10,0"
+            ProgressColor="#FFFFFF" />
+        <Label x:Name="ElapsedTimeLabel" />
         <Button
             Clicked="GoToMainPageClicked"
             HorizontalOptions="Center"

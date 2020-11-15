@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using StudentTestingApp.Model.DataAccess.Interface;
+using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
@@ -15,7 +15,7 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Хранилище учебных предметов
         /// </summary>
-        private readonly IReadOnlyRepository<Subject> _repository;
+        private readonly ReadOnlyRepository<Subject> _repository;
 
         /// <summary>
         /// Создание экземпляра класса
@@ -26,7 +26,7 @@ namespace StudentTestingApp.Presenter
         public SubjectsPresenter
             (ApplicationController controller,
             ISubjectsView view,
-            IReadOnlyRepository<Subject> repository) :
+            ReadOnlyRepository<Subject> repository) :
             base(controller, view)
         {
             _repository = repository;

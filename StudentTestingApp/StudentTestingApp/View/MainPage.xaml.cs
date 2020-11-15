@@ -36,13 +36,8 @@ namespace StudentTestingApp.View
         private void TestResultsViewClicked(object sender, EventArgs e) =>
             GoToTestResultsView?.Invoke();
 
-        /// <summary>
-        /// Обработчик нажатия на пункт обновления тестов
-        /// </summary>
-        /// <param name="sender">Источник события</param>
-        /// <param name="e">Параметры события</param>
-        private void UpdateTestsClicked(object sender, EventArgs e) =>
-            UpdateTests?.Invoke();
+        private void SettingsViewClicked(object sender, EventArgs e) =>
+            GoToSettingsView?.Invoke();
 
         #region IMainView
 
@@ -56,10 +51,9 @@ namespace StudentTestingApp.View
         /// </summary>
         public event Action GoToTestResultsView;
 
-        /// <summary>
-        /// Событие выбора пункта обновления базы данных тестов
-        /// </summary>
-        public event Action UpdateTests;
+        public event Action GoToMarksView;
+
+        public event Action GoToSettingsView;
 
         /// <summary>
         /// Показ представления
@@ -70,14 +64,6 @@ namespace StudentTestingApp.View
                 {
                     BarBackgroundColor = Color.FromHex("212121")
                 });
-
-        /// <summary>
-        /// Показ сообщения
-        /// </summary>
-        /// <param name="message">Текст сообщения</param>
-        public void ShowMessage(string message) =>
-            Device.BeginInvokeOnMainThread(() =>
-                DisplayAlert(string.Empty, message, "Назад"));
 
         #endregion
     }

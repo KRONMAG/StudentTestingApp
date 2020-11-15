@@ -17,9 +17,8 @@ namespace StudentTestingApp.View.Interface
         /// </summary>
         event Action GoToTestResultsView;
 
-        /// <summary>
-        /// Событие выбора пункта обновления базы данных тестов
-        /// </summary>
-        event Action UpdateTests;
+        event Action GoToMarksView;
+
+        event Action GoToSettingsView;
     }
 }

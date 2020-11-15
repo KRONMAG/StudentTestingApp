@@ -18,7 +18,7 @@ namespace StudentTestingApp.Presenter
         {
             view.GoToSubjectsView += GoToSubjectsView;
             view.GoToTestResultsView += GoToTestResultsView;
-            view.UpdateTests += UpdateTests;
+            view.GoToSettingsView += GoToSettingsView;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Обработчик выбора пункта обновления базы данных тестов
         /// </summary>
-        private void UpdateTests() =>
-            controller.CreatePresenter<PreloadPresenter, bool>().Run(true);
+        private void GoToSettingsView() =>
+            controller.CreatePresenter<SettingsPresenter>().Run();
     }
 }
