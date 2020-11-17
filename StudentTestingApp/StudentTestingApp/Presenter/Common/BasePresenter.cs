@@ -1,4 +1,6 @@
-﻿using StudentTestingApp.View.Interface;
+﻿using System;
+using StudentTestingApp.View.Interface;
+using Xamarin.Forms;
 
 namespace StudentTestingApp.Presenter.Common
 {
@@ -25,7 +27,6 @@ namespace StudentTestingApp.Presenter.Common
         /// <param name="view">Представление</param>
         public BasePresenter(ApplicationController controller, T view)
         {
-
             this.controller = controller;
             this.view = view;
         }

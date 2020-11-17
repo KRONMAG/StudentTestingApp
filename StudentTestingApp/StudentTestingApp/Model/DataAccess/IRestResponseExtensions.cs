@@ -5,7 +5,7 @@ namespace StudentTestingApp.Model.DataAccess
     /// <summary>
     /// Расширение интерфейса REST-ответа
     /// </summary>
-    public static class IRestResponseExtension
+    public static class IRestResponseExtensions
     {
         /// <summary>
         /// Преобразование JSON-тела REST-ответа в динамический объект

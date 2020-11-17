@@ -25,12 +25,8 @@ namespace StudentTestingApp.View
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
-        private void StartTestClicked(object sender, EventArgs e)
-        {
-            StartTestButton.IsEnabled = false;
+        private void StartTestClicked(object sender, EventArgs e) =>
             StartTest?.Invoke();
-            StartTestButton.IsEnabled = true;
-        }
 
         #region ITestStartView
 
@@ -65,7 +61,7 @@ namespace StudentTestingApp.View
         /// </summary>
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-                Application.Current.MainPage.Navigation.PushAsync(this));
+                App.Current.MainPage.Navigation.PushAsyncSingle(this));
 
         #endregion
     }

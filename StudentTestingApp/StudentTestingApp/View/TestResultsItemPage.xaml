@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg:PopupPage
+    x:Class="StudentTestingApp.View.TestResultsItemPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rg="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup">
+    <Grid
+        Background="#616161"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label
+            HorizontalTextAlignment="Center"
+            Style="{StaticResource Title}"
+            Text="Результат" />
+        <ScrollView Grid.Row="1" HorizontalOptions="Center">
+            <StackLayout>
+                <Label Style="{StaticResource Text}" Text="{Binding Item2, StringFormat='Предмет: {0}'}" />
+                <Label Style="{StaticResource Text}" Text="{Binding Item3, StringFormat='Тест: {0}'}" />
+                <Label Style="{StaticResource Text}" Text="{Binding Item4, StringFormat='Дата: {0}'}" />
+                <Label Style="{StaticResource Text}" Text="{Binding Item5, StringFormat='Время прохождения: {0} сек.'}" />
+                <Label Style="{StaticResource Text}" Text="{Binding Item6, StringFormat='Результат: {0}%'}" />
+                <Button
+                    Margin="0,20,0,0"
+                    Clicked="ShareTestResultClicked"
+                    Style="{StaticResource Command}"
+                    Text="Поделиться" />
+                <Button
+                    Margin="0"
+                    Clicked="RemoveTestResultClicked"
+                    Style="{StaticResource Command}"
+                    Text="Удалить" />
+                <Button
+                    Margin="0,0,0,10"
+                    Clicked="BackClicked"
+                    Style="{StaticResource Command}"
+                    Text="Назад" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</rg:PopupPage>

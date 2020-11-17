@@ -21,12 +21,12 @@ namespace StudentTestingApp.View
         /// <summary>
         /// Навигатор всплывающих окон
         /// </summary>
-        private IPopupNavigation _popupNavigation;
+        private IPopupNavigation _navigation;
 
         /// <summary>
         /// Страница с анимацией ожидания
         /// </summary>
-        private WaitingAnimationPage _waitingAnimationPage;
+        private WaitingAnimationPage _page;
 
         /// <summary>
         /// Создание экземпляра класса
@@ -34,8 +34,8 @@ namespace StudentTestingApp.View
         public WaitingAnimation()
         {
             _messages = new Dictionary<Guid, string>();
-            _popupNavigation = PopupNavigation.Instance;
-            _waitingAnimationPage = new WaitingAnimationPage();
+            _navigation = PopupNavigation.Instance;
+            _page = new WaitingAnimationPage();
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace StudentTestingApp.View
                 () =>
                 {
                     if (_messages.Count == 0)
-                        _popupNavigation.PushAsync(_waitingAnimationPage).ConfigureAwait(true);
-                    _waitingAnimationPage.Message = message;
+                        _navigation.PushAsync(_page).ConfigureAwait(true);
+                    _page.Message = message;
                     _messages.Add(animationGuid, message);
                 }
             );
@@ -73,11 +73,11 @@ namespace StudentTestingApp.View
                         _messages.Remove(guid);
                         if (_messages.Count == 0)
                         {
-                            if (_popupNavigation.PopupStack.Count == 1)
-                                _popupNavigation.PopAsync().ConfigureAwait(true);
+                            if (_navigation.PopupStack.Count == 1)
+                                _navigation.PopAsync().ConfigureAwait(true);
                         }
                         else
-                            _waitingAnimationPage.Message = _messages.Last().Value;
+                            _page.Message = _messages.Last().Value;
                     }
                 }
             );

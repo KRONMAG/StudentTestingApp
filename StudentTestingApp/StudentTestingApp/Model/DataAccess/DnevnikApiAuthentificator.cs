@@ -103,6 +103,24 @@ namespace StudentTestingApp.Model.DataAccess
             _settings.Remove(USER_ID_KEY);
         }
 
+        public bool TryGetDnevnikApi(out DnevnikAPI api)
+        {
+            if (!NeedToLogIn)
+            {
+                api = new DnevnikAPI
+                (
+                    _settings.GetValueOrDefault(ACCESS_TOKEN_KEY, null),
+                    _settings.GetValueOrDefault(USER_ID_KEY, 0L)
+                );
+                return true;
+            }
+            else
+            {
+                api = null;
+                return false;
+            }
+        }
+
         /// <summary>
         /// Попытка получения логина ранее авторизованного пользователя
         /// </summary>

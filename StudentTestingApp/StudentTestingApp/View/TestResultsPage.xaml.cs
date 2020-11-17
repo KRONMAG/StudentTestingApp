@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Rg.Plugins.Popup.Services;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
@@ -32,19 +33,10 @@ namespace StudentTestingApp.View
         private async void TestResultTapped(object sender, ItemTappedEventArgs e)
         {
             var result = GetSelectedTestResult();
-            var needToRemoveResult = await DisplayAlert
-            (
-                "Результат",
-                $"Предмет: {result.Item2}\n" +
-                $"Тест: {result.Item3}\n" +
-                $"Дата: {result.Item4}\n" +
-                $"Время прохождения: {result.Item5} сек.\n" +
-                $"Результат: {result.Item6}%",
-                "Удалить",
-                "Назад"
-            );
-            if (needToRemoveResult)
-                RemoveTestResult?.Invoke();
+            var page = new TestResultsItemPage(result);
+            page.ShareTestResult += () => ShareTestResult?.Invoke(result.Item1);
+            page.RemoveTestResult += () => RemoveTestResult?.Invoke(result.Item1);
+            await PopupNavigation.Instance.PushAsync(page);
         }
 
         /// <summary>
@@ -76,21 +68,17 @@ namespace StudentTestingApp.View
 
         #region ITestResultsView
 
+        public event Action<int> ShareTestResult;
+
         /// <summary>
         /// Событие запроса удаления результата тестирования
         /// </summary>
-        public event Action RemoveTestResult;
+        public event Action<int> RemoveTestResult;
 
         /// <summary>
         /// Событие запроса удаления всех результатов тестирования
         /// </summary>
         public event Action RemoveAllTestResults;
-
-        /// <summary>
-        /// Идентификатор результата тестирования для удаления
-        /// </summary>
-        public int TestResultToRemoveId =>
-            GetSelectedTestResult().Item1;
 
         /// <summary>
         /// Показ результатов тестирования
@@ -120,7 +108,7 @@ namespace StudentTestingApp.View
         /// </summary>
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-                Application.Current.MainPage.Navigation.PushAsync(this));
+                App.Current.MainPage.Navigation.PushAsyncSingle(this));
 
         #endregion
     }

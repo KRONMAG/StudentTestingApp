@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Xamarin.Essentials;
 using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
 using StudentTestingApp.Presenter.Common;
@@ -12,10 +13,16 @@ namespace StudentTestingApp.Presenter
     /// </summary>
     public class TestResultsPresenter : BasePresenter<ITestResultsView>
     {
+        private IWaitingAnimation _waitingAnimation;
+
+        private IMessageDialog _messageDialog;
+
         /// <summary>
         /// Хранилище результатов тестирования
         /// </summary>
         private Repository<TestResult> _repository;
+
+        private DnevnikApiAuthentificator _authentificator;
 
         /// <summary>
         /// Создание экземпляра класса
@@ -26,20 +33,62 @@ namespace StudentTestingApp.Presenter
         public TestResultsPresenter
             (ApplicationController controller,
             ITestResultsView view,
-            Repository<TestResult> repository) :
+            IMessageDialog messageDialog,
+            IWaitingAnimation waitingAnimation,
+            Repository<TestResult> repository,
+            DnevnikApiAuthentificator authentificator) :
             base(controller, view)
         {
+            _messageDialog = messageDialog;
+            _waitingAnimation = waitingAnimation;
             _repository = repository;
+            _authentificator = authentificator;
+            view.ShareTestResult += ShareTestResult;
             view.RemoveTestResult += RemoveTestResult;
             view.RemoveAllTestResults += RemoveAllTestResults;
         }
 
         /// <summary>
+        /// Обработчик запроса распространения результата тестирования в сети Дневник
+        /// </summary>
+        /// <param name="id">Идентификатор результата, которым необходимо поделиться</param>
+        public void ShareTestResult(int id)
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                _messageDialog.ShowMessage("Отсутствует интернет-соединение, поделиться результатом невозможно");
+            else if (_authentificator.NeedToLogIn)
+                _messageDialog.ShowMessage("Необходимо войти в сеть Дневник.ру, чтобы поделиться результатом");
+            else
+            {
+                _waitingAnimation.StartAnimation("Отправка результата", out Guid guid);
+                Worker.Run
+                (
+                    () =>
+                    {
+                        var result = _repository.Get(id);
+                        _authentificator.TryGetDnevnikApi(out DnevnikAPI api);
+                        return api.ShareTestResult(result);
+                    },
+                    result =>
+                    {
+                        _waitingAnimation.StopAnimation(guid);
+                        if (result)
+                            _messageDialog.ShowMessage("Вы успешно поделились результатом");
+                        else
+                            _messageDialog.ShowMessage("Не удалось отправить результат тестирования");
+                    },
+                    _ => { }
+                );
+            }
+        }
+
+        /// <summary>
         /// Обработчик запроса удаления выбранного результата тестирования
         /// </summary>
-        private void RemoveTestResult()
+        /// <param name="id">Идентификатор удаляемого результата</param>
+        private void RemoveTestResult(int id)
         {
-            _repository.Remove(view.TestResultToRemoveId);
+            _repository.Remove(id);
             LoadTestResults();
         }
 

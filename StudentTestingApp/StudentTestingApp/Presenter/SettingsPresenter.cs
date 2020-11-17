@@ -89,12 +89,7 @@ namespace StudentTestingApp.Presenter
                             return true;
                         }
                     },
-                    result =>
-                    {
-                        _waitingAnimation.StopAnimation(guid);
-                        if (result)
-                            controller.CreatePresenter<MainPresenter>().Run();
-                    },
+                    result => _waitingAnimation.StopAnimation(guid),
                     _ => { }
                 ); ;
             }

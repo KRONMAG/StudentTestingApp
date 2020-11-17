@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
 
 namespace StudentTestingApp.View
@@ -23,7 +24,11 @@ namespace StudentTestingApp.View
         /// </summary>
         public WaitingAnimationPage()
         {
+            CloseWhenBackgroundIsClicked = false;
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed() =>
+            true;
     }
 }

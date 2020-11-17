@@ -61,7 +61,7 @@
             <Setter Property="Margin" Value="10" />
         </Style>
         <Style x:Key="Command" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#212121" />
+            <Setter Property="BackgroundColor" Value="#000000" />
             <Setter Property="VerticalOptions" Value="Start" />
             <Setter Property="TextColor" Value="#FFFFFF" />
             <Setter Property="FontSize" Value="Small" />

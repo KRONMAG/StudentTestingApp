@@ -9,19 +9,21 @@ namespace StudentTestingApp.View.Interface
     public interface ITestResultsView : IView
     {
         /// <summary>
-        /// Событие запроса удаления результата тестирования
+        /// Событие запроса распространения результата тестирования в сети Дневник
+        /// Параметр - идентификатор результата, которым надо поделиться
         /// </summary>
-        event Action RemoveTestResult;
+        event Action<int> ShareTestResult;
+
+        /// <summary>
+        /// Событие запроса удаления результата тестирования
+        /// Параметр - идентификатор удаляемого результата
+        /// </summary>
+        event Action<int> RemoveTestResult;
 
         /// <summary>
         /// Событие запроса удаления всех результатов тестирования
         /// </summary>
         event Action RemoveAllTestResults;
-
-        /// <summary>
-        /// Идентификатор результата тестирования для удаления
-        /// </summary>
-        int TestResultToRemoveId { get; }
 
         /// <summary>
         /// Показ результатов тестирования

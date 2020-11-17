@@ -47,5 +47,7 @@ namespace StudentTestingApp
                 .CreatePresenter<PreloadPresenter>()
                 .Run();
         }
+
+        public static object Navigation { get; internal set; }
     }
 }

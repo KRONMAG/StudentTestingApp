@@ -67,7 +67,7 @@ namespace StudentTestingApp.View
         /// </summary>
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>
-                Application.Current.MainPage.Navigation.PushAsync(this));
+                App.Current.MainPage.Navigation.PushAsyncSingle(this));
 
         #endregion
     }
