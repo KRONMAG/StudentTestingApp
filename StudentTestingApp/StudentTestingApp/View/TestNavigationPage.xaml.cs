@@ -25,8 +25,8 @@ namespace StudentTestingApp.View
         /// <summary>
         /// Обработчик нажатия кнопки завершения тестирования
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Параметры события</param>
+        /// <param name="e">Источник события</param>
         private async void FinishTestClicked(object sender, EventArgs e)
         {
             if (await DisplayAlert("Выход", "Вы действительно хотите завершить тестирование?", "Да", "Нет"))

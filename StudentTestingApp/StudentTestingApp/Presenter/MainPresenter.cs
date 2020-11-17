@@ -22,19 +22,19 @@ namespace StudentTestingApp.Presenter
         }
 
         /// <summary>
-        /// Обработчик выбора пункта перехода к списку учебных предметов
+        /// Обработчик запроса перехода к списку учебных предметов
         /// </summary>
         private void GoToSubjectsView() =>
             controller.CreatePresenter<SubjectsPresenter>().Run();
 
         /// <summary>
-        /// Обработчик выбора пункта перехода к списку результатов тестирования
+        /// Обработчик запроса перехода к списку результатов тестирования
         /// </summary>
         private void GoToTestResultsView() =>
             controller.CreatePresenter<TestResultsPresenter>().Run();
 
         /// <summary>
-        /// Обработчик выбора пункта обновления базы данных тестов
+        /// Обработчик запроса перехода к настройкам приложения
         /// </summary>
         private void GoToSettingsView() =>
             controller.CreatePresenter<SettingsPresenter>().Run();

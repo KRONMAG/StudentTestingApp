@@ -1,13 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudentTestingApp.View.Interface
 {
+    /// <summary>
+    /// Функционал показа анимации ожидания
+    /// </summary>
     public interface IWaitingAnimation
     {
-        void StartAnimation(string message);
+        /// <summary>
+        /// Запуск анимации ожидания с заданным сообщением
+        /// </summary>
+        /// <param name="message">Сообщение, отображаемое рядом с анимацией ожидания</param>
+        /// <param name="guid">Идентификатор анимации</param>
+        void StartAnimation(string message, out Guid guid);
 
-        void StopAnimation();
+        /// <summary>
+        /// Остановка анимации ожидания с указанным идентификатором
+        /// </summary>
+        /// <param name="guid">Идентификатор анимации</param>
+        void StopAnimation(Guid guid);
     }
 }

@@ -15,17 +15,17 @@
                 VerticalOptions="Center" />
             <StackLayout Grid.Row="1" VerticalOptions="Start">
                 <Button
-                    Clicked="SubjectsViewClicked"
+                    Clicked="GoToSubjectsPageClicked"
                     ImageSource="edit.png"
                     Style="{StaticResource MenuItem}"
                     Text="Тестирование" />
                 <Button
-                    Clicked="TestResultsViewClicked"
+                    Clicked="GoToTestResultsPageClicked"
                     ImageSource="chart.png"
                     Style="{StaticResource MenuItem}"
                     Text="Результаты" />
                 <Button
-                    Clicked="SettingsViewClicked"
+                    Clicked="GoToSettingsPageClicked"
                     ImageSource="settings.png"
                     Style="{StaticResource MenuItem}"
                     Text="Настройки" />

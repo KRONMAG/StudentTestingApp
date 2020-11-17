@@ -10,6 +10,9 @@ namespace StudentTestingApp.Presenter
     /// </summary>
     public class PreloadPresenter : BasePresenter<IPreloadView>
     {
+        /// <summary>
+        /// Механизм показа диалоговых сообщений
+        /// </summary>
         private readonly IMessageDialog _messageDialog;
 
         /// <summary>
@@ -22,6 +25,7 @@ namespace StudentTestingApp.Presenter
         /// </summary>
         /// <param name="controller">Контроллер приложения</param>
         /// <param name="view">Представление предварительной настройки приложения</param>
+        /// <param name="messageDialog">Механизм показа диалоговых сообщений</param>
         /// <param name="testsLoader">Загрузчик базы данных тестов</param>
         public PreloadPresenter
             (ApplicationController controller,

@@ -1,33 +1,84 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Forms;
+using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Contracts;
 using StudentTestingApp.View.Interface;
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Средство показа страницы с анимацией ожидания
+    /// </summary>
     public class WaitingAnimation : IWaitingAnimation
     {
-        private static readonly WaitingAnimationPage _waitingAnimationPage;
+        /// <summary>
+        /// Очередь сообщений для отображения рядом с анимацией ожидания
+        /// </summary>
+        private IDictionary<Guid, string> _messages;
 
-        static WaitingAnimation()
+        /// <summary>
+        /// Навигатор всплывающих окон
+        /// </summary>
+        private IPopupNavigation _popupNavigation;
+
+        /// <summary>
+        /// Страница с анимацией ожидания
+        /// </summary>
+        private WaitingAnimationPage _waitingAnimationPage;
+
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        public WaitingAnimation()
         {
+            _messages = new Dictionary<Guid, string>();
+            _popupNavigation = PopupNavigation.Instance;
             _waitingAnimationPage = new WaitingAnimationPage();
         }
 
-        public void StartAnimation(string message) =>
+        /// <summary>
+        /// Показ анимации ожидания с заданным сообщением
+        /// </summary>
+        /// <param name="message">Сообщение, отображаемое рядом с анимацией ожидания</param>
+        /// <param name="guid">Идентификатор анимации</param>
+        public void StartAnimation(string message, out Guid guid)
+        {
+            var animationGuid = Guid.NewGuid();
+            guid = animationGuid;
             Device.BeginInvokeOnMainThread
             (
                 () =>
                 {
+                    if (_messages.Count == 0)
+                        _popupNavigation.PushAsync(_waitingAnimationPage).ConfigureAwait(true);
                     _waitingAnimationPage.Message = message;
-                    App.Current.MainPage.Navigation.PushModalAsync(_waitingAnimationPage);
+                    _messages.Add(animationGuid, message);
                 }
             );
+        }
 
-        public void StopAnimation() =>
+        /// <summary>
+        /// Остановка анимации ожидания с указанным идентификатором
+        /// </summary>
+        /// <param name="guid">Идентификатор анимации</param>
+        public void StopAnimation(Guid guid) =>
             Device.BeginInvokeOnMainThread
             (
                 () =>
                 {
-                    App.Current.MainPage.Navigation.PopModalAsync();
+                    if (_messages.ContainsKey(guid))
+                    {
+                        _messages.Remove(guid);
+                        if (_messages.Count == 0)
+                        {
+                            if (_popupNavigation.PopupStack.Count == 1)
+                                _popupNavigation.PopAsync().ConfigureAwait(true);
+                        }
+                        else
+                            _waitingAnimationPage.Message = _messages.Last().Value;
+                    }
                 }
             );
     }

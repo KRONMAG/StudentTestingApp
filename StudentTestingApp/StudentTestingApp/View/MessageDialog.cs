@@ -2,8 +2,15 @@
 
 namespace StudentTestingApp.View
 {
+    /// <summary>
+    /// Средство показа диалоговых окон
+    /// </summary>
     public class MessageDialog : IMessageDialog
     {
+        /// <summary>
+        /// Отображение диалогового окна с заданным сообщением
+        /// </summary>
+        /// <param name="message">Сообщение для показа</param>
         public void ShowMessage(string message)
         {
             var navigationStack = App.Current.MainPage.Navigation.NavigationStack;

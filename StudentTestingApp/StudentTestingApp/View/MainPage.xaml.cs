@@ -21,38 +21,44 @@ namespace StudentTestingApp.View
         }
 
         /// <summary>
-        /// Обработчик нажатия на пункт показа списка учебных предметов
+        /// Обработчик нажатия кнопки перехода к странице с учебными предметами
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
-        private void SubjectsViewClicked(object sender, EventArgs e) =>
+        private void GoToSubjectsPageClicked(object sender, EventArgs e) =>
             GoToSubjectsView?.Invoke();
 
         /// <summary>
-        /// Обработчик нажатия на пункт показа результатов тестирования
+        /// Обработчик нажатия кнопки перехода к странице с результатами тестирования
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
-        private void TestResultsViewClicked(object sender, EventArgs e) =>
+        private void GoToTestResultsPageClicked(object sender, EventArgs e) =>
             GoToTestResultsView?.Invoke();
 
-        private void SettingsViewClicked(object sender, EventArgs e) =>
+        /// <summary>
+        /// Обработчик нажатия кнопки перехода к странице настроек приложения
+        /// </summary>
+        /// <param name="sender">Параметры события</param>
+        /// <param name="e">Источник события</param>
+        private void GoToSettingsPageClicked(object sender, EventArgs e) =>
             GoToSettingsView?.Invoke();
 
         #region IMainView
 
         /// <summary>
-        /// Событие выбора пункта перехода к представлению списка учебных предметов
+        /// Событие запроса перехода к представлению списка учебных предметов
         /// </summary>
         public event Action GoToSubjectsView;
 
         /// <summary>
-        /// Событие выбора пункта перехода к представлению списка результатов тестирования
+        /// Событие запроса перехода к представлению списка результатов тестирования
         /// </summary>
         public event Action GoToTestResultsView;
 
-        public event Action GoToMarksView;
-
+        /// <summary>
+        /// Событие запроса перехода к представлению настроек приложения
+        /// </summary>
         public event Action GoToSettingsView;
 
         /// <summary>

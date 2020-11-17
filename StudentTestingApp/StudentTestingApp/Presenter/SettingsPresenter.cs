@@ -1,18 +1,45 @@
 ﻿using System;
+using Xamarin.Essentials;
 using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Presenter.Common;
 using StudentTestingApp.View.Interface;
-using Xamarin.Essentials;
 
 namespace StudentTestingApp.Presenter
 {
+    /// <summary>
+    /// Представитель представления настроек приложения
+    /// </summary>
     public class SettingsPresenter : BasePresenter<ISettingsView>
     {
+        /// <summary>
+        /// Механизм показа диалоговых сообщений
+        /// </summary>
         private readonly IMessageDialog _messageDialog;
+
+        /// <summary>
+        /// Средство показа анимации ожидания
+        /// </summary>
         private readonly IWaitingAnimation _waitingAnimation;
-        private readonly DnevnikApiAuthentificator _authentificator;
+
+        /// <summary>
+        /// Средство авторизации в системе Дневник
+        /// </summary>
+        private readonly DnevnikApiAuthentificator _dnevnikApiAuthentificator;
+
+        /// <summary>
+        /// Загрузчик базы данных тестов
+        /// </summary>
         private readonly TestsLoader _testsLoader;
 
+        /// <summary>
+        /// Создание экземпляра класса
+        /// </summary>
+        /// <param name="controller">Контроллер приложения</param>
+        /// <param name="view">Представление настроек приложения</param>
+        /// <param name="messageDialog">Механизм показа диалоговых сообщений</param>
+        /// <param name="waitingAnimation">Средство показа анимации ожидания</param>
+        /// <param name="authentificator">Средство авторизации в системе Дневник</param>
+        /// <param name="testsLoader">Загрузчик базы данных тестов</param>
         public SettingsPresenter
             (ApplicationController controller,
             ISettingsView view,
@@ -24,7 +51,7 @@ namespace StudentTestingApp.Presenter
         {
             _messageDialog = messageDialog;
             _waitingAnimation = waitingAnimation;
-            _authentificator = authentificator;
+            _dnevnikApiAuthentificator = authentificator;
             _testsLoader = testsLoader;
 
             view.UpdateTests += UpdateTests;
@@ -32,13 +59,16 @@ namespace StudentTestingApp.Presenter
             view.LogOutFromDnevnik += LogOutFromDnevnik;
         }
 
+        /// <summary>
+        /// Обработчик события запроса обновления базы данных тестов
+        /// </summary>
         private void UpdateTests()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
                 _messageDialog.ShowMessage("Невозможно обновить тесты: отсутствует интернет-соединение");
             else
             {
-                _waitingAnimation.StartAnimation("Обновление тестов");
+                _waitingAnimation.StartAnimation("Обновление тестов", out Guid guid);
                 Worker.Run
                 (
                     () =>
@@ -61,7 +91,7 @@ namespace StudentTestingApp.Presenter
                     },
                     result =>
                     {
-                        _waitingAnimation.StopAnimation();
+                        _waitingAnimation.StopAnimation(guid);
                         if (result)
                             controller.CreatePresenter<MainPresenter>().Run();
                     },
@@ -70,6 +100,9 @@ namespace StudentTestingApp.Presenter
             }
         }
 
+        /// <summary>
+        /// Обработчик события запроса попытки входа в систему Дневник
+        /// </summary>
         private void TryLogInToDnevnik()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -80,13 +113,13 @@ namespace StudentTestingApp.Presenter
                 _messageDialog.ShowMessage("Введите пароль пользователя");
             else
             {
-                _waitingAnimation.StartAnimation("Вход в Дневник.ру");
+                _waitingAnimation.StartAnimation("Вход в Дневник.ру", out Guid guid);
                 Worker.Run
                 (
-                    () => _authentificator.TryLogIn(view.Login, view.Password),
+                    () => _dnevnikApiAuthentificator.TryLogIn(view.Login, view.Password),
                     result =>
                     {
-                        _waitingAnimation.StopAnimation();
+                        _waitingAnimation.StopAnimation(guid);
                         if (!result)
                             _messageDialog.ShowMessage
                             (
@@ -95,8 +128,8 @@ namespace StudentTestingApp.Presenter
                             );
                         else
                         {
-                            _authentificator.TryGetLogin(out string login);
-                            _authentificator.TryGetExpirationDate(out DateTime date);
+                            _dnevnikApiAuthentificator.TryGetLogin(out string login);
+                            _dnevnikApiAuthentificator.TryGetExpirationDate(out DateTime date);
                             view.Login = login;
                             view.Password = string.Empty;
                             view.ShowExpirationDate(date);
@@ -108,18 +141,25 @@ namespace StudentTestingApp.Presenter
             }
         }
 
+        /// <summary>
+        /// Обработчик запроса выхода из системы Дневник
+        /// </summary>
         private void LogOutFromDnevnik()
         {
-            _authentificator.LogOut();
+            _dnevnikApiAuthentificator.LogOut();
             view.Login = string.Empty;
             view.Password = string.Empty;
             view.ShowExpirationDate();
         }
 
+        /// <summary>
+        /// Отображение логина ранее авторизиванного пользовател и
+        /// даты истечения авторизации в представлении, показ представления
+        /// </summary>
         public override void Run()
         {
-            if (_authentificator.TryGetLogin(out string login) &&
-                _authentificator.TryGetExpirationDate(out DateTime date))
+            if (_dnevnikApiAuthentificator.TryGetLogin(out string login) &&
+                _dnevnikApiAuthentificator.TryGetExpirationDate(out DateTime date))
             {
                 view.Login = login;
                 view.ShowExpirationDate(date);
