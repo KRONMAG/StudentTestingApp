@@ -1,4 +1,5 @@
 using Xamarin.Forms;
+using Xamarin.Forms.DataGrid;
 using Xamarin.Forms.Xaml;
 using StudentTestingApp.Model.DataAccess;
 using StudentTestingApp.Model.Entity;
@@ -21,6 +22,7 @@ namespace StudentTestingApp
         public App()
         {
             InitializeComponent();
+            DataGridComponent.Init();
             new ApplicationController()
                 .RegisterSingleton<CloudStorage>()
                 .RegisterSingleton<DbInfo>()
@@ -43,11 +45,10 @@ namespace StudentTestingApp
                 .Register<ITestResultView, TestResultPage>()
                 .Register<ITestResultsView, TestResultsPage>()
                 .Register<ISettingsView, SettingsPage>()
+                .Register<IMarksView, MarksStatisticsPage>()
                 .Register<IMainView, MainPage>()
                 .CreatePresenter<PreloadPresenter>()
                 .Run();
         }
-
-        public static object Navigation { get; internal set; }
     }
 }

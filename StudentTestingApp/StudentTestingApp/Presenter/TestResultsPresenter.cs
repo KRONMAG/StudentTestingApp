@@ -29,7 +29,7 @@ namespace StudentTestingApp.Presenter
         private Repository<TestResult> _repository;
 
         /// <summary>
-        /// Аутентификатор, обеспечивающий доступ к сети Дневник
+        /// Аутентификатор, обеспечивающий доступ к сети Дневника
         /// </summary>
         private readonly DnevnikApiAuthentificator _authentificator;
 

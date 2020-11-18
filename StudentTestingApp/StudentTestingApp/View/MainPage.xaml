@@ -25,6 +25,11 @@
                     Style="{StaticResource MenuItem}"
                     Text="Результаты" />
                 <Button
+                    Clicked="GoToMarksPageClicked"
+                    ImageSource="book.png"
+                    Style="{StaticResource MenuItem}"
+                    Text="Оценки" />
+                <Button
                     Clicked="GoToSettingsPageClicked"
                     ImageSource="settings.png"
                     Style="{StaticResource MenuItem}"

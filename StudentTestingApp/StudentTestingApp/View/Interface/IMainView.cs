@@ -18,6 +18,11 @@ namespace StudentTestingApp.View.Interface
         event Action GoToTestResultsView;
 
         /// <summary>
+        /// Событие запроса перехода к представлению оценок
+        /// </summary>
+        event Action GoToMarksView;
+
+        /// <summary>
         /// Событие запроса перехода к представлению настроек приложения
         /// </summary>
         event Action GoToSettingsView;

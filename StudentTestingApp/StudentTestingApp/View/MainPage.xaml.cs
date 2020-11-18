@@ -36,6 +36,9 @@ namespace StudentTestingApp.View
         private void GoToTestResultsPageClicked(object sender, EventArgs e) =>
             GoToTestResultsView?.Invoke();
 
+        private void GoToMarksPageClicked(object sender, EventArgs e) =>
+            GoToMarksView?.Invoke();
+
         /// <summary>
         /// Обработчик нажатия кнопки перехода к странице настроек приложения
         /// </summary>
@@ -55,6 +58,8 @@ namespace StudentTestingApp.View
         /// Событие запроса перехода к представлению списка результатов тестирования
         /// </summary>
         public event Action GoToTestResultsView;
+
+        public event Action GoToMarksView;
 
         /// <summary>
         /// Событие запроса перехода к представлению настроек приложения

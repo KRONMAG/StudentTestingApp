@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StudentTestingApp.View.MarksStatisticsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dataGrid="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid">
+    <Grid BackgroundColor="#616161" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackLayout Spacing="0">
+            <Label Style="{StaticResource MiniLogo}" />
+            <Label Style="{StaticResource Title}" Text="Оценки" />
+        </StackLayout>
+        <Label
+            x:Name="EmptyMarksLabel"
+            Grid.Row="1"
+            Style="{StaticResource EmptyListMessage}"
+            Text="Список оценок пуст" />
+        <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
+            <dataGrid:DataGrid
+                x:Name="MarksDataGrid"
+                BackgroundColor="#616161"
+                HeaderBackground="#9E9E9E"
+                HeaderBordersVisible="True"
+                IsSortable="False"
+                IsVisible="False">
+                <dataGrid:DataGrid.HeaderLabelStyle>
+                    <Style TargetType="Label">
+                        <Setter Property="HorizontalTextAlignment" Value="Center" />
+                        <Setter Property="TextColor" Value="#FFFFFF" />
+                        <Setter Property="FontAttributes" Value="Bold" />
+                        <Setter Property="VerticalTextAlignment" Value="Center" />
+                    </Style>
+                </dataGrid:DataGrid.HeaderLabelStyle>
+                <dataGrid:DataGrid.RowsBackgroundColorPalette>
+                    <dataGrid:PaletteCollection>
+                        <Color>#9E9E9E</Color>
+                    </dataGrid:PaletteCollection>
+                </dataGrid:DataGrid.RowsBackgroundColorPalette>
+                <dataGrid:DataGrid.RowsTextColorPalette>
+                    <dataGrid:PaletteCollection>
+                        <Color>#FFFFFF</Color>
+                    </dataGrid:PaletteCollection>
+                </dataGrid:DataGrid.RowsTextColorPalette>
+                <dataGrid:DataGrid.Columns>
+                    <dataGrid:DataGridColumn Title="Учебный год" PropertyName="Item1" />
+                    <dataGrid:DataGridColumn Title="«2»" PropertyName="Item2" />
+                    <dataGrid:DataGridColumn Title="«3»" PropertyName="Item3" />
+                    <dataGrid:DataGridColumn Title="«4»" PropertyName="Item4" />
+                    <dataGrid:DataGridColumn Title="«5»" PropertyName="Item5" />
+                </dataGrid:DataGrid.Columns>
+            </dataGrid:DataGrid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

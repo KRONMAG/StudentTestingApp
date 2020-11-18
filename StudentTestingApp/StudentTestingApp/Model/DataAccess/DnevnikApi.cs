@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using RestSharp;
 using StudentTestingApp.Model.Entity;
@@ -65,20 +66,15 @@ namespace StudentTestingApp.Model.DataAccess
         /// <summary>
         /// Попытка получения количества оценок пользователя за все учебные года
         /// </summary>
-        /// <param name="marks">
-        /// Словарь оценок:
-        /// - первый элемент ключа - учебный год
-        /// - второй элемент ключа - значение оценки
-        /// - значение - количество полученных оценок данного типа за учебный год
-        /// </param>
-        public bool TryGetMarks(out Dictionary<(int, int), int>  marks)
+        /// <param name="marks">Список с количеством полученных оценок за каждый учебный год</param>
+        public bool TryGetMarks(out List<MarksStatistics> marksStatistics)
         {
             var contextResponse = _restClient
                 .Execute(new RestRequest("users/me/context", Method.GET));
             
             if (!contextResponse.IsSuccessful)
             {
-                marks = null;
+                marksStatistics = null;
                 return false;
             }
 
@@ -91,13 +87,13 @@ namespace StudentTestingApp.Model.DataAccess
 
             if (!eduGroupsResponse.IsSuccessful)
             {
-                marks = null;
+                marksStatistics = null;
                 return false;
             }
 
             var eduGroups = eduGroupsResponse.JsonContentToDynamic();
 
-            marks = new Dictionary<(int, int), int>();
+            var marksStatisticsByStudyYears = new Dictionary<int, MarksStatistics>();
 
             foreach (var eduGroup in eduGroups)
             {
@@ -131,21 +127,41 @@ namespace StudentTestingApp.Model.DataAccess
 
                     if (!marksResponse.IsSuccessful)
                     {
-                        marks = null;
+                        marksStatistics = null;
                         return false;
                     }
 
-                    var studyYearMarks = marksResponse.JsonContentToDynamic();
-
-                    foreach (var mark in studyYearMarks)
+                    if (!marksStatisticsByStudyYears.ContainsKey(studyYear))
                     {
-                        var value = int.Parse(mark.value);
-                        if (!marks.ContainsKey((studyYear, value)))
-                            marks.Add((studyYear, value), 0);
-                        marks[(studyYear, value)] += 1;
+                        marksStatisticsByStudyYears.Add(studyYear, new MarksStatistics());
+                        marksStatisticsByStudyYears[studyYear].StartYear = studyYear;
+                        marksStatisticsByStudyYears[studyYear].EndYear = studyYear + 1;
+                    }
+
+                    var semesterMarks = marksResponse.JsonContentToDynamic();
+
+                    foreach (var mark in semesterMarks)
+                    {
+                        switch (int.Parse(mark.value))
+                        {
+                            case 2:
+                                marksStatisticsByStudyYears[studyYear].TwosCount++;
+                                break;
+                            case 3:
+                                marksStatisticsByStudyYears[studyYear].ThreesCount++;
+                                break;
+                            case 4:
+                                marksStatisticsByStudyYears[studyYear].FoursCount++;
+                                break;
+                            case 5:
+                                marksStatisticsByStudyYears[studyYear].FivesCount++;
+                                break;
+                        }
                     }
                 }
             }
+
+            marksStatistics = marksStatisticsByStudyYears.Values.ToList();
 
             return true;
         }

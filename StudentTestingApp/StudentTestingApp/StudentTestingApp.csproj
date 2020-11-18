@@ -24,9 +24,13 @@
     <PackageReference Include="Xam.Plugins.Settings" Version="4.1.0-beta" />
     <PackageReference Include="Xamarin.Essentials" Version="1.4.0-pre2" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
+    <PackageReference Include="Xamarin.Forms.DataGrid" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\MarksStatisticsPage.xaml.cs">
+      <DependentUpon>MarksStatisticsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\QuestionPage.xaml.cs">
       <DependentUpon>QuestionPage.xaml</DependentUpon>
     </Compile>
@@ -42,6 +46,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="View\MarksStatisticsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

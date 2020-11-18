@@ -10,6 +10,7 @@
         </Grid.RowDefinitions>
         <StackLayout Spacing="0">
             <Label Style="{StaticResource MiniLogo}" />
+
             <Label Style="{StaticResource Title}" Text="Результаты" />
         </StackLayout>
         <Label

@@ -13,11 +13,14 @@ namespace StudentTestingApp.Presenter
         /// </summary>
         /// <param name="controller">Контроллер приложения</param>
         /// <param name="view">Представление главного меню приложения</param>
-        public MainPresenter(ApplicationController controller, IMainView view) :
+        public MainPresenter
+            (ApplicationController controller,
+            IMainView view) :
             base(controller, view)
         {
             view.GoToSubjectsView += GoToSubjectsView;
             view.GoToTestResultsView += GoToTestResultsView;
+            view.GoToMarksView += GoToMarksView;
             view.GoToSettingsView += GoToSettingsView;
         }
 
@@ -32,6 +35,12 @@ namespace StudentTestingApp.Presenter
         /// </summary>
         private void GoToTestResultsView() =>
             controller.CreatePresenter<TestResultsPresenter>().Run();
+
+        /// <summary>
+        /// Обработчик запроса перехода к представлению оценок
+        /// </summary>
+        private void GoToMarksView() =>
+            controller.CreatePresenter<MarksStatisticsPresenter>().Run();
 
         /// <summary>
         /// Обработчик запроса перехода к настройкам приложения
