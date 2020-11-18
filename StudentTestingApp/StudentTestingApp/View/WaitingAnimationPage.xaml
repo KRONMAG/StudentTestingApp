@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-
 <rg:PopupPage
     x:Class="StudentTestingApp.View.WaitingAnimationPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -10,6 +9,9 @@
         Orientation="Horizontal"
         VerticalOptions="Center">
         <ActivityIndicator IsRunning="True" Color="White" />
-        <Label x:Name="MessageLabel" Style="{StaticResource Text}" VerticalOptions="Center"/>
+        <Label
+            x:Name="MessageLabel"
+            Style="{StaticResource Text}"
+            VerticalOptions="Center" />
     </StackLayout>
 </rg:PopupPage>

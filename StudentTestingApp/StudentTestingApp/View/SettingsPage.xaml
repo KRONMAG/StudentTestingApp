@@ -76,8 +76,8 @@
                         Style="{StaticResource Command}"
                         Text="Выйти" />
                     <Button
-                        Margin="5"
                         Grid.Column="1"
+                        Margin="5"
                         Clicked="LogInToDnevnikClicked"
                         Style="{StaticResource Command}"
                         Text="Войти" />

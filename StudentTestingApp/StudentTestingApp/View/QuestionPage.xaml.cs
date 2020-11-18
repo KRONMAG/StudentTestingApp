@@ -48,7 +48,7 @@ namespace StudentTestingApp.View
                 if (_selectionMode == SelectionMode.Single)
                     _selectedAnswers.Clear();
                 _selectedAnswers.Add(selectedAnswer);
-                SelectAnswer?.Invoke();
+                SelectAnswer?.Invoke(selectedAnswer.Item1);
             }
         }
 
@@ -61,30 +61,22 @@ namespace StudentTestingApp.View
         {
             var unselectedAnswer = (Tuple<int, string>)SelectedAnswersListView.SelectedItem;
             _selectedAnswers.Remove(unselectedAnswer);
-            UnselectAnswer?.Invoke();
+            UnselectAnswer?.Invoke(unselectedAnswer.Item1);
         }
 
         #region IQuestionView
 
         /// <summary>
         /// Событие выбора варианта ответа
+        /// Параметр события - идентификатор выбранного варианта ответа
         /// </summary>
-        public event Action SelectAnswer;
+        public event Action<int> SelectAnswer;
 
         /// <summary>
         /// Событие отмены выбора варианта ответа
+        /// Параметр события - идентификатор вариант ответа для отмены выбора
         /// </summary>
-        public event Action UnselectAnswer;
-
-        /// <summary>
-        /// Идентификатор выбранного варианта ответа
-        /// </summary>
-        public int SelectedAnswerId => ((Tuple<int, string>)AnswersListView.SelectedItem).Item1;
-
-        /// <summary>
-        /// Идентификатор варианта ответа для отмены выбора
-        /// </summary>
-        public int UnselectedAnswerId => ((Tuple<int, string>)SelectedAnswersListView.SelectedItem).Item1;
+        public event Action<int> UnselectAnswer;
 
         /// <summary>
         /// Установка режима выбора вариантов ответов

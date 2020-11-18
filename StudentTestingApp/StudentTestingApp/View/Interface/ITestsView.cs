@@ -10,13 +10,9 @@ namespace StudentTestingApp.View.Interface
     {
         /// <summary>
         /// Событие выбора теста из списка
+        /// Параметр события - идентификатор выбранного теста
         /// </summary>
-        event Action SelectTest;
-
-        /// <summary>
-        /// Идентификатор выбранного теста
-        /// </summary>
-        int SelectedTestId { get; }
+        event Action<int> SelectTest;
 
         /// <summary>
         /// Показ списка тестов

@@ -10,23 +10,15 @@ namespace StudentTestingApp.View.Interface
     {
         /// <summary>
         /// Событие выбора варианта ответа
+        /// Параметр события - идентификатор выбранного варианта ответа
         /// </summary>
-        event Action SelectAnswer;
+        event Action<int> SelectAnswer;
 
         /// <summary>
         /// Событие отмены выбора варианта ответа
+        /// Параметр события - идентификатор варианта ответа для отмены
         /// </summary>
-        event Action UnselectAnswer;
-
-        /// <summary>
-        /// Идентификатор выбранного варианта ответа
-        /// </summary>
-        int SelectedAnswerId { get; }
-
-        /// <summary>
-        /// Идентификатор варианта ответа для отмены выбора
-        /// </summary>
-        int UnselectedAnswerId { get; }
+        event Action<int> UnselectAnswer;
 
         /// <summary>
         /// Установка режима выбора вариантов ответов

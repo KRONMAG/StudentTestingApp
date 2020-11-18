@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-
 <ContentPage
     x:Class="StudentTestingApp.View.TestResultPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -25,6 +24,7 @@
             ProgressColor="#FFFFFF" />
         <Label x:Name="ElapsedTimeLabel" />
         <Button
+            x:Name="GoToMainPageButton"
             Clicked="GoToMainPageClicked"
             HorizontalOptions="Center"
             Style="{StaticResource Command}"

@@ -16,8 +16,8 @@
             HorizontalTextAlignment="Center"
             Style="{StaticResource Title}"
             Text="Результат" />
-        <ScrollView Grid.Row="1" HorizontalOptions="Center">
-            <StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout HorizontalOptions="Center">
                 <Label Style="{StaticResource Text}" Text="{Binding Item2, StringFormat='Предмет: {0}'}" />
                 <Label Style="{StaticResource Text}" Text="{Binding Item3, StringFormat='Тест: {0}'}" />
                 <Label Style="{StaticResource Text}" Text="{Binding Item4, StringFormat='Дата: {0}'}" />

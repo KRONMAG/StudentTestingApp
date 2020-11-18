@@ -26,8 +26,12 @@ namespace StudentTestingApp.View
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
-        private void GoToMainPageClicked(object sender, EventArgs e) =>
+        private void GoToMainPageClicked(object sender, EventArgs e)
+        {
+            GoToMainPageButton.IsEnabled = false;
             GoToMainView?.Invoke();
+            GoToMainPageButton.IsEnabled = true;
+        }
 
         #region ITestResultView
 

@@ -27,10 +27,10 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Показ данных о выбранном тесте, представления
         /// </summary>
-        /// <param name="test"></param>
+        /// <param name="test">Выбранный для прохождения тест</param>
         public override void Run(Test test)
         {
-            view.ShowTestInfo(test.Name, test.QuestionsCount, test.Duration);
+            view.ShowTest(test.Name, test.QuestionsCount, test.Duration);
             base.Run(test);
         }
     }

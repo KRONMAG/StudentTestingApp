@@ -36,13 +36,10 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Обработчик события выбора учебного предмета из списка
         /// </summary>
-        private void SelectSubject() =>
-            controller.CreatePresenter<TestsPresenter, Subject>().Run
-            (
-                _repository
-                    .Get()
-                    .First(subject => subject.Id == view.SelectedSubjectId)
-            );
+        /// <param name="selectedSubjectId">Идентификатор выбранного предмета</param>
+        private void SelectSubject(int selectedSubjectId) =>
+            controller.CreatePresenter<TestsPresenter, Subject>()
+                .Run(_repository.Get(selectedSubjectId));
 
         /// <summary>
         /// Показ списка учебных предметов, представления

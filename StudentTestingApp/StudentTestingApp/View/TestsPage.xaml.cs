@@ -28,19 +28,15 @@ namespace StudentTestingApp.View
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
         private void TestTapped(object sender, ItemTappedEventArgs e) =>
-            SelectTest?.Invoke();
+            SelectTest?.Invoke(((Tuple<int, string>)TestsListView.SelectedItem).Item1);
 
         #region ITestsView
 
         /// <summary>
         /// Событие выбора теста из списка
+        /// Параметр события - идентификатор выбранного теста
         /// </summary>
-        public event Action SelectTest;
-
-        /// <summary>
-        /// Идентификатор выбранного теста
-        /// </summary>
-        public int SelectedTestId => ((Tuple<int, string>)TestsListView.SelectedItem).Item1;
+        public event Action<int> SelectTest;
 
         /// <summary>
         /// Показ списка тестов

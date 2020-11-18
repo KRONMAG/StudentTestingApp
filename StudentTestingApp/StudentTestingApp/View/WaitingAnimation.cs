@@ -53,8 +53,8 @@ namespace StudentTestingApp.View
                 {
                     if (_messages.Count == 0)
                         _navigation.PushAsync(_page).ConfigureAwait(true);
-                    _page.Message = message;
                     _messages.Add(animationGuid, message);
+                    _page.ShowMessage(message);
                 }
             );
         }
@@ -77,7 +77,7 @@ namespace StudentTestingApp.View
                                 _navigation.PopAsync().ConfigureAwait(true);
                         }
                         else
-                            _page.Message = _messages.Last().Value;
+                            _page.ShowMessage(_messages.Last().Value);
                     }
                 }
             );

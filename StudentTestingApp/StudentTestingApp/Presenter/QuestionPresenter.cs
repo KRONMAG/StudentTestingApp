@@ -25,7 +25,7 @@ namespace StudentTestingApp.Presenter
         private readonly Dictionary<int, Answer> _selectedAnswers;
 
         /// <summary>
-        /// Количество правильных среди выбранных вариантов ответа на вопрос
+        /// Количество правильных вариантов ответа на вопрос среди выбранных
         /// </summary>
         private int _rightAnswersCount;
 
@@ -64,24 +64,26 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Обработчик выбора варианта ответа
         /// </summary>
-        private void SelectAnswer()
+        /// <param name="selectedAnswerId">Идентификатор выбранного варианта ответа</param>
+        private void SelectAnswer(int selectedAnswerId)
         {
-            if (!_selectedAnswers.Keys.Contains(view.SelectedAnswerId))
+            if (!_selectedAnswers.Keys.Contains(selectedAnswerId))
             {
                 if (_rightAnswersCount == 1)
                     _selectedAnswers.Clear();
                 var selectedAnswer = _repository
                     .Get()
-                    .First(answer => answer.Id == view.SelectedAnswerId);
+                    .First(answer => answer.Id == selectedAnswerId);
                 _selectedAnswers.Add(selectedAnswer.Id, selectedAnswer);
             }
         }
-        
+
         /// <summary>
         /// Обработчик отмены выбора варианта ответа
         /// </summary>
-        private void UnselectAnswer() =>
-            _selectedAnswers.Remove(view.UnselectedAnswerId);
+        /// <param name="unselectedAnswerId">Идентификатор варианта ответа для отмены</param>
+        private void UnselectAnswer(int unselectedAnswerId) =>
+            _selectedAnswers.Remove(unselectedAnswerId);
 
         /// <summary>
         /// Показ вопроса, вариантов ответов, представления
@@ -97,11 +99,11 @@ namespace StudentTestingApp.Presenter
                 .OrderBy(answer => random.Next())
                 .ToList();
             _rightAnswersCount = answers.Count(answer => answer.Right);
-            view.ShowQuestion(question.Text, question.Image);
             view.SetSelectionMode
             (
                 _rightAnswersCount == 1 ? SelectionMode.Single : SelectionMode.Multiply
             );
+            view.ShowQuestion(question.Text, question.Image);
             view.ShowAnswers
             (
                 answers

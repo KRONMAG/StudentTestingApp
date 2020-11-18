@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using RestSharp;
 using StudentTestingApp.Model.Entity;
 
 namespace StudentTestingApp.Model.DataAccess
 {
+    /// <summary>
+    /// Взаимодействие с API Дневник.ру
+    /// </summary>
     public class DnevnikAPI
     {
-        private RestClient _restClient;
-        private long _userId;
+        /// <summary>
+        /// REST-клиент
+        /// </summary>
+        private readonly RestClient _restClient;
 
+        /// <summary>
+        /// Идентификатор пользователя системы Дневник
+        /// </summary>
+        private readonly long _userId;
+
+        /// <summary>
+        /// Создание экземляра класса
+        /// </summary>
+        /// <param name="accessToken">Токен доступа к API Дневника</param>
+        /// <param name="userId">Идентификатор пользователя, соответствущий токену</param>
         public DnevnikAPI(string accessToken, long userId)
         {
             _restClient = new RestClient("https://api.dnevnik.ru/v2.0");
@@ -18,6 +32,11 @@ namespace StudentTestingApp.Model.DataAccess
             _userId = userId;
         }
 
+        /// <summary>
+        /// Попытка публикации записи о пройденном тесте на стене пользователя
+        /// </summary>
+        /// <param name="testResult">Результат тестирования</param>
+        /// <returns>Истина, если публикация выполнена успешна, иначе - ложь</returns>
         public bool ShareTestResult(TestResult testResult)
         {
             var request = new RestRequest($"users/{_userId}/wallrecord", Method.POST, DataFormat.Json);
@@ -43,35 +62,62 @@ namespace StudentTestingApp.Model.DataAccess
             return _restClient.Execute(request).IsSuccessful;
         }
 
-        public void GetMarks()
+        /// <summary>
+        /// Попытка получения количества оценок пользователя за все учебные года
+        /// </summary>
+        /// <param name="marks">
+        /// Словарь оценок:
+        /// - первый элемент ключа - учебный год
+        /// - второй элемент ключа - значение оценки
+        /// - значение - количество полученных оценок данного типа за учебный год
+        /// </param>
+        public bool TryGetMarks(out Dictionary<(int, int), int>  marks)
         {
-            var personId = (long)_restClient
-                .Execute(new RestRequest("users/me/context", Method.GET))
-                .JsonContentToDynamic()
-                .personId;
-            var marksByStudyYears = new Dictionary<long, List<int>>();
-            var eduGroups = _restClient
-                .Execute(new RestRequest($"persons/{personId}/edu-groups/all", Method.GET))
-                .JsonContentToDynamic();
+            var contextResponse = _restClient
+                .Execute(new RestRequest("users/me/context", Method.GET));
+            
+            if (!contextResponse.IsSuccessful)
+            {
+                marks = null;
+                return false;
+            }
+
+            var personId = contextResponse.JsonContentToDynamic().personId;
+
+            var eduGroupsResponse = _restClient.Execute
+            (
+                new RestRequest( $"persons/{personId}/edu-groups/all", Method.GET)
+            );
+
+            if (!eduGroupsResponse.IsSuccessful)
+            {
+                marks = null;
+                return false;
+            }
+
+            var eduGroups = eduGroupsResponse.JsonContentToDynamic();
+
+            marks = new Dictionary<(int, int), int>();
 
             foreach (var eduGroup in eduGroups)
             {
+                var studyYear = (int)eduGroup.studyyear;
                 var periods = new[]
                 {
                     new Tuple<DateTime, DateTime>
                     (
-                        new DateTime((int)eduGroup.studyyear, 9, 1),
-                        new DateTime((int)eduGroup.studyyear, 12, 31)
+                        new DateTime(studyYear, 9, 1),
+                        new DateTime(studyYear, 12, 31)
                     ),
                     new Tuple<DateTime, DateTime>
                     (
-                        new DateTime((int)eduGroup.studyyear + 1, 1, 1),
-                        new DateTime((int)eduGroup.studyyear + 1, 5, 31)
+                        new DateTime(studyYear + 1, 1, 1),
+                        new DateTime(studyYear + 1, 5, 31)
                     )
                 };
                 foreach (var period in periods)
                 {
-                    var marks = _restClient
+                    var marksResponse = _restClient
                         .Execute
                         (
                             new RestRequest
@@ -81,20 +127,27 @@ namespace StudentTestingApp.Model.DataAccess
                                 $"/{period.Item2.Year}-{period.Item2.Month}-{period.Item2.Day}",
                                 Method.GET
                             )
-                        )
-                        .JsonContentToDynamic();
-                    foreach (var mark in marks)
+                        );
+
+                    if (!marksResponse.IsSuccessful)
                     {
-                        if (!marksByStudyYears.ContainsKey(eduGroup.studyyear))
-                            marksByStudyYears.Add(eduGroup.studyyear, new List<int>());
-                        marksByStudyYears[eduGroup.studyyear].Add(int.Parse(mark.value));
+                        marks = null;
+                        return false;
+                    }
+
+                    var studyYearMarks = marksResponse.JsonContentToDynamic();
+
+                    foreach (var mark in studyYearMarks)
+                    {
+                        var value = int.Parse(mark.value);
+                        if (!marks.ContainsKey((studyYear, value)))
+                            marks.Add((studyYear, value), 0);
+                        marks[(studyYear, value)] += 1;
                     }
                 }
             }
-            foreach (var pair in marksByStudyYears)
-            {
-                Console.WriteLine($"{pair.Key} {pair.Value.Count()}");
-            }
+
+            return true;
         }
     }
 }

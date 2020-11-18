@@ -98,20 +98,23 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Обработчик события запроса попытки входа в систему Дневник
         /// </summary>
-        private void TryLogInToDnevnik()
+        /// <param name="login">Логин пользователя</param>
+        /// <param name="password">Пароль пользователя</param>
+        private void TryLogInToDnevnik(string login, string password)
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
                 _messageDialog.ShowMessage("Отсутствует интернет-соединение, вход невозможен");
-            else if (string.IsNullOrWhiteSpace(view.Login))
+            else if (string.IsNullOrWhiteSpace(login))
                 _messageDialog.ShowMessage("Введите логин пользователя");
-            else if (string.IsNullOrWhiteSpace(view.Password))
+            else if (string.IsNullOrWhiteSpace(password))
                 _messageDialog.ShowMessage("Введите пароль пользователя");
             else
             {
                 _waitingAnimation.StartAnimation("Вход в Дневник.ру", out Guid guid);
+                view.ClearPassword();
                 Worker.Run
                 (
-                    () => _dnevnikApiAuthentificator.TryLogIn(view.Login, view.Password),
+                    () => _dnevnikApiAuthentificator.TryLogIn(login, password),
                     result =>
                     {
                         _waitingAnimation.StopAnimation(guid);
@@ -123,10 +126,7 @@ namespace StudentTestingApp.Presenter
                             );
                         else
                         {
-                            _dnevnikApiAuthentificator.TryGetLogin(out string login);
                             _dnevnikApiAuthentificator.TryGetExpirationDate(out DateTime date);
-                            view.Login = login;
-                            view.Password = string.Empty;
                             view.ShowExpirationDate(date);
                             _messageDialog.ShowMessage("Вход в систему Дневник.ру выполнен успешно");
                         }
@@ -142,9 +142,9 @@ namespace StudentTestingApp.Presenter
         private void LogOutFromDnevnik()
         {
             _dnevnikApiAuthentificator.LogOut();
-            view.Login = string.Empty;
-            view.Password = string.Empty;
-            view.ShowExpirationDate();
+            view.ClearLogin();
+            view.ClearPassword();
+            view.ClearExpirationDate();
         }
 
         /// <summary>
@@ -153,10 +153,13 @@ namespace StudentTestingApp.Presenter
         /// </summary>
         public override void Run()
         {
+            view.ClearLogin();
+            view.ClearPassword();
+            view.ClearExpirationDate();
             if (_dnevnikApiAuthentificator.TryGetLogin(out string login) &&
                 _dnevnikApiAuthentificator.TryGetExpirationDate(out DateTime date))
             {
-                view.Login = login;
+                view.ShowLogin(login);
                 view.ShowExpirationDate(date);
             }
             base.Run();

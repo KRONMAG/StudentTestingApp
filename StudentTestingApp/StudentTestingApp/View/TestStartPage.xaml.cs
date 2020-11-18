@@ -25,8 +25,12 @@ namespace StudentTestingApp.View
         /// </summary>
         /// <param name="sender">Источник события</param>
         /// <param name="e">Параметры события</param>
-        private void StartTestClicked(object sender, EventArgs e) =>
+        private void StartTestClicked(object sender, EventArgs e)
+        {
+            StartTestButton.IsEnabled = false;
             StartTest?.Invoke();
+
+        }
 
         #region ITestStartView
 
@@ -44,7 +48,7 @@ namespace StudentTestingApp.View
         /// Продолжительность тестирования в секундах,
         /// значение null - продолжительность не ограничена
         /// </param>
-        public void ShowTestInfo(string name, int questionCount, int? duration)
+        public void ShowTest(string name, int questionCount, int? duration)
         {
             Device.BeginInvokeOnMainThread(() =>
             {

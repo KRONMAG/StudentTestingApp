@@ -33,11 +33,10 @@ namespace StudentTestingApp.Presenter
         /// <summary>
         /// Обработчик выбора теста из списка
         /// </summary>
-        private void SelectTest() =>
-            controller.CreatePresenter<TestStartPresenter, Test>().Run
-            (
-                _repository.Get(view.SelectedTestId)
-            );
+        /// <param name="selectedTestId">Идентификатор выбранного теста</param>
+        private void SelectTest(int selectedTestId) =>
+            controller.CreatePresenter<TestStartPresenter, Test>()
+                .Run( _repository.Get(selectedTestId));
 
         /// <summary>
         /// Показ списка тестов выбранного учебного предмета, представления

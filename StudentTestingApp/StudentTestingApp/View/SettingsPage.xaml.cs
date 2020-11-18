@@ -34,7 +34,7 @@ namespace StudentTestingApp.View
         /// <param name="sender">Параметры события</param>
         /// <param name="e">Источник события</param>
         private void LogInToDnevnikClicked(object sender, EventArgs e) =>
-            TryLogInToDnevnik?.Invoke();
+            TryLogInToDnevnik?.Invoke(LoginEntry.Text, PasswordEntry.Text);
 
         /// <summary>
         /// Обработчик нажатия кнопки выхода из Дневника
@@ -53,8 +53,9 @@ namespace StudentTestingApp.View
 
         /// <summary>
         /// Событие запроса входа в систему Дневник
+        /// Первый параметр события - логин пользователя, второй - его пароль
         /// </summary>
-        public event Action TryLogInToDnevnik;
+        public event Action<string, string> TryLogInToDnevnik;
 
         /// <summary>
         /// Событие запроса выхода из Дневника
@@ -62,35 +63,41 @@ namespace StudentTestingApp.View
         public event Action LogOutFromDnevnik;
 
         /// <summary>
-        /// Логин пользователя
+        /// Очистка введенного пароля
         /// </summary>
-        public string Login
-        {
-            get => LoginEntry.Text;
-            set => Device.BeginInvokeOnMainThread(() => LoginEntry.Text = value);
-        }
+        public void ClearPassword() =>
+            Device.BeginInvokeOnMainThread(() =>
+                PasswordEntry.Text = string.Empty);
 
         /// <summary>
-        /// Пароль пользователя
+        /// Очистка введенного логина
         /// </summary>
-        public string Password
-        {
-            get => PasswordEntry.Text;
-            set => Device.BeginInvokeOnMainThread(() => PasswordEntry.Text = value);
-        }
+        public void ClearLogin() =>
+            Device.BeginInvokeOnMainThread(() =>
+                LoginEntry.Text = string.Empty);
+
+        /// <summary>
+        /// Очистка даты истечения авторизации
+        /// </summary>
+        public void ClearExpirationDate() =>
+            Device.BeginInvokeOnMainThread(() =>
+                ExpirationDateLabel.Text = "вход не выполнен");
+
+        /// <summary>
+        /// Показ логина
+        /// </summary>
+        /// <param name="login">Логин пользователя</param>
+        public void ShowLogin(string login) =>
+            Device.BeginInvokeOnMainThread(() =>    
+                LoginEntry.Text = login);
 
         /// <summary>
         /// Показ даты истечения авторизации в системе Дневник
         /// </summary>
         /// <param name="date">Дата истечения авторизации</param>
-        public void ShowExpirationDate(DateTime? date = null) =>
+        public void ShowExpirationDate(DateTime date) =>
             Device.BeginInvokeOnMainThread(() =>
-            {
-                if (date != null)
-                    ExpirationDateLabel.Text = date.ToString();
-                else
-                    ExpirationDateLabel.Text = "вход не выполнен";
-            });
+                ExpirationDateLabel.Text = date.ToString());
 
         /// <summary>
         /// Показ представления

@@ -68,10 +68,15 @@ namespace StudentTestingApp.View
 
         #region ITestResultsView
 
+        /// <summary>
+        /// Событие запроса публикации результата тестирования в системе Дневник
+        /// Параметр события - идентификатор результата тестирования, который надо опубликовать
+        /// </summary>
         public event Action<int> ShareTestResult;
 
         /// <summary>
         /// Событие запроса удаления результата тестирования
+        /// Параметр события - идентификатор результата тестирования для удаления
         /// </summary>
         public event Action<int> RemoveTestResult;
 
@@ -104,7 +109,7 @@ namespace StudentTestingApp.View
         }
 
         /// <summary>
-        /// Отображение страницы
+        /// Показ страницы
         /// </summary>
         public void Show() =>
             Device.BeginInvokeOnMainThread(() =>

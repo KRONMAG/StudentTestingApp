@@ -13,23 +13,35 @@ namespace StudentTestingApp.Presenter
     /// </summary>
     public class TestResultsPresenter : BasePresenter<ITestResultsView>
     {
-        private IWaitingAnimation _waitingAnimation;
+        /// <summary>
+        /// Средство показа анимации ожидания
+        /// </summary>
+        private readonly IWaitingAnimation _waitingAnimation;
 
-        private IMessageDialog _messageDialog;
+        /// <summary>
+        /// Механизм показа диалоговых сообщений
+        /// </summary>
+        private readonly IMessageDialog _messageDialog;
 
         /// <summary>
         /// Хранилище результатов тестирования
         /// </summary>
         private Repository<TestResult> _repository;
 
-        private DnevnikApiAuthentificator _authentificator;
+        /// <summary>
+        /// Аутентификатор, обеспечивающий доступ к сети Дневник
+        /// </summary>
+        private readonly DnevnikApiAuthentificator _authentificator;
 
         /// <summary>
         /// Создание экземпляра класса
         /// </summary>
         /// <param name="controller">Контроллер приложения</param>
         /// <param name="view">Представление списка результатов тестирования</param>
+        /// <param name="messageDialog">Механизм показа диалоговых сообщений</param>
+        /// <param name="waitingAnimation">Средство показа анимации ожидания</param>
         /// <param name="repository">Хранилище результатов тестирования</param>
+        /// <param name="authentificator">Аутентификатор, использующийся для входа в систему Дневник</param>
         public TestResultsPresenter
             (ApplicationController controller,
             ITestResultsView view,

@@ -21,6 +21,6 @@ namespace StudentTestingApp.View.Interface
         /// Продолжительность тестирования в секундах,
         /// значение null - продолжительность не ограничена
         /// </param>
-        void ShowTestInfo(string name, int questionCount, int? duration);
+        void ShowTest(string name, int questionCount, int? duration);
     }
 }
